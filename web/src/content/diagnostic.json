@@ -1,0 +1,38 @@
+[
+  {
+    "id": "diagnostic-001",
+    "type": "single-choice",
+    "topic": "主谓一致",
+    "difficulty": "foundation",
+    "stem": "The number of students in the class ___ thirty.",
+    "options": ["is", "are", "be"],
+    "answer": "is",
+    "explanation": "主语是 The number of，表示“……的数量”，谓语动词用单数 is。",
+    "misconception": "不要被 of 后面的复数名词 students 影响。",
+    "version": 1
+  },
+  {
+    "id": "diagnostic-002",
+    "type": "single-choice",
+    "topic": "反意疑问句",
+    "difficulty": "foundation",
+    "stem": "Open the window, ___?",
+    "options": ["will you", "do you", "don't you"],
+    "answer": "will you",
+    "explanation": "祈使句后常用 will you 构成反意疑问句，语气是请求或提醒。",
+    "misconception": "祈使句没有显性的主语，不要机械套用 do/does。",
+    "version": 1
+  },
+  {
+    "id": "diagnostic-003",
+    "type": "single-choice",
+    "topic": "程度副词",
+    "difficulty": "foundation",
+    "stem": "This book is ___ difficult for a beginner to understand.",
+    "options": ["too", "so", "such"],
+    "answer": "too",
+    "explanation": "too + 形容词 + for sb. + to do 表示“太……以至于不能……”。",
+    "misconception": "so 后面通常还要接 that 从句；such 后面应接名词短语。",
+    "version": 1
+  }
+]
