@@ -3,6 +3,7 @@
 
 # JavaScript build and test outputs.
 web/node_modules/
+web/.npm-install-conflict-*/
 web/dist/
 web/coverage/
 web/playwright-report/
