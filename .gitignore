@@ -1,0 +1,15 @@
+# Linked worktrees are local implementation environments.
+.worktrees/
+
+# JavaScript build and test outputs.
+web/node_modules/
+web/dist/
+web/coverage/
+web/playwright-report/
+web/test-results/
+
+# Local secrets and editor/OS files.
+web/.env.local
+web/.env.*.local
+.DS_Store
+Thumbs.db
