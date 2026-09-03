@@ -1,21 +1,37 @@
 import { useMemo, useState } from 'react'
-import { diagnosticQuestions, foundationTopicBanks } from './content/manifest'
+import { allQuestions, diagnosticQuestions, foundationTopicBanks } from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
 import type { Question } from './domain/question'
+import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-const todayTasks = [
-  { title: '语法与词汇', detail: '冠词与可数名词 · 12 题', action: '开始练习' },
-  { title: '完形填空', detail: '高频搭配辨析 · 1 篇', action: '继续学习' },
-  { title: '错题回顾', detail: '有 6 题到期复习', action: '去复习' },
-]
+type Screen = 'dashboard' | 'topics' | 'practice'
+
+interface PracticeTarget {
+  title: string
+  questions: Question[]
+  returnTo: Exclude<Screen, 'practice'>
+}
 
 function App() {
-  const [screen, setScreen] = useState<'dashboard' | 'topics' | 'practice'>('dashboard')
-  const [practiceTarget, setPracticeTarget] = useState<{ title: string; questions: Question[] } | null>(null)
+  const [screen, setScreen] = useState<Screen>('dashboard')
+  const [practiceTarget, setPracticeTarget] = useState<PracticeTarget | null>(null)
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
+  const [dashboard, setDashboard] = useState(() => repository.getDashboard())
+  const remainingDays = daysUntilExam(new Date())
+  const dueReviewQuestions = useMemo(() => {
+    if (!allQuestions.success) {
+      return []
+    }
+
+    const questionsById = new Map(allQuestions.questions.map((question) => [question.id, question]))
+    return repository
+      .listDueReviews(new Date())
+      .map(({ questionId }) => questionsById.get(questionId))
+      .filter((question): question is Question => question !== undefined)
+  }, [dashboard.dueReviewCount, repository])
 
   if (!diagnosticQuestions.success) {
     return (
@@ -26,8 +42,8 @@ function App() {
     )
   }
 
-  function startPractice(title: string, questions: Question[]) {
-    setPracticeTarget({ title, questions })
+  function startPractice(title: string, questions: Question[], returnTo: PracticeTarget['returnTo'] = 'dashboard') {
+    setPracticeTarget({ title, questions, returnTo })
     setScreen('practice')
   }
 
@@ -40,13 +56,14 @@ function App() {
       guessed,
       createdAt: new Date().toISOString(),
     })
+    setDashboard(repository.getDashboard())
   }
 
   if (screen === 'practice' && practiceTarget) {
     return (
       <PracticeSession
         onAnswer={recordAnswer}
-        onComplete={() => setScreen('topics')}
+        onComplete={() => setScreen(practiceTarget.returnTo)}
         questions={practiceTarget.questions}
         title={practiceTarget.title}
       />
@@ -58,7 +75,7 @@ function App() {
       <TopicHub
         banks={foundationTopicBanks}
         onBack={() => setScreen('dashboard')}
-        onStart={(bank: TopicBank) => startPractice(bank.topic, bank.questions)}
+        onStart={(bank: TopicBank) => startPractice(bank.topic, bank.questions, 'topics')}
       />
     )
   }
@@ -75,7 +92,7 @@ function App() {
           <button className="topic-entry" onClick={() => setScreen('topics')} type="button">专项突破</button>
           <div className="exam-countdown" aria-label="考试倒计时">
             <span>距离 10 月 17 日</span>
-            <strong>44 天</strong>
+            <strong>{remainingDays} 天</strong>
           </div>
         </div>
       </header>
@@ -85,7 +102,7 @@ function App() {
           <p className="eyebrow">今日目标</p>
           <h2 id="today-goal">完成 30 分钟语法基础练习</h2>
         </div>
-        <p className="progress-text">本周进度 <strong>0 / 10</strong> 个学习单元</p>
+        <p className="progress-text">已完成 <strong>{dashboard.attemptCount}</strong> 题</p>
       </section>
 
       <section aria-labelledby="study-plan-title">
@@ -98,14 +115,36 @@ function App() {
         </div>
 
         <div className="task-grid">
-          {todayTasks.map((task, index) => (
+          {[
+            {
+              title: '语法与词汇',
+              detail: '先做 20 题诊断，确定最该补的基础点',
+              action: '开始练习',
+              onClick: () => startPractice('诊断练习', diagnosticQuestions.questions),
+            },
+            {
+              title: '完形填空',
+              detail: '高频搭配辨析 · 内容准备中',
+              action: '即将开放',
+              onClick: undefined,
+            },
+            {
+              title: '错题回顾',
+              detail: `有 ${dashboard.dueReviewCount} 题到期复习`,
+              action: '去复习',
+              onClick: dueReviewQuestions.length > 0
+                ? () => startPractice('到期复习', dueReviewQuestions)
+                : undefined,
+            },
+          ].map((task, index) => (
             <article className="task-card" key={task.title}>
               <span className="task-index">0{index + 1}</span>
               <h3>{task.title}</h3>
               <p>{task.detail}</p>
               <button
                 type="button"
-                onClick={index === 0 ? () => startPractice('诊断练习', diagnosticQuestions.questions) : undefined}
+                disabled={!task.onClick}
+                onClick={task.onClick}
               >
                 {task.action}
               </button>
