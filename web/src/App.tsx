@@ -1,3 +1,7 @@
+import { useMemo, useState } from 'react'
+import { diagnosticQuestions } from './content/manifest'
+import { LocalStudyRepository } from './data/study-repository'
+import { PracticeSession } from './features/PracticeSession'
 import './App.css'
 
 const todayTasks = [
@@ -7,6 +11,38 @@ const todayTasks = [
 ]
 
 function App() {
+  const [screen, setScreen] = useState<'dashboard' | 'diagnostic'>('dashboard')
+  const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
+
+  if (!diagnosticQuestions.success) {
+    return (
+      <main className="app-shell">
+        <h1>题库暂时无法加载</h1>
+        <p>{diagnosticQuestions.issues.join('；')}</p>
+      </main>
+    )
+  }
+
+  if (screen === 'diagnostic') {
+    return (
+      <PracticeSession
+        onAnswer={(question, answer, correct, guessed) => {
+          repository.recordAttempt({
+            id: `attempt-${question.id}-${Date.now()}`,
+            questionId: question.id,
+            answer,
+            correct,
+            guessed,
+            createdAt: new Date().toISOString(),
+          })
+        }}
+        onComplete={() => setScreen('dashboard')}
+        questions={diagnosticQuestions.questions}
+        title="诊断练习"
+      />
+    )
+  }
+
   return (
     <main className="app-shell">
       <header className="site-header">
@@ -44,7 +80,9 @@ function App() {
               <span className="task-index">0{index + 1}</span>
               <h3>{task.title}</h3>
               <p>{task.detail}</p>
-              <button type="button">{task.action}</button>
+              <button type="button" onClick={index === 0 ? () => setScreen('diagnostic') : undefined}>
+                {task.action}
+              </button>
             </article>
           ))}
         </div>

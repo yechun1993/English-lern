@@ -4,26 +4,45 @@ import { calculateReadiness, createInitialMastery, recordAttempt } from './maste
 const firstDay = new Date('2026-09-01T00:00:00.000Z')
 
 describe('recordAttempt', () => {
-  it('moves a new question into learning after one correct answer', () => {
+  it('moves a new question into learning after one correct review day', () => {
     const result = recordAttempt(createInitialMastery(), true, firstDay)
 
     expect(result).toMatchObject({
       status: 'learning',
       correctStreak: 1,
+      correctReviewDays: ['2026-09-01'],
       intervalDays: 1,
       nextReviewAt: '2026-09-02T00:00:00.000Z',
     })
   })
 
-  it('moves a question to review after two consecutive correct answers', () => {
+  it('marks a question mastered only after three correct answers on different review days', () => {
     const afterFirstCorrect = recordAttempt(createInitialMastery(), true, firstDay)
-    const result = recordAttempt(afterFirstCorrect, true, new Date('2026-09-02T00:00:00.000Z'))
+    const afterSecondCorrect = recordAttempt(
+      afterFirstCorrect,
+      true,
+      new Date('2026-09-02T00:00:00.000Z'),
+    )
+    const result = recordAttempt(afterSecondCorrect, true, new Date('2026-09-05T00:00:00.000Z'))
 
     expect(result).toMatchObject({
-      status: 'review',
-      correctStreak: 2,
-      intervalDays: 3,
-      nextReviewAt: '2026-09-05T00:00:00.000Z',
+      status: 'mastered',
+      correctStreak: 3,
+      correctReviewDays: ['2026-09-01', '2026-09-02', '2026-09-05'],
+      intervalDays: 14,
+      nextReviewAt: '2026-09-19T00:00:00.000Z',
+    })
+  })
+
+  it('does not count two correct answers on the same review day twice', () => {
+    const afterFirstCorrect = recordAttempt(createInitialMastery(), true, firstDay)
+    const result = recordAttempt(afterFirstCorrect, true, new Date('2026-09-01T08:00:00.000Z'))
+
+    expect(result).toMatchObject({
+      status: 'learning',
+      correctStreak: 1,
+      correctReviewDays: ['2026-09-01'],
+      intervalDays: 1,
     })
   })
 
@@ -34,6 +53,7 @@ describe('recordAttempt', () => {
     expect(result).toMatchObject({
       status: 'learning',
       correctStreak: 0,
+      correctReviewDays: [],
       intervalDays: 1,
       nextReviewAt: '2026-09-03T00:00:00.000Z',
     })

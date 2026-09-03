@@ -16,6 +16,7 @@ export interface AttemptEvent {
   questionId: string
   answer: string
   correct: boolean
+  guessed: boolean
   createdAt: string
 }
 
@@ -88,7 +89,7 @@ export class LocalStudyRepository {
     const state = this.read()
     const attemptedAt = new Date(event.createdAt)
     const previousMastery = state.masteryByQuestion[event.questionId] ?? createInitialMastery()
-    const mastery = recordMasteryAttempt(previousMastery, event.correct, attemptedAt)
+    const mastery = recordMasteryAttempt(previousMastery, event.correct, attemptedAt, event.guessed)
 
     state.attempts.push(event)
     state.masteryByQuestion[event.questionId] = mastery

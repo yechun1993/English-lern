@@ -1,8 +1,9 @@
-export type MasteryStatus = 'new' | 'learning' | 'review'
+export type MasteryStatus = 'new' | 'learning' | 'mastered'
 
 export interface MasteryState {
   status: MasteryStatus
   correctStreak: number
+  correctReviewDays: string[]
   intervalDays: number
   nextReviewAt?: string
   lastAttemptAt?: string
@@ -12,6 +13,7 @@ export function createInitialMastery(): MasteryState {
   return {
     status: 'new',
     correctStreak: 0,
+    correctReviewDays: [],
     intervalDays: 0,
   }
 }
@@ -22,14 +24,39 @@ function addDays(date: Date, days: number): Date {
   return nextDate
 }
 
-export function recordAttempt(state: MasteryState, correct: boolean, attemptedAt: Date): MasteryState {
-  const correctStreak = correct ? state.correctStreak + 1 : 0
-  const status: MasteryStatus = correctStreak >= 2 ? 'review' : 'learning'
-  const intervalDays = status === 'review' ? Math.max(3, state.intervalDays * 2) : 1
+function toReviewDay(date: Date): string {
+  return date.toISOString().slice(0, 10)
+}
+
+export function recordAttempt(
+  state: MasteryState,
+  correct: boolean,
+  attemptedAt: Date,
+  guessed = false,
+): MasteryState {
+  if (!correct || guessed) {
+    const intervalDays = 1
+    return {
+      status: 'learning',
+      correctStreak: 0,
+      correctReviewDays: [],
+      intervalDays,
+      lastAttemptAt: attemptedAt.toISOString(),
+      nextReviewAt: addDays(attemptedAt, intervalDays).toISOString(),
+    }
+  }
+
+  const reviewDay = toReviewDay(attemptedAt)
+  const correctReviewDays = state.correctReviewDays.includes(reviewDay)
+    ? state.correctReviewDays
+    : [...state.correctReviewDays, reviewDay]
+  const status: MasteryStatus = correctReviewDays.length >= 3 ? 'mastered' : 'learning'
+  const intervalDays = status === 'mastered' ? 14 : correctReviewDays.length === 2 ? 3 : 1
 
   return {
     status,
-    correctStreak,
+    correctStreak: correctReviewDays.length,
+    correctReviewDays,
     intervalDays,
     lastAttemptAt: attemptedAt.toISOString(),
     nextReviewAt: addDays(attemptedAt, intervalDays).toISOString(),

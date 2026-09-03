@@ -6,7 +6,7 @@ describe('diagnosticQuestions', () => {
     expect(diagnosticQuestions.success).toBe(true)
 
     if (diagnosticQuestions.success) {
-      expect(diagnosticQuestions.questions.length).toBeGreaterThan(0)
+      expect(diagnosticQuestions.questions).toHaveLength(20)
       expect(new Set(diagnosticQuestions.questions.map((question) => question.id)).size).toBe(
         diagnosticQuestions.questions.length,
       )

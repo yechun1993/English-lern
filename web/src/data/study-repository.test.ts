@@ -22,6 +22,7 @@ describe('LocalStudyRepository', () => {
       questionId: 'grammar-001',
       answer: 'is',
       correct: true,
+      guessed: false,
       createdAt: '2026-09-01T00:00:00.000Z',
     })
     repository.saveDraft({
@@ -50,6 +51,7 @@ describe('LocalStudyRepository', () => {
       questionId: 'grammar-001',
       answer: 'is',
       correct: true,
+      guessed: false,
       createdAt: '2026-09-01T00:00:00.000Z',
     })
 
@@ -58,5 +60,22 @@ describe('LocalStudyRepository', () => {
 
     expect(repository.getDashboard().pendingCount).toBe(0)
     expect(repository.getMastery('grammar-001')).toMatchObject({ status: 'learning' })
+  })
+
+  it('treats a guessed correct answer as needing review', () => {
+    const repository = new LocalStudyRepository(new MemoryStorage())
+    repository.recordAttempt({
+      id: 'attempt-guessed-001',
+      questionId: 'grammar-001',
+      answer: 'is',
+      correct: true,
+      guessed: true,
+      createdAt: '2026-09-01T00:00:00.000Z',
+    })
+
+    expect(repository.getMastery('grammar-001')).toMatchObject({
+      status: 'learning',
+      correctReviewDays: [],
+    })
   })
 })
