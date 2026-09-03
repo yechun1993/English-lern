@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react'
-import { diagnosticQuestions } from './content/manifest'
+import { diagnosticQuestions, foundationTopicBanks } from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
+import { TopicHub, type TopicBank } from './features/TopicHub'
+import type { Question } from './domain/question'
 import './App.css'
 
 const todayTasks = [
@@ -11,7 +13,8 @@ const todayTasks = [
 ]
 
 function App() {
-  const [screen, setScreen] = useState<'dashboard' | 'diagnostic'>('dashboard')
+  const [screen, setScreen] = useState<'dashboard' | 'topics' | 'practice'>('dashboard')
+  const [practiceTarget, setPracticeTarget] = useState<{ title: string; questions: Question[] } | null>(null)
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
 
   if (!diagnosticQuestions.success) {
@@ -23,22 +26,39 @@ function App() {
     )
   }
 
-  if (screen === 'diagnostic') {
+  function startPractice(title: string, questions: Question[]) {
+    setPracticeTarget({ title, questions })
+    setScreen('practice')
+  }
+
+  function recordAnswer(question: Question, answer: string, correct: boolean, guessed: boolean) {
+    repository.recordAttempt({
+      id: `attempt-${question.id}-${Date.now()}`,
+      questionId: question.id,
+      answer,
+      correct,
+      guessed,
+      createdAt: new Date().toISOString(),
+    })
+  }
+
+  if (screen === 'practice' && practiceTarget) {
     return (
       <PracticeSession
-        onAnswer={(question, answer, correct, guessed) => {
-          repository.recordAttempt({
-            id: `attempt-${question.id}-${Date.now()}`,
-            questionId: question.id,
-            answer,
-            correct,
-            guessed,
-            createdAt: new Date().toISOString(),
-          })
-        }}
-        onComplete={() => setScreen('dashboard')}
-        questions={diagnosticQuestions.questions}
-        title="诊断练习"
+        onAnswer={recordAnswer}
+        onComplete={() => setScreen('topics')}
+        questions={practiceTarget.questions}
+        title={practiceTarget.title}
+      />
+    )
+  }
+
+  if (screen === 'topics') {
+    return (
+      <TopicHub
+        banks={foundationTopicBanks}
+        onBack={() => setScreen('dashboard')}
+        onStart={(bank: TopicBank) => startPractice(bank.topic, bank.questions)}
       />
     )
   }
@@ -51,9 +71,12 @@ function App() {
           <h1>今日学习</h1>
           <p className="subtitle">按题型逐点突破，先稳定拿到及格分。</p>
         </div>
-        <div className="exam-countdown" aria-label="考试倒计时">
-          <span>距离 10 月 17 日</span>
-          <strong>46 天</strong>
+        <div className="header-actions">
+          <button className="topic-entry" onClick={() => setScreen('topics')} type="button">专项突破</button>
+          <div className="exam-countdown" aria-label="考试倒计时">
+            <span>距离 10 月 17 日</span>
+            <strong>44 天</strong>
+          </div>
         </div>
       </header>
 
@@ -80,7 +103,10 @@ function App() {
               <span className="task-index">0{index + 1}</span>
               <h3>{task.title}</h3>
               <p>{task.detail}</p>
-              <button type="button" onClick={index === 0 ? () => setScreen('diagnostic') : undefined}>
+              <button
+                type="button"
+                onClick={index === 0 ? () => startPractice('诊断练习', diagnosticQuestions.questions) : undefined}
+              >
                 {task.action}
               </button>
             </article>

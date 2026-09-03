@@ -60,6 +60,23 @@ h2 {
   text-align: right;
 }
 
+.header-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.topic-entry {
+  width: auto;
+  padding: 11px 13px;
+  background: #1e293b;
+  font-size: 0.86rem;
+}
+
+.topic-entry:hover {
+  background: #0f172a;
+}
+
 .exam-countdown strong {
   margin-top: 2px;
   color: #0f766e;
@@ -205,5 +222,10 @@ button:hover {
 
   .task-card {
     min-height: auto;
+  }
+
+  .header-actions {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
