@@ -129,6 +129,36 @@ After the activity, a local volunteer gave a short talk [11] recycling. She expl
 
 [14] one clean-up could not solve every problem, it changed the way they looked at daily choices. Many students felt [15] of their work and agreed [16] single-use products. They knew that using [17] plastic would matter [18] they continued the habit. The event showed that environmental protection begins [19] ordinary [20].`,
   },
+  {
+    id: 'cloze-passage-08',
+    type: 'cloze',
+    title: '城市生活：从陌生到熟悉',
+    body: `Zhao Ming moved to a new city for work last year. At first, he felt [1] because he did not know anyone. The streets were busy, and even simple tasks, such as finding a market, seemed [2].
+
+Instead of staying at home every weekend, Zhao decided [3] the city on foot. He bought a small map and visited one neighborhood [4] another. He soon found a library near his apartment, [5] he could read and join free activities.
+
+One Saturday, he saw a notice about a local walking group. Although he was [6] about meeting strangers, he went there. The group members were friendly and asked him [7] their next walk. During the walk, they talked about food, transport, and places [8] visiting.
+
+Zhao learned that city life becomes easier when people pay attention [9] their surroundings. He began to remember bus routes and to greet shop owners. He also discovered that a city offers more choices [10] a person is willing to try something new.
+
+After several months, Zhao no longer felt like a visitor. He had made friends and become more [11]. He knew [12] he could ask for help when needed. [13] his work was sometimes tiring, he still made time [14] the people around him. His new home did not become familiar [15]; it became familiar through many small experiences. Zhao now thinks that moving to a city is not only about finding a job. It is also a chance to learn how to live [16], listen to others, and build [17]. He tells new coworkers that they should not be afraid [18] take the first step. A smile or a short conversation can [19] a big difference. For Zhao, the city finally felt like [20].`,
+  },
+  {
+    id: 'cloze-passage-09',
+    type: 'cloze',
+    title: '时间管理：把重要的事排在前面',
+    body: `Chen Yu worked part-time while taking classes. At first, she tried to remember every task in her head. This made her feel [1], because she often forgot [2] a report or reply to an email.
+
+Her teacher suggested that she make a weekly [3]. Chen Yu wrote down class times, work hours, and family plans. Then she divided large tasks [4] smaller steps. She put the most important task at the [5] of each day.
+
+At first, following the plan was not easy. Friends sometimes invited her out, and unexpected work appeared. [6], she learned to leave some empty time in her schedule. If a task took longer [7] expected, she could move a smaller task to the next day.
+
+Chen Yu also stopped trying to do several things at once. When she studied, she turned [8] messages for thirty minutes. This helped her finish work more [9] and make fewer mistakes. She took a short break [10] completing each important step.
+
+After a month, Chen Yu had more control over her time. She was [11] worried at night, because she knew what to do the next morning. She understood that a plan does not have to be [12]. It only needs to be [13] enough to guide action.
+
+Her classmates noticed the change and asked for her advice. Chen Yu told them to begin [14] one small habit, such as writing tomorrow's list before bed. She also said they should be kind to [15] when a plan failed. Good time management means choosing what matters most, not filling every minute [16] work. People can make progress [17] they review their plans and change them when necessary. Chen Yu still has busy days, but she now feels [18] of her choices. Her rule is simple: do one important thing, then do the next. This rule gives her a sense of [19] and helps her use each day more [20].`,
+  },
 ]
 
 export const clozeQuestions = [
@@ -285,5 +315,49 @@ export const clozeQuestions = [
     ['条件连词', ['if', 'though', 'because'], 'if', '持续保持习惯是产生影响的条件。', 'though 表让步，不能表达条件。'],
     ['介词搭配', ['with', 'without', 'beside'], 'with', 'begin with ordinary action 表示从日常行动开始。', 'without 与行动的含义相反。'],
     ['名词搭配', ['action', 'weather', 'information'], 'action', 'ordinary action 表示日常行动。', 'weather/information 不符合环保主题。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-08', 141, [
+    ['形容词词义', ['lonely', 'ready', 'busy'], 'lonely', '初到新城不认识任何人，会感到孤单。', 'ready/busy 不表达缺少社交联系。'],
+    ['形容词词义', ['difficult', 'cheap', 'clean'], 'difficult', '找市场等简单事看起来困难，符合陌生环境语境。', 'cheap/clean 不说明做事难度。'],
+    ['非谓语', ['to explore', 'exploring', 'explored'], 'to explore', 'decide to do 表示决定做某事。', 'decide 后通常接不定式。'],
+    ['介词搭配', ['after', 'before', 'under'], 'after', 'one ... after another 表示一个接一个。', 'before/under 不构成该固定表达。'],
+    ['关系副词', ['where', 'when', 'why'], 'where', 'library 是地点，后面表示在图书馆能做什么，用 where。', 'when/why 不指代地点。'],
+    ['形容词搭配', ['nervous', 'proud', 'famous'], 'nervous', 'be nervous about 表示对见陌生人感到紧张。', 'proud/famous 不合初次见面的心理。'],
+    ['非谓语', ['to join', 'joining', 'joined'], 'to join', 'ask somebody to do 表示要求或邀请某人做事。', 'ask 后接人时用不定式。'],
+    ['形容词搭配', ['worth', 'ready', 'able'], 'worth', 'places worth visiting 表示值得游览的地方。', 'ready/able 后不能直接接 visiting。'],
+    ['介词搭配', ['to', 'for', 'with'], 'to', 'pay attention to 表示注意、留意。', 'pay attention 后固定接 to。'],
+    ['条件连词', ['if', 'though', 'because'], 'if', '愿意尝试是获得更多选择的条件。', 'though 表让步，不表达条件。'],
+    ['形容词比较级', ['confident', 'silent', 'angry'], 'confident', '交到朋友后会更自信，用 become more confident。', 'silent/angry 不符合积极变化。'],
+    ['宾语从句', ['that', 'what', 'whether'], 'that', 'knew that 后接完整的陈述内容。', 'what 在从句中需充当成分。'],
+    ['让步连词', ['Although', 'Because', 'Unless'], 'Although', '工作累但仍留出时间社交，前后为让步。', 'because/unless 不表达转折。'],
+    ['介词搭配', ['for', 'with', 'at'], 'for', 'make time for somebody 表示为某人留出时间。', 'make time 后固定用 for。'],
+    ['副词用法', ['quickly', 'quietly', 'nearly'], 'quickly', '后文说靠许多小经历才熟悉，说明不是很快熟悉。', 'quietly/nearly 不说明熟悉的速度。'],
+    ['副词用法', ['well', 'early', 'away'], 'well', 'live well 表示好好生活。', 'early/away 不能修饰 live 表示生活状态。'],
+    ['名词词义', ['relationships', 'tickets', 'messages'], 'relationships', '与人交流并建立关系，用 build relationships。', 'tickets/messages 不可被建立。'],
+    ['介词搭配', ['to', 'from', 'with'], 'to', 'be afraid to do 表示害怕做某事。', 'afraid 后接不定式表达不敢行动。'],
+    ['动词搭配', ['make', 'take', 'have'], 'make', 'make a difference 表示产生影响。', 'take/have 不构成该固定搭配。'],
+    ['名词词义', ['home', 'school', 'office'], 'home', '城市最终让他有家的感觉，用 feel like home。', 'school/office 不符合全文情感落点。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-09', 161, [
+    ['形容词词义', ['stressed', 'quiet', 'free'], 'stressed', '记不住任务会让人感到压力大。', 'quiet/free 与遗忘任务的后果不符。'],
+    ['非谓语', ['to finish', 'finishing', 'finished'], 'to finish', 'forget to do 表示忘记去做某事。', 'forget doing 表示忘记做过某事，含义不同。'],
+    ['名词词义', ['schedule', 'ticket', 'message'], 'schedule', 'weekly schedule 表示每周日程表。', 'ticket/message 不能安排任务。'],
+    ['介词搭配', ['into', 'from', 'with'], 'into', 'divide ... into smaller steps 表示拆分成小步骤。', 'divide from 不是该搭配。'],
+    ['名词搭配', ['beginning', 'middle', 'end'], 'beginning', '把重要任务放在一天开始时完成，符合时间管理策略。', 'middle/end 不体现优先处理。'],
+    ['逻辑连接', ['However', 'Therefore', 'Besides'], 'However', '计划会被意外打乱，但她学会留空档，前后转折。', 'therefore/besides 不表示转折。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'longer than expected 表示比预期更久。', '比较级后用 than。'],
+    ['动词短语', ['off', 'up', 'on'], 'off', 'turn off messages 表示关闭消息提醒。', 'turn on 与减少干扰的目的相反。'],
+    ['副词用法', ['carefully', 'suddenly', 'nearly'], 'carefully', '专心后能更仔细完成工作并减少错误。', 'suddenly/nearly 不说明完成方式。'],
+    ['介词搭配', ['after', 'before', 'during'], 'after', '完成一个重要步骤后休息，用 after completing。', 'before 会变成未完成就休息。'],
+    ['比较级', ['less', 'more', 'little'], 'less', '有计划后夜间担忧更少，用 less worried。', 'little 不能修饰 worried。'],
+    ['形容词词义', ['perfect', 'expensive', 'late'], 'perfect', '计划不必完美，强调可执行性。', 'expensive/late 不合计划质量语境。'],
+    ['形容词词义', ['clear', 'empty', 'private'], 'clear', '清晰的计划才能指导行动。', 'empty/private 不说明计划的作用。'],
+    ['介词搭配', ['with', 'from', 'under'], 'with', 'begin with one small habit 表示从一个小习惯开始。', 'from/under 不构成该搭配。'],
+    ['反身代词', ['themselves', 'herself', 'ourselves'], 'themselves', 'they 指同学们，反身代词用 themselves。', 'herself 与复数 they 不一致。'],
+    ['介词搭配', ['with', 'for', 'at'], 'with', 'fill every minute with work 表示让每一分钟都充满工作。', 'for/at 不合搭配。'],
+    ['条件连词', ['if', 'though', 'because'], 'if', '复盘并调整是进步的条件。', 'though 表让步，不能表达条件。'],
+    ['形容词搭配', ['sure', 'afraid', 'tired'], 'sure', 'feel sure of one\'s choices 表示对选择有把握。', 'afraid/tired 不符合积极变化。'],
+    ['名词搭配', ['control', 'weather', 'silence'], 'control', 'a sense of control 表示掌控感。', 'weather/silence 不合时间管理语境。'],
+    ['副词用法', ['wisely', 'slowly', 'quietly'], 'wisely', 'use each day wisely 表示明智地利用每一天。', 'slowly/quietly 不表示有效利用时间。'],
   ]),
 ]
