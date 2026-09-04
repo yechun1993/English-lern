@@ -101,6 +101,34 @@ She learned that every job has difficult parts. [11] a job may look interesting,
 
 During the internship, she [15] learned what she enjoyed. She liked working with people and finding practical answers. She also discovered that she still had much [16]. At the end, Mei did not believe there was one perfect job. She believed that [17] interest and effort matter. A person can grow [18] he or she keeps learning. Mei felt calmer about her [19], because she had made it after careful thought. That was a good first [20].`,
   },
+  {
+    id: 'cloze-passage-06',
+    type: 'cloze',
+    title: '网络使用：让手机服务于你的生活',
+    body: `Many students use the internet every day. It helps them [1] information, communicate with friends, and finish school tasks. Yet a phone can also take [2] more time than people expect, especially when short videos appear one after another. For this reason, students need a simple plan before they go online.
+
+Li Wen noticed this problem during a busy month. He opened an app to check one message, [3] he stayed online for almost an hour. After that, he decided to keep his phone [4] while studying. He placed it in a drawer and turned off its sound.
+
+At first, Li Wen worried that he might miss something important. To feel safer, he set a [5] for twenty minutes and promised [6] when it rang. [7] the alarm rang, he [8] by how much reading he [9] without looking at a screen. His homework took [10] time than before.
+
+Li Wen did not give up the internet. [11] checking it again and again, he chose a few [12] times for messages and entertainment. [13] this habit was [14] in the first week, it [15] became easier. He slept [16] and talked with his family more often.
+
+His classmates later tried the same idea. They learned that technology can be helpful when people use it [17] a clear purpose. Li Wen now believes that a balanced online life is more important [18] being connected every minute. He also understood [19] self-control makes free time [20].`,
+  },
+  {
+    id: 'cloze-passage-07',
+    type: 'cloze',
+    title: '环境保护：从一次河边清理开始',
+    body: `On the first Saturday of spring, a school [1] a clean-up day near a small river. Teachers invited students [2] and asked them to arrive [3]. At the meeting point, groups [4] gloves, bags, and a map of the area.
+
+Some students picked up plastic bottles. Others sorted paper and cans [5] different bags. Several students also wrote down the kinds of rubbish they found, so the school could discuss how to prevent the same problem later. They soon discovered that wet rubbish was much [6] than they had imagined. One student said [7] he had never noticed so much waste before.
+
+The work continued for two hours. Everyone was tired, but no one left early [8] the river was a place they used every week. The teachers reminded students to work [9] near the water and to help each other. By noon, the riverbank looked cleaner [10] it had in months.
+
+After the activity, a local volunteer gave a short talk [11] recycling. She explained that [12] small habit, such as carrying a bottle, can reduce waste. The students [13] surprised to learn how many plastic cups are thrown away each day.
+
+[14] one clean-up could not solve every problem, it changed the way they looked at daily choices. Many students felt [15] of their work and agreed [16] single-use products. They knew that using [17] plastic would matter [18] they continued the habit. The event showed that environmental protection begins [19] ordinary [20].`,
+  },
 ]
 
 export const clozeQuestions = [
@@ -213,5 +241,49 @@ export const clozeQuestions = [
     ['条件连词', ['if', 'though', 'because'], 'if', '只要持续学习就能成长，表示条件。', 'though 表让步，不表达条件。'],
     ['名词词义', ['future', 'holiday', 'mistake'], 'future', '毕业生对未来感到平静。', 'holiday/mistake 不合职业选择语境。'],
     ['名词搭配', ['choice', 'meeting', 'rule'], 'choice', 'a good first choice 表示一个好的初步选择。', 'meeting/rule 不对应职业决定。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-06', 101, [
+    ['动词词义', ['find', 'hide', 'carry'], 'find', 'find information 表示查找信息。', 'hide/carry 不符合互联网的主要用途。'],
+    ['动词短语', ['up', 'off', 'away'], 'up', 'take up time 表示占用时间。', 'take off 表示起飞或脱下，与时间无关。'],
+    ['逻辑连接', ['but', 'so', 'because'], 'but', '本想看一条消息，却上网近一小时，前后转折。', 'so/because 不表达出乎意料的结果。'],
+    ['形容词用法', ['away', 'ready', 'open'], 'away', 'keep a phone away 表示把手机放到一边。', 'ready/open 不能表示减少干扰。'],
+    ['名词词义', ['timer', 'ticket', 'lesson'], 'timer', 'set a timer 表示设置计时器。', 'ticket/lesson 不能在二十分钟后响。'],
+    ['非谓语', ['to stop', 'stopping', 'stopped'], 'to stop', 'promise to do 表示承诺做某事。', 'promise 后常接不定式。'],
+    ['时间连词', ['When', 'Unless', 'Because'], 'When', '闹钟响时他发现阅读进展，用 When 引导时间状语。', 'unless 表条件，语义不合。'],
+    ['形容词搭配', ['was surprised', 'was quiet', 'was ready'], 'was surprised', 'be surprised by 表示对某事感到惊讶。', 'quiet/ready 不能与 by 构成该语义。'],
+    ['过去完成时', ['had completed', 'has completed', 'will complete'], 'had completed', '闹钟响前已完成阅读，过去的过去用 had completed。', 'has/will 与过去叙事时间不一致。'],
+    ['比较结构', ['less', 'more', 'little'], 'less', '比以前花的时间少，用 less time than。', 'time 不可数，little 不构成此比较。'],
+    ['介词短语', ['Instead of', 'Because of', 'Apart from'], 'Instead of', 'instead of 后接动名词，表示不再反复查看。', 'because of 表原因，不表示替代。'],
+    ['形容词词义', ['fixed', 'empty', 'nervous'], 'fixed', 'fixed times 表示固定的查看时间，有助于管理网络使用。', 'empty/nervous 不修饰 times 的计划性。'],
+    ['让步连词', ['Although', 'Therefore', 'So'], 'Although', '第一周有难度，后来变容易，前后为让步。', 'therefore/so 不能引导让步从句。'],
+    ['形容词词义', ['difficult', 'expensive', 'natural'], 'difficult', '新习惯在开始时有困难，语义最连贯。', 'expensive/natural 不描述执行难度。'],
+    ['副词用法', ['gradually', 'suddenly', 'hardly'], 'gradually', '习惯是逐渐变容易的，用 gradually。', 'suddenly 表突然，不合过程。'],
+    ['比较级', ['better', 'best', 'well'], 'better', 'sleep 后接副词比较级，表示睡得更好。', 'best 需最高级语境。'],
+    ['介词搭配', ['with', 'from', 'under'], 'with', 'use something with a clear purpose 表示带着明确目的使用。', 'from/under 不合搭配。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'more important than 表示比……更重要。', '比较级后用 than。'],
+    ['宾语从句', ['that', 'what', 'whether'], 'that', 'understood that 后接完整陈述从句。', 'what 在从句中需充当成分。'],
+    ['形容词词义', ['meaningful', 'empty', 'dangerous'], 'meaningful', '有自控力能让自由时间更有意义。', 'empty/dangerous 与积极语境不符。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-07', 121, [
+    ['动词词义', ['planned', 'missed', 'sold'], 'planned', '学校策划清理日，用 planned。', 'missed/sold 不符合组织活动的语境。'],
+    ['非谓语', ['to join', 'joining', 'joined'], 'to join', 'invite somebody to do 表示邀请某人做事。', 'invite 后接人时用不定式。'],
+    ['副词用法', ['early', 'quietly', 'slowly'], 'early', '活动集合通常要求早到，用 arrive early。', 'quietly/slowly 不说明到达时间。'],
+    ['被动语态', ['were given', 'gave', 'giving'], 'were given', '手套等物品被发给各组，用被动。', 'groups 不能主动 give 这些物品。'],
+    ['介词搭配', ['into', 'from', 'with'], 'into', 'sort ... into different bags 表示分类放入不同袋子。', 'sort from 不是该搭配。'],
+    ['形容词比较级', ['heavier', 'heavy', 'heavily'], 'heavier', 'much 修饰比较级，wet rubbish 更重。', 'heavy 不能跟在 much 后构成比较。'],
+    ['宾语从句', ['that', 'what', 'whether'], 'that', 'said that 后接完整内容。', 'what 在从句中需要充当成分。'],
+    ['原因连词', ['because', 'although', 'until'], 'because', '没人早退的原因是河流与大家生活有关。', 'although 表让步，不表示原因。'],
+    ['副词用法', ['carefully', 'suddenly', 'nearly'], 'carefully', '水边工作需要小心，用 carefully。', 'suddenly/nearly 不表示做事方式。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'cleaner than it had been 表示比过去更干净。', '比较级后用 than。'],
+    ['介词搭配', ['on', 'at', 'for'], 'on', 'give a talk on recycling 表示作关于回收的演讲。', 'at/for 不表示话题。'],
+    ['冠词', ['a', 'an', 'the'], 'a', 'habit 是单数可数名词，small 以辅音音素开头。', 'an 应用于元音音素开头的词。'],
+    ['被动语态', ['were', 'are', 'have'], 'were', '学生当时感到惊讶，用过去时 be surprised。', 'are 与过去活动时间不一致。'],
+    ['让步连词', ['Although', 'Because', 'Unless'], 'Although', '一次清理无法解决所有问题，但能改变看法，前后让步。', 'because/unless 不表达这种对比。'],
+    ['形容词搭配', ['proud', 'afraid', 'tired'], 'proud', 'feel proud of 表示为自己的工作感到自豪。', 'afraid/tired 与后文积极行动不符。'],
+    ['非谓语', ['to reduce', 'reducing', 'reduced'], 'to reduce', 'agree to do 表示同意做某事。', 'agree 后通常接不定式。'],
+    ['比较级', ['less', 'few', 'little'], 'less', 'plastic 不可数，用 less plastic。', 'few 修饰可数名词复数。'],
+    ['条件连词', ['if', 'though', 'because'], 'if', '持续保持习惯是产生影响的条件。', 'though 表让步，不能表达条件。'],
+    ['介词搭配', ['with', 'without', 'beside'], 'with', 'begin with ordinary action 表示从日常行动开始。', 'without 与行动的含义相反。'],
+    ['名词搭配', ['action', 'weather', 'information'], 'action', 'ordinary action 表示日常行动。', 'weather/information 不符合环保主题。'],
   ]),
 ]

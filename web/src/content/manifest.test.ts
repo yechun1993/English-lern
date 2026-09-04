@@ -18,7 +18,7 @@ describe('题库清单', () => {
     expect(clozeAssignmentIssues).toEqual([])
 
     if (clozeQuestionBank.success) {
-      expect(clozeQuestionBank.questions).toHaveLength(100)
+      expect(clozeQuestionBank.questions).toHaveLength(140)
       const questionsByPassage = new Map<string, typeof clozeQuestionBank.questions>()
       for (const question of clozeQuestionBank.questions) {
         if (!question.passageId) {
@@ -30,7 +30,7 @@ describe('题库清单', () => {
         questionsByPassage.set(question.passageId, questions)
       }
 
-      expect(questionsByPassage.size).toBe(5)
+      expect(questionsByPassage.size).toBe(7)
       for (const questions of questionsByPassage.values()) {
         expect(questions).toHaveLength(20)
         expect(new Set(questions.map((question) => question.blankIndex)).size).toBe(20)
