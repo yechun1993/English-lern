@@ -13,13 +13,28 @@ describe('题库清单', () => {
     }
   })
 
-  it('includes the cloze pilot only when all numbered blanks are valid', () => {
+  it('includes every cloze passage only when it has 20 valid numbered blanks', () => {
     expect(clozeQuestionBank.success).toBe(true)
     expect(clozeAssignmentIssues).toEqual([])
 
     if (clozeQuestionBank.success) {
-      expect(clozeQuestionBank.questions).toHaveLength(20)
-      expect(new Set(clozeQuestionBank.questions.map((question) => question.blankIndex)).size).toBe(20)
+      expect(clozeQuestionBank.questions).toHaveLength(40)
+      const questionsByPassage = new Map<string, typeof clozeQuestionBank.questions>()
+      for (const question of clozeQuestionBank.questions) {
+        if (!question.passageId) {
+          continue
+        }
+
+        const questions = questionsByPassage.get(question.passageId) ?? []
+        questions.push(question)
+        questionsByPassage.set(question.passageId, questions)
+      }
+
+      expect(questionsByPassage.size).toBe(2)
+      for (const questions of questionsByPassage.values()) {
+        expect(questions).toHaveLength(20)
+        expect(new Set(questions.map((question) => question.blankIndex)).size).toBe(20)
+      }
     }
   })
 })

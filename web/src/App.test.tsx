@@ -19,15 +19,18 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: '第 1 / 20 题' })).toBeInTheDocument()
   })
 
-  it('opens the cloze pilot with its complete passage visible', async () => {
+  it('lets the learner choose one cloze passage before starting practice', async () => {
     const user = userEvent.setup()
     render(<App />)
 
-    await user.click(screen.getByRole('button', { name: '开始完形' }))
+    await user.click(screen.getByRole('button', { name: '选择篇章' }))
+    expect(screen.getByRole('heading', { name: '完形填空' })).toBeInTheDocument()
 
-    expect(screen.getByText('完形填空 · 家庭沟通')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '校园学习：学会安排自己的时间 · 20 空' }))
+
+    expect(screen.getByText('完形填空 · 校园学习：学会安排自己的时间')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: '第 1 / 20 题' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('The Chen family used to eat dinner')
+    expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('When Lin began university')
     expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('[1]')
   })
 

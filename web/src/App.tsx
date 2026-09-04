@@ -10,12 +10,13 @@ import {
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
+import { ClozeHub, type ClozeBank } from './features/ClozeHub'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-type Screen = 'dashboard' | 'topics' | 'practice'
+type Screen = 'dashboard' | 'topics' | 'cloze' | 'practice'
 
 interface PracticeTarget {
   title: string
@@ -30,6 +31,18 @@ function App() {
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
   const [dashboard, setDashboard] = useState(() => repository.getDashboard())
   const remainingDays = daysUntilExam(new Date())
+  const clozeBanks = useMemo<ClozeBank[]>(() => {
+    if (!clozeQuestionBank.success || clozeAssignmentIssues.length > 0) {
+      return []
+    }
+
+    return allPassages
+      .filter((passage) => passage.type === 'cloze')
+      .map((passage) => ({
+        passage,
+        questions: clozeQuestionBank.questions.filter((question) => question.passageId === passage.id),
+      }))
+  }, [])
   const dueReviewQuestions = useMemo(() => {
     if (!allQuestions.success) {
       return []
@@ -95,6 +108,16 @@ function App() {
     )
   }
 
+  if (screen === 'cloze') {
+    return (
+      <ClozeHub
+        banks={clozeBanks}
+        onBack={() => setScreen('dashboard')}
+        onStart={(bank) => startPractice(`完形填空 · ${bank.passage.title}`, bank.questions, 'cloze', [bank.passage])}
+      />
+    )
+  }
+
   return (
     <main className="app-shell">
       <header className="site-header">
@@ -139,10 +162,10 @@ function App() {
             },
             {
               title: '完形填空',
-              detail: '家庭沟通 · 1 篇 20 空',
-              action: '开始完形',
+              detail: `${clozeBanks.length} 篇 · ${clozeBanks.reduce((total, bank) => total + bank.questions.length, 0)} 空`,
+              action: '选择篇章',
               onClick: clozeQuestionBank.success && clozeAssignmentIssues.length === 0
-                ? () => startPractice('完形填空 · 家庭沟通', clozeQuestionBank.questions, 'dashboard', allPassages)
+                ? () => setScreen('cloze')
                 : undefined,
             },
             {
