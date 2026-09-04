@@ -130,6 +130,30 @@ Of course, buying second-hand requires care. A buyer should read the description
 
 For many families, second-hand shopping is not about choosing the cheapest thing every time. It is about comparing value. An item that is affordable, useful, and in good condition may be a better choice than a new item that will soon be forgotten.`,
   },
+  {
+    id: 'reading-passage-09',
+    type: 'reading',
+    title: '旅行体验：一张手绘地图带来的发现',
+    body: `During a four-day visit to a coastal city, Mei chose a small family hotel instead of a large chain hotel. On her first evening, the owner gave her a hand-drawn map. It marked a bus stop, several low-cost restaurants, a quiet beach, and a hill where local people watched the sunset. Mei had already saved many online recommendations, but she put the map in her bag as well.
+
+The next morning, Mei planned to visit a famous museum. On the way there, heavy rain began. The museum was still open, but the streets around it were crowded with visitors trying to stay dry. Mei remembered the map and decided to take a bus to a neighborhood farther from the center.
+
+There she found a covered market, a small history room, and a bakery run by two sisters. The sisters told her how the neighborhood had changed after a new bridge was built. Mei spent most of the afternoon there. She did not see the museum that day, but she felt that she understood the city better.
+
+When Mei returned to the hotel, she thanked the owner for the map. The owner smiled and said that visitors often want to see the famous places first. Those places are important, but a city also lives in the streets where local people shop, work, and talk. Mei kept the map after the trip because it reminded her to leave room for unexpected discoveries.`,
+  },
+  {
+    id: 'reading-passage-10',
+    type: 'reading',
+    title: '科学参与：普通人也能帮助观察城市鸟类',
+    body: `Scientists who study birds need information from many places and many seasons. It would be impossible for a small research team to watch every park, lake, and street tree in a large city. For this reason, some projects invite ordinary residents to record the birds they see. This kind of work is often called citizen science.
+
+Participants do not need to know every bird at the beginning. They can use a guide or a phone application to compare colors, size, and sounds. Most projects ask people to record the date, the place, the number of birds, and what the birds were doing. Some volunteers choose the same route each week, which makes comparisons clearer. Others visit areas that have not been reported often. A clear photograph can also help experts check a report later.
+
+One observation may not mean much by itself. However, thousands of observations collected over several years can show useful patterns. For example, they may show that a certain bird arrives earlier in spring or is becoming less common in one area. Researchers can then ask further questions about food, weather, buildings, or water quality.
+
+Citizen science does not replace professional research. Instead, it gives scientists more information and gives residents a closer look at nature around them. People who take part often say that they notice parks and streets differently after they begin watching carefully.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -180,5 +204,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “affordable” most nearly mean in the last paragraph?', ['Not too expensive for a buyer.', 'Very difficult to find.', 'Completely new and unused.', 'Made in another country.'], 'Not too expensive for a buyer.', 'affordable 表示价格在购买者能够负担的范围内。', '不要把 affordable 误解为“一定最便宜”。', 'foundation'],
     ['推断判断', 'Why does the passage advise buyers to check an item carefully?', ['Second-hand items can vary in condition and need personal judgment.', 'Online platforms never show descriptions.', 'New items are always of low quality.', 'Second-hand goods cannot be useful.'], 'Second-hand items can vary in condition and need personal judgment.', '文章强调看说明、提问、检查状况，并说明评价不是完全保证。', '不要把谨慎购买理解为否定二手物品的价值。', 'standard'],
     ['主旨概括', 'Which statement best summarizes the passage?', ['Second-hand shopping can offer value and reduce waste when people buy carefully.', 'People should always buy the cheapest product.', 'Only books should be bought second-hand.', 'Making new products never uses energy.'], 'Second-hand shopping can offer value and reduce waste when people buy carefully.', '文章从价格、环保和谨慎检查三方面说明理性购买二手物品的价值。', '不要遗漏“谨慎检查”这一重要条件。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-09', 33, [
+    ['细节定位', 'What was marked on the hotel owner’s map?', ['A new bridge and a large museum only.', 'A bus stop, restaurants, a beach, and a hill.', 'Every hotel in the coastal city.', 'The exact route to Mei’s home.'], 'A bus stop, restaurants, a beach, and a hill.', '第一段列出手绘地图标注的地点，包括车站、餐馆、海滩和山丘。', '不要把后来出现的市场和历史室误认为地图最初标注内容。', 'foundation'],
+    ['词义猜测', 'What does “recommendations” most nearly mean in the passage?', ['Suggestions about what to do or see.', 'Tickets for public transport.', 'Rules for hotel workers.', 'Maps drawn by local people.'], 'Suggestions about what to do or see.', 'online recommendations 指网上给出的游览建议。', '不要把建议本身误解成门票或地图。', 'foundation'],
+    ['推断判断', 'Why did Mei feel that she understood the city better after visiting the neighborhood?', ['She bought more expensive food there.', 'She learned about local life and changes from residents.', 'The neighborhood had the city’s largest museum.', 'She avoided speaking to local people.'], 'She learned about local life and changes from residents.', '两位店主讲述了桥建成后社区的变化，体现了当地人的生活视角。', '文章没有说她花钱更多或参观了最大博物馆。', 'standard'],
+    ['主旨概括', 'What is the main message of the passage?', ['Famous museums should be avoided in bad weather.', 'Travel can become richer when people remain open to local and unexpected experiences.', 'Online maps are always less useful than paper maps.', 'Family hotels are cheaper than all chain hotels.'], 'Travel can become richer when people remain open to local and unexpected experiences.', '文章通过手绘地图和临时改变路线，强调旅行中保持开放能发现更多当地生活。', '不要把“手绘地图”这一工具误当成全文唯一结论。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-10', 37, [
+    ['细节定位', 'What information do most bird projects ask participants to record?', ['The price of the phone application.', 'The date, place, number, and bird activity.', 'Only the names of local parks.', 'The weather in other countries.'], 'The date, place, number, and bird activity.', '第二段明确列出日期、地点、鸟的数量和活动情况。', '不要遗漏“鸟在做什么”这一记录内容。', 'foundation'],
+    ['词义猜测', 'What does “patterns” most nearly mean in the third paragraph?', ['Repeated changes or regular trends.', 'Pictures of different birds.', 'Rules for using a park.', 'Personal opinions about science.'], 'Repeated changes or regular trends.', '多年大量观测可显示鸟类到达时间或数量变化的规律。', '不要把 patterns 仅理解为衣服图案。', 'foundation'],
+    ['推断判断', 'Why are thousands of observations more useful than one observation?', ['They can reveal changes that are hard to see from a single report.', 'They make professional research unnecessary.', 'They guarantee every bird is correctly named.', 'They stop birds from moving to new places.'], 'They can reveal changes that are hard to see from a single report.', '第三段说明长期大量数据能够呈现季节和区域变化的模式。', '文章强调 citizen science 补充而非取代专业研究。', 'standard'],
+    ['主旨概括', 'What is the main idea of the passage?', ['Only scientists can observe birds correctly.', 'Citizen science lets residents contribute useful bird observations while learning about nature.', 'Phone applications are more important than parks.', 'Birds should be kept away from cities.'], 'Citizen science lets residents contribute useful bird observations while learning about nature.', '全文说明居民记录鸟类既能为研究提供信息，也能增进对身边自然的观察。', '不要忽略普通居民参与和科学家复核之间的合作关系。', 'standard'],
   ]),
 ]
