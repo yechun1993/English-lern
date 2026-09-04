@@ -202,6 +202,30 @@ Small goals also help people notice progress. A calendar, a phone reminder, or a
 
 Exercise does not have to look the same for everyone. Some people enjoy dancing, others prefer walking with a friend, and some like working in a garden. The best activity is often the one that fits a person’s life well enough to become a regular habit.`,
   },
+  {
+    id: 'reading-passage-15',
+    type: 'reading',
+    title: '兼职工作：书店里学到的沟通课',
+    body: `During his first summer at university, Bo took a part-time job in a neighborhood bookstore. He expected to spend most of his time putting books on shelves and checking prices. On his first day, the manager gave him a simple rule: if a customer asks for help, listen carefully before you suggest a book.
+
+At first, Bo thought this rule was obvious. Then a father came in looking for a book for his twelve-year-old daughter. Bo pointed to a popular novel, but the father explained that his daughter had recently started learning English and wanted something shorter. Bo asked a few more questions and found a small bilingual story collection instead. The father returned a week later to say that his daughter had finished two stories.
+
+After that, Bo began to notice how different customers’ needs could be. Some wanted a quiet place to study. Others needed a simple gift or a book about a new hobby. Bo kept a small notebook with comments about books and the questions people asked. This helped him remember useful details when similar customers visited.
+
+By the end of the summer, Bo still did ordinary tasks, but he saw them differently. Arranging books made it easier for people to find what they needed. Talking with customers taught him that good service was not about giving the fastest answer. It was about understanding the question behind the question.`,
+  },
+  {
+    id: 'reading-passage-16',
+    type: 'reading',
+    title: '科技服务：让社区志愿帮助更容易找到',
+    body: `In many neighborhoods, people are willing to help others, but they may not know who needs help or what kind of help is useful. A simple online service platform can make this connection easier. Residents can post a request, such as collecting medicine, explaining a form, or visiting an older neighbor for a short conversation.
+
+The platform does not choose volunteers by chance. It asks volunteers to list their available time, general location, and skills. A person who can drive may be matched with someone who needs transport. A volunteer who speaks two languages may help a new resident understand local information. The goal is to make each request clear and practical.
+
+Safety and communication are important parts of the process. Before meeting, both sides can see basic information about the task and agree on a time. Clear requests also help volunteers know what they can reasonably promise. This reduces misunderstandings and makes it easier to prepare. Afterward, they can confirm that the task is complete. Some platforms also provide a contact person from a community organization if a problem appears.
+
+Technology alone cannot create kindness. It can, however, reduce the time people spend searching for the right person or repeating the same request. When a platform is used carefully, it can support the face-to-face help that makes a neighborhood feel connected.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -288,5 +312,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “realistic” most nearly mean in the first paragraph?', ['Possible to do in real life.', 'Very expensive.', 'Related to a hospital.', 'Harder than other goals.'], 'Possible to do in real life.', 'realistic goal 指符合个人时间和生活情况、实际可完成的目标。', '不要把 realistic 误解为目标越难越好。', 'foundation'],
     ['推断判断', 'Why might a calendar or reminder help a person exercise regularly?', ['It can make people notice their progress.', 'It makes every activity more difficult.', 'It replaces the need for any movement.', 'It guarantees no day will be missed.'], 'It can make people notice their progress.', '第三段说明记录能显示一周中已完成的活动，使人更容易坚持。', '记录有帮助，但不保证从不错过一天。', 'standard'],
     ['主旨概括', 'What is the main message of the passage?', ['The best exercise plan is always a gym plan.', 'Small, suitable activities are more likely to become lasting exercise habits.', 'People should exercise in exactly the same way.', 'Missing one day means a plan has failed.'], 'Small, suitable activities are more likely to become lasting exercise habits.', '全文强调从小而现实的行动开始，并选择适合自身生活的运动方式。', '不要把一次遗漏视为整个计划失败。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-15', 57, [
+    ['细节定位', 'What did Bo finally suggest for the father’s daughter?', ['A popular long novel.', 'A small bilingual story collection.', 'A book about prices.', 'A quiet place to study.'], 'A small bilingual story collection.', '第二段说明博在进一步了解需求后推荐了双语短故事集。', '不要选择他最初指向、但不符合女孩英语水平的长小说。', 'foundation'],
+    ['词义猜测', 'What does “bilingual” most nearly mean in the passage?', ['Written in two languages.', 'Made for two customers.', 'About traveling abroad.', 'Very difficult to read.'], 'Written in two languages.', 'bilingual story collection 指包含两种语言的故事集，适合刚开始学英语的女孩。', '不要把 bilingual 误解为双倍难度。', 'foundation'],
+    ['推断判断', 'Why did Bo keep a small notebook?', ['To record his working hours only.', 'To remember book details and customer needs for future help.', 'To write stories for the bookstore.', 'To avoid talking with customers.'], 'To remember book details and customer needs for future help.', '第三段说明笔记帮助他在遇到相似顾客时记起有用信息。', '不要把记录顾客需求理解成逃避交流。', 'standard'],
+    ['主旨概括', 'What lesson did Bo learn from the job?', ['Fast answers are always the best service.', 'Good service begins with understanding what a customer really needs.', 'Bookstores should only sell bilingual books.', 'Part-time jobs are only about arranging shelves.'], 'Good service begins with understanding what a customer really needs.', '末段总结：服务不是最快给答案，而是理解问题背后的真正需求。', '不要把摆书这一日常任务当作全文唯一意义。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-16', 61, [
+    ['细节定位', 'What information does the platform ask volunteers to list?', ['Their favorite books and food.', 'Available time, general location, and skills.', 'Their full work history.', 'The names of every neighbor.'], 'Available time, general location, and skills.', '第二段明确列出平台所需的三类信息。', '不要把任务请求内容误当成志愿者个人资料。', 'foundation'],
+    ['词义猜测', 'What does “matched” most nearly mean in the passage?', ['Paired with a suitable person.', 'Asked to wait for a long time.', 'Given money for a task.', 'Moved to another neighborhood.'], 'Paired with a suitable person.', '平台根据时间、地点和技能把志愿者与合适需求配对。', '不要把 match 只理解为比赛。', 'foundation'],
+    ['推断判断', 'Why does the platform let both sides agree on a time before meeting?', ['To make the task clearer and safer.', 'To replace all face-to-face help.', 'To stop volunteers from using skills.', 'To make requests less practical.'], 'To make the task clearer and safer.', '第三段强调见面前了解任务并约定时间，是安全和沟通的一部分。', '文章没有说平台取代线下帮助。', 'standard'],
+    ['主旨概括', 'What is the main idea of the passage?', ['Technology can support community help by connecting suitable people and tasks.', 'Online platforms can create kindness without people.', 'Only drivers can volunteer in a neighborhood.', 'Community organizations should stop using technology.'], 'Technology can support community help by connecting suitable people and tasks.', '全文说明技术不能替代善意，但可提高志愿服务的连接和组织效率。', '不要把技术的辅助作用夸大成它能独自创造善意。', 'standard'],
   ]),
 ]

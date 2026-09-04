@@ -4,8 +4,8 @@ import { readingPassages, readingQuestions } from './reading-bank'
 
 describe('阅读理解练习内容', () => {
   it('keeps each article linked to four four-choice questions', () => {
-    expect(readingPassages).toHaveLength(14)
-    expect(readingQuestions).toHaveLength(56)
+    expect(readingPassages).toHaveLength(16)
+    expect(readingQuestions).toHaveLength(64)
     expect(readingQuestions.every((question) => question.options.length === 4)).toBe(true)
     expect(validatePassageAssignments(readingQuestions, readingPassages).issues).toEqual([])
 
@@ -16,7 +16,7 @@ describe('阅读理解练习内容', () => {
       questionsByPassage.set(question.passageId ?? '', questions)
     }
 
-    expect(questionsByPassage.size).toBe(14)
+    expect(questionsByPassage.size).toBe(16)
     expect([...questionsByPassage.values()].every((questions) => questions.length === 4)).toBe(true)
   })
 })
