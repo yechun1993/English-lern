@@ -93,6 +93,27 @@ progress::-moz-progress-bar {
   color: #115e59;
 }
 
+.reading-passage {
+  margin: 0 0 22px;
+  padding: 20px;
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  background: #eff6ff;
+}
+
+.reading-passage h2 {
+  margin-bottom: 12px;
+  color: #1e3a8a;
+  font-size: 1.05rem;
+}
+
+.reading-passage p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
 .option-list {
   display: grid;
   gap: 12px;

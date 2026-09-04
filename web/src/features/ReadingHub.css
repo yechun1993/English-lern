@@ -1,0 +1,69 @@
+.reading-shell {
+  width: min(100% - 32px, 900px);
+  margin: 0 auto;
+  padding: 42px 0 72px;
+}
+
+.reading-header {
+  max-width: 620px;
+  margin-bottom: 30px;
+}
+
+.reading-header h1 {
+  margin-bottom: 12px;
+}
+
+.reading-header p:last-child {
+  margin-bottom: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.reading-card {
+  display: grid;
+  min-height: 154px;
+  padding: 20px;
+  border: 1px solid #dbe4ef;
+  border-radius: 15px;
+  background: #fff;
+  color: #1e293b;
+  text-align: left;
+}
+
+.reading-card:hover {
+  background: #eff6ff;
+}
+
+.reading-card span {
+  color: #2563eb;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.reading-card strong {
+  align-self: center;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.reading-card small {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .reading-shell {
+    width: min(100% - 24px, 900px);
+    padding-top: 28px;
+  }
+
+  .reading-grid {
+    grid-template-columns: 1fr;
+  }
+}

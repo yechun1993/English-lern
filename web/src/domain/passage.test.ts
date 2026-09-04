@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Question } from './question'
-import { PassageSchema, validateClozeAssignments } from './passage'
+import { PassageSchema, validateClozeAssignments, validatePassageAssignments } from './passage'
 
 const withinWordLimitBody = `${Array.from({ length: 220 }, () => 'word').join(' ')} [1]`
 
@@ -26,6 +26,27 @@ const clozeQuestion: Question = {
   blankIndex: 1,
 }
 
+const readingPassage = {
+  id: 'reading-passage-01',
+  type: 'reading',
+  title: '城市图书馆',
+  body: Array.from({ length: 220 }, () => 'word').join(' '),
+}
+
+const readingQuestion: Question = {
+  id: 'reading-001',
+  type: 'reading',
+  topic: '细节定位',
+  difficulty: 'foundation',
+  stem: 'What is the passage mainly about?',
+  options: ['A library', 'A school', 'A market', 'A hospital'],
+  answer: 'A library',
+  explanation: '题目用于验证阅读题和文章的关联。',
+  misconception: '不要把阅读题关联到完形文章。',
+  version: 1,
+  passageId: 'reading-passage-01',
+}
+
 describe('PassageSchema', () => {
   it('accepts a cloze passage with numbered blank markers', () => {
     expect(PassageSchema.safeParse(clozePassage).success).toBe(true)
@@ -40,6 +61,11 @@ describe('PassageSchema', () => {
 
     expect(PassageSchema.safeParse({ ...clozePassage, body: tooLongBody }).success).toBe(false)
   })
+
+  it('requires reading passages to meet the same word range without blank markers', () => {
+    expect(PassageSchema.safeParse(readingPassage).success).toBe(true)
+    expect(PassageSchema.safeParse({ ...readingPassage, body: 'too short' }).success).toBe(false)
+  })
 })
 
 describe('validateClozeAssignments', () => {
@@ -48,5 +74,14 @@ describe('validateClozeAssignments', () => {
     expect(validateClozeAssignments([
       { ...clozeQuestion, blankIndex: 2 },
     ], [clozePassage]).issues).toContain('完形题 cloze-001 引用的第 2 空不存在。')
+  })
+})
+
+describe('validatePassageAssignments', () => {
+  it('requires each reading item to point to an existing reading passage', () => {
+    expect(validatePassageAssignments([readingQuestion], [readingPassage]).issues).toEqual([])
+    expect(validatePassageAssignments([
+      { ...readingQuestion, passageId: 'cloze-passage-01' },
+    ], [clozePassage, readingPassage]).issues).toContain('阅读题 reading-001 引用的文章类型不匹配。')
   })
 })

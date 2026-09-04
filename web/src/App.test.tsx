@@ -34,6 +34,20 @@ describe('App', () => {
     expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('[1]')
   })
 
+  it('lets the learner choose one reading article before starting practice', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '选择阅读' }))
+    expect(screen.getByRole('heading', { name: '阅读理解' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '社区图书馆：从借书处到共享空间 · 4 题' }))
+
+    expect(screen.getByText('阅读理解 · 社区图书馆：从借书处到共享空间')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '第 1 / 4 题' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: '阅读文章' })).toHaveTextContent('East Street Library')
+  })
+
   it('opens a 20-question grammar micro-topic from the topic hub', async () => {
     const user = userEvent.setup()
     render(<App />)

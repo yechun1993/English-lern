@@ -17,6 +17,13 @@ const question: Question = {
   version: 1,
 }
 
+const readingQuestion: Question = {
+  ...question,
+  id: 'reading-001',
+  type: 'reading',
+  passageId: 'reading-passage-01',
+}
+
 describe('PracticeSession', () => {
   it('waits for the learner to check the answer before showing feedback', async () => {
     const user = userEvent.setup()
@@ -49,5 +56,25 @@ describe('PracticeSession', () => {
 
     expect(screen.getByText('答案正确，但已记为需复习')).toBeInTheDocument()
     expect(onAnswer).toHaveBeenCalledWith(question, 'is', true, true)
+  })
+
+  it('shows the full reading article while the learner answers a reading question', () => {
+    render(
+      <PracticeSession
+        title="阅读理解 · 图书馆"
+        questions={[readingQuestion]}
+        passages={[
+          {
+            id: 'reading-passage-01',
+            type: 'reading',
+            title: '图书馆',
+            body: 'A short reading passage for the learner.',
+          },
+        ]}
+        onComplete={vi.fn()}
+      />,
+    )
+
+    expect(screen.getByRole('region', { name: '阅读文章' })).toHaveTextContent('A short reading passage')
   })
 })

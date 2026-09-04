@@ -23,7 +23,7 @@ export const PassageSchema = z
       })
     }
 
-    if (passage.type === 'cloze' && (countEnglishWords(passage.body) < 220 || countEnglishWords(passage.body) > 300)) {
+    if (countEnglishWords(passage.body) < 220 || countEnglishWords(passage.body) > 300) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['body'],
@@ -38,6 +38,8 @@ export interface ClozeAssignmentValidation {
   issues: string[]
 }
 
+export type PassageAssignmentValidation = ClozeAssignmentValidation
+
 function getBlankIndexes(body: string): Set<number> {
   return new Set(
     [...body.matchAll(/\[(\d{1,2})\]/g)]
@@ -45,10 +47,10 @@ function getBlankIndexes(body: string): Set<number> {
   )
 }
 
-export function validateClozeAssignments(
+export function validatePassageAssignments(
   questions: Question[],
   rawPassages: unknown[],
-): ClozeAssignmentValidation {
+): PassageAssignmentValidation {
   const issues: string[] = []
   const passagesById = new Map<string, Passage>()
 
@@ -63,20 +65,33 @@ export function validateClozeAssignments(
   }
 
   for (const question of questions) {
-    if (question.type !== 'cloze') {
+    if (question.type !== 'cloze' && question.type !== 'reading') {
       continue
     }
 
     const passage = question.passageId ? passagesById.get(question.passageId) : undefined
+    const questionLabel = question.type === 'cloze' ? '完形题' : '阅读题'
     if (!passage) {
-      issues.push(`完形题 ${question.id} 引用的文章不存在。`)
+      issues.push(`${questionLabel} ${question.id} 引用的文章不存在。`)
       continue
     }
 
-    if (!question.blankIndex || !getBlankIndexes(passage.body).has(question.blankIndex)) {
+    if (passage.type !== question.type) {
+      issues.push(`${questionLabel} ${question.id} 引用的文章类型不匹配。`)
+      continue
+    }
+
+    if (question.type === 'cloze' && (!question.blankIndex || !getBlankIndexes(passage.body).has(question.blankIndex))) {
       issues.push(`完形题 ${question.id} 引用的第 ${question.blankIndex} 空不存在。`)
     }
   }
 
   return { issues }
+}
+
+export function validateClozeAssignments(
+  questions: Question[],
+  rawPassages: unknown[],
+): ClozeAssignmentValidation {
+  return validatePassageAssignments(questions.filter((question) => question.type === 'cloze'), rawPassages)
 }

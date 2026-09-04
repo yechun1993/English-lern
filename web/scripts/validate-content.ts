@@ -1,9 +1,9 @@
-import { allQuestions, clozeAssignmentIssues } from '../src/content/manifest'
+import { allQuestions, clozeAssignmentIssues, readingAssignmentIssues } from '../src/content/manifest'
 import { collectContentIssues } from '../src/content/content-validation'
 
 const contentIssues = collectContentIssues(
   allQuestions.success ? [] : allQuestions.issues,
-  clozeAssignmentIssues,
+  [...clozeAssignmentIssues, ...readingAssignmentIssues],
 )
 
 if (contentIssues.length > 0) {

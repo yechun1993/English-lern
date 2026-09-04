@@ -19,7 +19,8 @@ import { questionTags } from './advanced/question-tags'
 import { referenceLogic } from './advanced/reference-logic'
 import { verbNounCollocations } from './advanced/verb-noun-collocations'
 import { clozePassages, clozeQuestions as clozeItems } from './cloze/cloze-bank'
-import { validateClozeAssignments, type Passage } from '../domain/passage'
+import { readingPassages, readingQuestions as readingItems } from './reading/reading-bank'
+import { validateClozeAssignments, validatePassageAssignments, type Passage } from '../domain/passage'
 
 export const diagnosticQuestions = validateQuestionBank(diagnosticItems)
 const grammarFoundationItems = [
@@ -70,13 +71,18 @@ export const foundationTopicBanks = [
 export const grammarFoundationQuestions = validateQuestionBank(grammarFoundationItems)
 export const grammarAdvancedQuestions = validateQuestionBank(grammarAdvancedItems)
 export const clozeQuestionBank = validateQuestionBank(clozeItems)
-export const allPassages: Passage[] = clozePassages
+export const readingQuestionBank = validateQuestionBank(readingItems)
+export const allPassages: Passage[] = [...clozePassages, ...readingPassages]
 export const clozeAssignmentIssues = clozeQuestionBank.success
   ? validateClozeAssignments(clozeQuestionBank.questions, allPassages).issues
   : clozeQuestionBank.issues
+export const readingAssignmentIssues = readingQuestionBank.success
+  ? validatePassageAssignments(readingQuestionBank.questions, allPassages).issues
+  : readingQuestionBank.issues
 export const allQuestions = validateQuestionBank([
   ...diagnosticItems,
   ...grammarFoundationItems,
   ...grammarAdvancedItems,
   ...clozeItems,
+  ...readingItems,
 ])

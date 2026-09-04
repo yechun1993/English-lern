@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { clozeAssignmentIssues, clozeQuestionBank, diagnosticQuestions } from './manifest'
+import {
+  clozeAssignmentIssues,
+  clozeQuestionBank,
+  diagnosticQuestions,
+  readingAssignmentIssues,
+  readingQuestionBank,
+} from './manifest'
 
 describe('题库清单', () => {
   it('contains only schema-valid questions with unique IDs', () => {
@@ -35,6 +41,24 @@ describe('题库清单', () => {
         expect(questions).toHaveLength(20)
         expect(new Set(questions.map((question) => question.blankIndex)).size).toBe(20)
       }
+    }
+  })
+
+  it('includes every reading passage only when it has four valid questions', () => {
+    expect(readingQuestionBank.success).toBe(true)
+    expect(readingAssignmentIssues).toEqual([])
+
+    if (readingQuestionBank.success) {
+      expect(readingQuestionBank.questions).toHaveLength(8)
+      const questionsByPassage = new Map<string, typeof readingQuestionBank.questions>()
+      for (const question of readingQuestionBank.questions) {
+        const questions = questionsByPassage.get(question.passageId ?? '') ?? []
+        questions.push(question)
+        questionsByPassage.set(question.passageId ?? '', questions)
+      }
+
+      expect(questionsByPassage.size).toBe(2)
+      expect([...questionsByPassage.values()].every((questions) => questions.length === 4)).toBe(true)
     }
   })
 })

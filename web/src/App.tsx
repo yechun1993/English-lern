@@ -6,17 +6,20 @@ import {
   diagnosticQuestions,
   foundationTopicBanks,
   allPassages,
+  readingAssignmentIssues,
+  readingQuestionBank,
 } from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
 import { ClozeHub, type ClozeBank } from './features/ClozeHub'
+import { ReadingHub, type ReadingBank } from './features/ReadingHub'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-type Screen = 'dashboard' | 'topics' | 'cloze' | 'practice'
+type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'practice'
 
 interface PracticeTarget {
   title: string
@@ -41,6 +44,18 @@ function App() {
       .map((passage) => ({
         passage,
         questions: clozeQuestionBank.questions.filter((question) => question.passageId === passage.id),
+      }))
+  }, [])
+  const readingBanks = useMemo<ReadingBank[]>(() => {
+    if (!readingQuestionBank.success || readingAssignmentIssues.length > 0) {
+      return []
+    }
+
+    return allPassages
+      .filter((passage) => passage.type === 'reading')
+      .map((passage) => ({
+        passage,
+        questions: readingQuestionBank.questions.filter((question) => question.passageId === passage.id),
       }))
   }, [])
   const dueReviewQuestions = useMemo(() => {
@@ -118,6 +133,16 @@ function App() {
     )
   }
 
+  if (screen === 'reading') {
+    return (
+      <ReadingHub
+        banks={readingBanks}
+        onBack={() => setScreen('dashboard')}
+        onStart={(bank) => startPractice(`阅读理解 · ${bank.passage.title}`, bank.questions, 'reading', [bank.passage])}
+      />
+    )
+  }
+
   return (
     <main className="app-shell">
       <header className="site-header">
@@ -166,6 +191,14 @@ function App() {
               action: '选择篇章',
               onClick: clozeQuestionBank.success && clozeAssignmentIssues.length === 0
                 ? () => setScreen('cloze')
+                : undefined,
+            },
+            {
+              title: '阅读理解',
+              detail: `${readingBanks.length} 篇 · ${readingBanks.reduce((total, bank) => total + bank.questions.length, 0)} 题`,
+              action: '选择阅读',
+              onClick: readingQuestionBank.success && readingAssignmentIssues.length === 0
+                ? () => setScreen('reading')
                 : undefined,
             },
             {

@@ -97,6 +97,12 @@ export function PracticeSession({ title, questions, passages, onComplete, onAnsw
             </p>
           </section>
         )}
+        {passage && question.type === 'reading' && (
+          <section aria-label="阅读文章" className="reading-passage">
+            <h2>{passage.title}</h2>
+            <p>{passage.body}</p>
+          </section>
+        )}
         <p className="question-topic">{question.topic} · {question.difficulty === 'foundation' ? '基础' : '进阶'}</p>
         <h2>{question.stem}</h2>
 
