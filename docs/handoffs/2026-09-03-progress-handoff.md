@@ -18,7 +18,7 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 本次已提交的最新提交：`7eed322 content: add online and environmental cloze passages`
+- 本次已提交的最新提交：`3d8980f content: fit time management cloze length`
 
 已提交的近期关键提交：
 
@@ -30,6 +30,8 @@
 6. `bb666b6 content: add healthy habits cloze passage`
 7. `3116752 content: add volunteer and career cloze passages`
 8. `7eed322 content: add online and environmental cloze passages`
+9. `88bf584 content: add city and time management cloze passages`
+10. `3d8980f content: fit time management cloze length`
 
 ## 已实现且已验证的功能
 
@@ -44,15 +46,15 @@
 
 ### 已入库内容
 
-当前已**提交并接入页面**的题目共 **520 道**：
+当前已**提交并接入页面**的题目共 **560 道**：
 
 | 内容 | 数量 | 状态 |
 | --- | ---: | --- |
 | 首次诊断 | 20 | 可练习 |
 | 基础语法与词汇 | 180 | 9 个专题、每个 20 题，可练习 |
 | 高频易错语法与搭配 | 180 | 9 个专题、每个 20 题，可练习 |
-| 完形填空 | 140 | 7 篇原创文章、每篇 20 空，可练习 |
-| 合计 | 520 | 已通过校验 |
+| 完形填空 | 180 | 9 篇原创文章、每篇 20 空，可练习 |
+| 合计 | 560 | 已通过校验 |
 
 高频易错层的 9 个专题：
 
@@ -77,7 +79,7 @@ npm run test:run
 12 个测试文件通过，35 个测试通过
 
 npm run validate:content
-题库校验通过：共 520 道题
+题库校验通过：共 560 道题
 
 npm run build
 TypeScript 编译和 Vite 生产构建通过
@@ -89,7 +91,7 @@ TypeScript 编译和 Vite 生产构建通过
 
 - 完形/阅读篇章 schema 已建立；完形正文必须含 `[1]` 这类编号空位，且自动限制在 220–300 个英文词。
 - 完形题与“文章 ID + 空号”的绑定已被统一内容校验覆盖，避免空题指向不存在的文章或空位。
-- 当前已接入七篇原创完形：
+- 当前已接入九篇原创完形：
   1. 《家庭沟通：一顿不看手机的晚餐》，复原后 289 词；
   2. 《校园学习：学会安排自己的时间》，复原后 254 词；
   3. 《健康习惯：从每天的小改变开始》，复原后 247 词；
@@ -97,9 +99,11 @@ TypeScript 编译和 Vite 生产构建通过
   5. 《工作选择：先了解自己，再选择方向》，复原后 247 词。
   6. 《网络使用：让手机服务于你的生活》，复原后 248 词；
   7. 《环境保护：从一次河边清理开始》，复原后 248 词。
+  8. 《城市生活：从陌生到熟悉》，复原后 292 词；
+  9. 《时间管理：把重要的事排在前面》，复原后 300 词。
 - 首页先进入篇章选择页，每次只练一篇 20 空文章；作答页展示全文并高亮当前空位，完成后回到篇章列表。
 
-下一步按已确认的主题顺序补齐其余 5 篇、共 100 空：城市生活、时间管理、旅行体验、科学常识、成长故事。
+下一步按已确认的主题顺序补齐其余 3 篇、共 60 空：旅行体验、科学常识、成长故事。
 
 ## 后续优先级
 
