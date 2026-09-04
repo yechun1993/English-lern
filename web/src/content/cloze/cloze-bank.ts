@@ -73,6 +73,34 @@ By the third week, several students could see a difference. They arrived at scho
 
 At the end of the month, the nurse asked the students to look [16] their notes. Most of them had [17] changed their daily lives. They did not become perfect, but they had formed useful [18]. The students understood that health improves [19] of repeated choices, not one big decision. Their first month gave them confidence to continue, and that was already a [20].`,
   },
+  {
+    id: 'cloze-passage-04',
+    type: 'cloze',
+    title: '志愿服务：让社区花园重新开花',
+    body: `A community center [1] a weekend event to repair its small garden. The garden had been empty for months, and the center hoped students would help [2] rubbish, paint old boxes, and plant flowers.
+
+At first, only twelve students signed up. The organizer was disappointed; [3], more students [4] after they saw photos of the garden online. On Saturday morning, everyone received a job. Some were responsible [5] cleaning paths, while others chose seeds [6].
+
+The work was harder than many students expected. Heavy bags had to be moved, and old tools [7] to the group by a neighbor. People helped one another [8] they wanted to finish before it rained. No one complained about the [9]. Instead, the students worked [10] and shared simple ideas.
+
+At noon, a local shop sent sandwiches and fruit. For many volunteers, this was [11] small reward, but it meant more [12] the food itself. They could see that their effort had changed a public place. Some students gained [13] after speaking with older residents.
+
+[14] the garden was not perfect, it looked brighter by the afternoon. The volunteers promised [15] the next month and water the plants. They also posted pictures [16] the school website. The event taught them that a few hours can be [17] when people care about the same place. They learned [18] a neighborhood improves [19] shared action, not waiting for someone else. For them, the garden became a lesson in [20].`,
+  },
+  {
+    id: 'cloze-passage-05',
+    type: 'cloze',
+    title: '工作选择：先了解自己，再选择方向',
+    body: `When Mei was close to graduation, she found it hard to [1] what kind of work she wanted. Her family gave many suggestions, but Mei knew that a job should match her own [2] and strengths. She wrote a short list of questions for herself.
+
+She did not choose a position quickly. [3], she spent several weeks gathering [4]. She read about different industries and talked [5] people who were already working. One manager invited her [6] with a small team for an afternoon.
+
+Mei was surprised by how [7] the jobs were from one another. Some workers spent more time solving problems [8] speaking with customers. Others needed technical [9], while some needed to organize meetings. Mei began to understand [10] better.
+
+She learned that every job has difficult parts. [11] a job may look interesting, it also requires people to be [12] and ready [13] new tasks. Mei decided that work experience was more useful than guessing. She applied for a short internship to gain [14].
+
+During the internship, she [15] learned what she enjoyed. She liked working with people and finding practical answers. She also discovered that she still had much [16]. At the end, Mei did not believe there was one perfect job. She believed that [17] interest and effort matter. A person can grow [18] he or she keeps learning. Mei felt calmer about her [19], because she had made it after careful thought. That was a good first [20].`,
+  },
 ]
 
 export const clozeQuestions = [
@@ -141,5 +169,49 @@ export const clozeQuestions = [
     ['名词搭配', ['habits', 'projects', 'objects'], 'habits', 'form useful habits 表示形成有用习惯。', 'project/object 不合健康主题。'],
     ['介词搭配', ['because', 'because of', 'despite'], 'because', '空后已有 of，因此填 because 构成 because of + 名词短语。', '填 because of 会与后面的 of 重复。'],
     ['语境词义', ['success', 'mistake', 'question'], 'success', '获得继续的信心本身就是一种成功。', 'mistake/question 与积极结果相反。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-04', 61, [
+    ['动词词义', ['planned', 'forgot', 'borrowed'], 'planned', 'center planned an event 表示中心策划活动。', 'forgot/borrowed 不符合主办活动。'],
+    ['非谓语', ['to collect', 'collecting', 'collected'], 'to collect', 'help to do 表示帮助做某事。', 'help 后不接过去分词表达主动。'],
+    ['逻辑连接', ['however', 'therefore', 'unless'], 'however', '开始人数少，后来增加，前后为转折。', 'therefore 表因果，不合语气。'],
+    ['动词辨析', ['joined', 'left', 'waited'], 'joined', '更多学生加入活动，用 joined。', 'left 表离开，与人数增加相反。'],
+    ['介词搭配', ['for', 'with', 'at'], 'for', 'be responsible for 表示对某项工作负责。', 'responsible 后不接 with。'],
+    ['副词用法', ['carefully', 'quietly', 'suddenly'], 'carefully', '选择种子需要仔细判断，用 carefully。', 'quietly/suddenly 不说明选择方式。'],
+    ['被动语态', ['were given', 'gave', 'giving'], 'were given', 'tools 是被邻居给到的，用被动。', '主语 tools 不能主动 give。'],
+    ['原因连词', ['because', 'although', 'until'], 'because', '大家互助的原因是想在下雨前完成。', 'although 表让步，不表达原因。'],
+    ['名词词义', ['work', 'weather', 'lesson'], 'work', 'complain about the work 表示抱怨劳动。', 'weather/lesson 与前文劳动不对应。'],
+    ['副词搭配', ['together', 'alone', 'early'], 'together', '志愿者合作完成任务，用 work together。', 'alone 与互相帮助矛盾。'],
+    ['冠词', ['a', 'an', 'the'], 'a', 'reward 是单数可数名词，small 以辅音音素开头。', 'an 应用于元音音素开头的词。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'more ... than ... 表示不止于食物本身。', 'more 后比较结构用 than。'],
+    ['名词搭配', ['confidence', 'silence', 'space'], 'confidence', 'gain confidence 表示获得信心。', 'silence/space 不合交流语境。'],
+    ['让步连词', ['Although', 'Because', 'So'], 'Although', '花园不完美但更明亮，表示让步。', 'because/so 不构成这种对比。'],
+    ['非谓语', ['to return', 'returning', 'returned'], 'to return', 'promise to do 表示承诺做某事。', 'promise 后通常接不定式。'],
+    ['介词搭配', ['on', 'at', 'by'], 'on', 'post pictures on a website 是常用表达。', 'at/by 不表示网站平台。'],
+    ['形容词词义', ['useful', 'empty', 'noisy'], 'useful', '几个小时也能有用，说明志愿服务价值。', 'empty/noisy 不描述时间价值。'],
+    ['宾语从句', ['that', 'what', 'whether'], 'that', 'learned that 后接完整陈述内容。', 'what 在从句中需担任成分。'],
+    ['介词搭配', ['through', 'without', 'under'], 'through', 'improve through shared action 表示通过共同行动改善。', 'without 与共同参与含义相反。'],
+    ['名词搭配', ['service', 'travel', 'business'], 'service', 'community service 是社区服务的常用表达。', 'travel/business 不对应志愿主题。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-05', 81, [
+    ['动词词义', ['decide', 'forget', 'repeat'], 'decide', 'decide what kind of work 表示决定职业方向。', 'forget/repeat 不合毕业选择语境。'],
+    ['名词词义', ['interests', 'tickets', 'accidents'], 'interests', '工作应匹配个人兴趣和优势。', 'ticket/accident 不可与 strengths 并列。'],
+    ['逻辑连接', ['Instead', 'Therefore', 'Otherwise'], 'Instead', '没有仓促选择，转而收集信息。', 'therefore 不表示替代做法。'],
+    ['名词搭配', ['information', 'exercise', 'trouble'], 'information', 'gather information 表示搜集信息。', 'gather exercise/trouble 不合搭配。'],
+    ['介词搭配', ['with', 'to', 'from'], 'with', 'talk with people 表示与人交流。', 'talk to 也可用，但此处与交流语境优先用 with。'],
+    ['非谓语', ['to talk', 'talking', 'talked'], 'to talk', 'invite somebody to do 表示邀请某人做事。', 'invite 后接人作宾语时用不定式。'],
+    ['形容词词义', ['different', 'similar', 'quiet'], 'different', '后文列举不同工作特点，说明工作差异大。', 'similar 与后文对比矛盾。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'more ... than ... 表示更多做前者而非后者。', '比较级后用 than。'],
+    ['名词搭配', ['skills', 'colors', 'seasons'], 'skills', 'technical skills 表示技术技能。', 'colors/seasons 不可完成工作要求。'],
+    ['反身代词', ['herself', 'himself', 'themselves'], 'herself', 'Mei 指女性单数，understand herself。', 'themselves 与单数主语不一致。'],
+    ['让步连词', ['Although', 'Because', 'Unless'], 'Although', '看起来有趣但仍有困难，表示让步。', 'because/unless 不表达转折。'],
+    ['形容词搭配', ['responsible', 'popular', 'careless'], 'responsible', 'be responsible 表示有责任心。', 'careless 与工作要求相反。'],
+    ['介词搭配', ['for', 'at', 'with'], 'for', 'be ready for new tasks 表示准备好面对新任务。', 'ready 后常接 for。'],
+    ['名词词义', ['experience', 'silence', 'luck'], 'experience', 'gain experience 表示获得经验。', 'silence/luck 不来自实习。'],
+    ['副词用法', ['gradually', 'rarely', 'suddenly'], 'gradually', '实习中对喜好的认识是逐渐形成的。', 'suddenly 不符合学习过程。'],
+    ['非谓语', ['to learn', 'learning', 'learned'], 'to learn', 'have much to learn 表示还有很多要学。', 'much 后的具体内容用不定式说明。'],
+    ['代词搭配', ['both', 'either', 'neither'], 'both', 'interest and effort 两者都重要，用 both。', 'either 指两者之一，语义不足。'],
+    ['条件连词', ['if', 'though', 'because'], 'if', '只要持续学习就能成长，表示条件。', 'though 表让步，不表达条件。'],
+    ['名词词义', ['future', 'holiday', 'mistake'], 'future', '毕业生对未来感到平静。', 'holiday/mistake 不合职业选择语境。'],
+    ['名词搭配', ['choice', 'meeting', 'rule'], 'choice', 'a good first choice 表示一个好的初步选择。', 'meeting/rule 不对应职业决定。'],
   ]),
 ]

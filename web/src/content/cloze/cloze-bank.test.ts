@@ -4,8 +4,8 @@ import { clozePassages, clozeQuestions } from './cloze-bank'
 
 describe('完形填空练习内容', () => {
   it('keeps every blank linked to its original passage', () => {
-    expect(clozePassages).toHaveLength(3)
-    expect(clozeQuestions).toHaveLength(60)
+    expect(clozePassages).toHaveLength(5)
+    expect(clozeQuestions).toHaveLength(100)
     expect(clozeQuestions.every((question) => question.options.length === 3)).toBe(true)
     expect(validateClozeAssignments(clozeQuestions, clozePassages).issues).toEqual([])
   })
