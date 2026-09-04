@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import type { Question } from '../domain/question'
+import type { Passage } from '../domain/passage'
 import './PracticeSession.css'
 
 export interface PracticeSessionProps {
   title: string
   questions: Question[]
+  passages?: Passage[]
   onComplete: () => void
   onAnswer?: (question: Question, answer: string, correct: boolean, guessed: boolean) => void
 }
 
-export function PracticeSession({ title, questions, onComplete, onAnswer }: PracticeSessionProps) {
+export function PracticeSession({ title, questions, passages, onComplete, onAnswer }: PracticeSessionProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [isChecked, setIsChecked] = useState(false)
@@ -31,6 +33,9 @@ export function PracticeSession({ title, questions, onComplete, onAnswer }: Prac
 
   const isCorrect = selectedAnswer === question.answer
   const isLastQuestion = currentIndex === questions.length - 1
+  const passage = question.passageId
+    ? passages?.find((candidate) => candidate.id === question.passageId)
+    : undefined
 
   function handleSelect(answer: string) {
     if (isChecked) {
@@ -72,6 +77,26 @@ export function PracticeSession({ title, questions, onComplete, onAnswer }: Prac
       </header>
 
       <article className="question-card">
+        {passage && question.type === 'cloze' && (
+          <section aria-label="完形文章" className="cloze-passage">
+            <h2>{passage.title}</h2>
+            <p>
+              {passage.body.split(/(\[\d{1,2}\])/g).map((part, index) => {
+                const blankMatch = part.match(/^\[(\d{1,2})\]$/)
+                if (!blankMatch) {
+                  return part
+                }
+
+                const isActiveBlank = Number(blankMatch[1]) === question.blankIndex
+                return (
+                  <mark className={isActiveBlank ? 'active' : ''} key={`${part}-${index}`}>
+                    {part}
+                  </mark>
+                )
+              })}
+            </p>
+          </section>
+        )}
         <p className="question-topic">{question.topic} · {question.difficulty === 'foundation' ? '基础' : '进阶'}</p>
         <h2>{question.stem}</h2>
 

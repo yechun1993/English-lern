@@ -19,6 +19,18 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: '第 1 / 20 题' })).toBeInTheDocument()
   })
 
+  it('opens the cloze pilot with its complete passage visible', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '开始完形' }))
+
+    expect(screen.getByText('完形填空 · 家庭沟通')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '第 1 / 20 题' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('The Chen family used to eat dinner')
+    expect(screen.getByRole('region', { name: '完形文章' })).toHaveTextContent('[1]')
+  })
+
   it('opens a 20-question grammar micro-topic from the topic hub', async () => {
     const user = userEvent.setup()
     render(<App />)

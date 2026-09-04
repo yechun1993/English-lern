@@ -1,9 +1,17 @@
 import { useMemo, useState } from 'react'
-import { allQuestions, diagnosticQuestions, foundationTopicBanks } from './content/manifest'
+import {
+  allQuestions,
+  clozeAssignmentIssues,
+  clozeQuestionBank,
+  diagnosticQuestions,
+  foundationTopicBanks,
+  allPassages,
+} from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
 import type { Question } from './domain/question'
+import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
@@ -12,6 +20,7 @@ type Screen = 'dashboard' | 'topics' | 'practice'
 interface PracticeTarget {
   title: string
   questions: Question[]
+  passages?: Passage[]
   returnTo: Exclude<Screen, 'practice'>
 }
 
@@ -42,8 +51,13 @@ function App() {
     )
   }
 
-  function startPractice(title: string, questions: Question[], returnTo: PracticeTarget['returnTo'] = 'dashboard') {
-    setPracticeTarget({ title, questions, returnTo })
+  function startPractice(
+    title: string,
+    questions: Question[],
+    returnTo: PracticeTarget['returnTo'] = 'dashboard',
+    passages?: Passage[],
+  ) {
+    setPracticeTarget({ title, questions, returnTo, passages })
     setScreen('practice')
   }
 
@@ -64,6 +78,7 @@ function App() {
       <PracticeSession
         onAnswer={recordAnswer}
         onComplete={() => setScreen(practiceTarget.returnTo)}
+        passages={practiceTarget.passages}
         questions={practiceTarget.questions}
         title={practiceTarget.title}
       />
@@ -124,9 +139,11 @@ function App() {
             },
             {
               title: '完形填空',
-              detail: '高频搭配辨析 · 内容准备中',
-              action: '即将开放',
-              onClick: undefined,
+              detail: '家庭沟通 · 1 篇 20 空',
+              action: '开始完形',
+              onClick: clozeQuestionBank.success && clozeAssignmentIssues.length === 0
+                ? () => startPractice('完形填空 · 家庭沟通', clozeQuestionBank.questions, 'dashboard', allPassages)
+                : undefined,
             },
             {
               title: '错题回顾',

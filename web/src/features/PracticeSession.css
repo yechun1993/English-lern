@@ -58,6 +58,41 @@ progress::-moz-progress-bar {
   line-height: 1.55;
 }
 
+.cloze-passage {
+  margin: 0 0 24px;
+  padding: 18px;
+  border: 1px solid #ccfbf1;
+  border-radius: 14px;
+  background: #f8fffe;
+}
+
+.cloze-passage h2 {
+  margin-bottom: 10px;
+  color: #0f766e;
+  font-size: 1rem;
+}
+
+.cloze-passage p {
+  margin: 0;
+  color: #334155;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.cloze-passage mark {
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #475569;
+  font-weight: 800;
+}
+
+.cloze-passage mark.active {
+  background: #99f6e4;
+  color: #115e59;
+}
+
 .option-list {
   display: grid;
   gap: 12px;

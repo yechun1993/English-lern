@@ -1,8 +1,14 @@
-import { allQuestions } from '../src/content/manifest'
+import { allQuestions, clozeAssignmentIssues } from '../src/content/manifest'
+import { collectContentIssues } from '../src/content/content-validation'
 
-if (!allQuestions.success) {
+const contentIssues = collectContentIssues(
+  allQuestions.success ? [] : allQuestions.issues,
+  clozeAssignmentIssues,
+)
+
+if (contentIssues.length > 0) {
   console.error('题库校验失败：')
-  for (const issue of allQuestions.issues) {
+  for (const issue of contentIssues) {
     console.error(`- ${issue}`)
   }
   process.exit(1)
