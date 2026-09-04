@@ -178,6 +178,30 @@ It is also helpful to look for evidence. Does the message explain where its fact
 
 Checking information does not mean that people must become professional reporters. It means they should be careful with what they pass to friends and family. A short pause can prevent confusion and help online conversations become more useful.`,
   },
+  {
+    id: 'reading-passage-13',
+    type: 'reading',
+    title: '社区互助：一场跨年龄的技能交换',
+    body: `A community center in Longyuan began a skill-sharing afternoon last spring. The idea was simple: people of different ages could teach one another something useful. Older residents could share cooking, sewing, or gardening skills. Younger residents could help with phone settings, online appointments, and digital photographs. The center also hoped the activity would reduce loneliness for people who lived alone in the area.
+
+At first, the organizers worried that few people would come. Some older residents said they had nothing special to teach. Some university students thought they would not have time. To make the event easier, the center asked everyone to bring one small question or one small skill. No one had to prepare a formal lesson.
+
+The first afternoon was busy. Mr. Zhou showed two students how to repair a loose button. In return, they helped him organize photographs from his phone. At another table, a young mother learned how to grow herbs on a balcony. She later showed the older gardener how to use a weather application.
+
+After several weeks, people began to arrive early and stay after the event ended. They talked about family, work, and neighborhood changes. The organizers found that the most important result was not simply learning a new skill. It was discovering that people who seemed very different could still help one another.`,
+  },
+  {
+    id: 'reading-passage-14',
+    type: 'reading',
+    title: '健康习惯：把运动拆成容易坚持的小段',
+    body: `When people decide to exercise more, they often make a plan that is too difficult to keep. They may promise to run for an hour every day or join a gym immediately. After a busy week, the plan may feel impossible, and they stop. Health experts often suggest starting with a smaller and more realistic goal.
+
+For example, a person who sits at a desk for many hours can begin by standing up and walking for a few minutes each hour. Someone who takes a bus can get off one stop early and walk the rest of the way. These activities may not seem impressive, but they add movement to an ordinary day. Even a short walk outside can improve mood and provide fresh air.
+
+Small goals also help people notice progress. A calendar, a phone reminder, or a simple note can show how often a person has moved that week. Seeing several successful days can make it easier to continue. If one day is missed, there is no need to give up the whole plan. The next small action can begin again.
+
+Exercise does not have to look the same for everyone. Some people enjoy dancing, others prefer walking with a friend, and some like working in a garden. The best activity is often the one that fits a person’s life well enough to become a regular habit.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -252,5 +276,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “source” most nearly mean in the passage?', ['Where information comes from.', 'A type of online picture.', 'The final result of a search.', 'A person who shares every message.'], 'Where information comes from.', 'source 指消息来自哪个机构、媒体或个人账号。', '不要把 source 只理解为“搜索结果”。', 'foundation'],
     ['推断判断', 'Why does the passage advise finding the same information on more than one reliable website?', ['It can provide stronger support for a claim.', 'It makes a headline more surprising.', 'It guarantees that all images are new.', 'It removes the need to check dates.'], 'It can provide stronger support for a claim.', '多个可靠来源的一致信息能为消息提供更强的证据。', '多来源核对也不能替代检查日期和图片背景。', 'standard'],
     ['主旨概括', 'What is the main purpose of the passage?', ['To teach people to pause and check online information before sharing it.', 'To stop people from using online news services.', 'To explain how to become a professional reporter.', 'To show that all online photographs are false.'], 'To teach people to pause and check online information before sharing it.', '全文围绕“分享前暂停、核查来源日期和证据”的实用习惯展开。', '不要把“保持谨慎”扩大成“完全不相信网络信息”。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-13', 49, [
+    ['细节定位', 'What did Mr. Zhou teach the students to do?', ['Repair a loose button.', 'Grow herbs on a balcony.', 'Use a weather application.', 'Organize a formal lesson.'], 'Repair a loose button.', '第三段明确写到周先生教两名学生修理松开的纽扣。', '不要把其他桌上的园艺活动混作周先生教授的内容。', 'foundation'],
+    ['词义猜测', 'What does “formal” most nearly mean in “a formal lesson”?', ['Carefully planned and official.', 'Short and useful.', 'Related to a phone.', 'Given only by older people.'], 'Carefully planned and official.', 'formal lesson 指经过正式准备的课程；活动特意说明不需要这样准备。', '不要把 formal 理解为“内容难”或“由老人教授”。', 'foundation'],
+    ['推断判断', 'Why did the center ask people to bring only one small question or skill?', ['To make joining the event feel easier.', 'To stop people from speaking to others.', 'To make every lesson last two hours.', 'To replace all community classes.'], 'To make joining the event feel easier.', '第二段说明这样做是为了降低参与难度，不需准备正式课程。', '不要把“小问题”误解为限制交流时间。', 'standard'],
+    ['主旨概括', 'What is the main idea of the passage?', ['A skill-sharing event helped people of different ages learn and connect.', 'Young people can only teach digital skills.', 'Older residents do not need help with phones.', 'Community events should include formal exams.'], 'A skill-sharing event helped people of different ages learn and connect.', '全文展示跨年龄技能互教，以及由此产生的理解和邻里联系。', '不要只关注某一个技能，忽略“相互连接”的主题。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-14', 53, [
+    ['细节定位', 'What does the passage suggest for someone who sits at a desk for hours?', ['Walk for a few minutes each hour.', 'Run for an hour every day.', 'Stop working completely.', 'Buy a gym membership immediately.'], 'Walk for a few minutes each hour.', '第二段给出的具体建议是每小时起身走几分钟。', '不要选择第一段中作为“难以坚持”的例子。', 'foundation'],
+    ['词义猜测', 'What does “realistic” most nearly mean in the first paragraph?', ['Possible to do in real life.', 'Very expensive.', 'Related to a hospital.', 'Harder than other goals.'], 'Possible to do in real life.', 'realistic goal 指符合个人时间和生活情况、实际可完成的目标。', '不要把 realistic 误解为目标越难越好。', 'foundation'],
+    ['推断判断', 'Why might a calendar or reminder help a person exercise regularly?', ['It can make people notice their progress.', 'It makes every activity more difficult.', 'It replaces the need for any movement.', 'It guarantees no day will be missed.'], 'It can make people notice their progress.', '第三段说明记录能显示一周中已完成的活动，使人更容易坚持。', '记录有帮助，但不保证从不错过一天。', 'standard'],
+    ['主旨概括', 'What is the main message of the passage?', ['The best exercise plan is always a gym plan.', 'Small, suitable activities are more likely to become lasting exercise habits.', 'People should exercise in exactly the same way.', 'Missing one day means a plan has failed.'], 'Small, suitable activities are more likely to become lasting exercise habits.', '全文强调从小而现实的行动开始，并选择适合自身生活的运动方式。', '不要把一次遗漏视为整个计划失败。', 'standard'],
   ]),
 ]
