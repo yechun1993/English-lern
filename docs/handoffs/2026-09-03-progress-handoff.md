@@ -18,14 +18,15 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 本次已提交的最新提交：`4b1d686 content: add high-frequency grammar and collocation bank`
-- 注意：本文件写入时，完形相关的原型文件仍 **未提交**，不要清理或覆盖它们。
+- 本次已提交的最新提交：`9290bf1 feat: add selectable cloze passages`
 
 已提交的近期关键提交：
 
 1. `c670e9d feat: add grammar topic hub`
 2. `65886d5 feat: show live study progress and exam countdown`
 3. `4b1d686 content: add high-frequency grammar and collocation bank`
+4. `486c2b1 feat: add cloze passage practice flow`
+5. `9290bf1 feat: add selectable cloze passages`
 
 ## 已实现且已验证的功能
 
@@ -47,7 +48,8 @@
 | 首次诊断 | 20 | 可练习 |
 | 基础语法与词汇 | 180 | 9 个专题、每个 20 题，可练习 |
 | 高频易错语法与搭配 | 180 | 9 个专题、每个 20 题，可练习 |
-| 合计 | 380 | 已通过校验 |
+| 完形填空 | 40 | 2 篇原创文章、每篇 20 空，可练习 |
+| 合计 | 420 | 已通过校验 |
 
 高频易错层的 9 个专题：
 
@@ -65,14 +67,14 @@
 
 ## 最近验证证据
 
-以下验证是在高频题库提交前完成的，结果均成功：
+以下验证在两篇完形内容接入后完成，结果均成功：
 
 ```text
 npm run test:run
-9 个测试文件通过，27 个测试通过
+12 个测试文件通过，35 个测试通过
 
 npm run validate:content
-题库校验通过：共 380 道题
+题库校验通过：共 420 道题
 
 npm run build
 TypeScript 编译和 Vite 生产构建通过
@@ -80,34 +82,16 @@ TypeScript 编译和 Vite 生产构建通过
 
 高频题库已人工抽检：每个十号题及所有 18 道冲刺题；审校中已修正一个重复干扰项和一个 `would rather` 的未来语境。
 
-## 正在开发、尚未提交的内容
+## 已完成的完形训练闭环
 
-以下文件在工作树中存在，但本次交接时没有接入 `manifest.ts`，因此**不计入 380 道可用题，也不会在页面上显示**：
+- 完形/阅读篇章 schema 已建立；完形正文必须含 `[1]` 这类编号空位，且自动限制在 220–300 个英文词。
+- 完形题与“文章 ID + 空号”的绑定已被统一内容校验覆盖，避免空题指向不存在的文章或空位。
+- 当前已接入两篇原创完形：
+  1. 《家庭沟通：一顿不看手机的晚餐》，复原后 290 词；
+  2. 《校园学习：学会安排自己的时间》，复原后 257 词。
+- 首页先进入篇章选择页，每次只练一篇 20 空文章；作答页展示全文并高亮当前空位，完成后回到篇章列表。
 
-- `web/src/domain/passage.ts`
-- `web/src/domain/passage.test.ts`
-- `web/src/content/cloze/cloze-bank.ts`
-- `web/src/content/cloze/cloze-bank.test.ts`
-
-它们实现了：
-
-- 完形/阅读篇章的 schema；完形正文必须含 `[1]` 这类编号空位。
-- 完形题到“文章 ID + 空号”的绑定校验，避免空题指向不存在的篇章或空位。
-- 1 篇原创试行完形文章《家庭沟通：一顿不看手机的晚餐》，含 20 个三选一空题和逐空解析。
-
-该原型已独立通过：
-
-```text
-npm run test:run -- passage.test.ts
-npm run test:run -- cloze-bank.test.ts
-```
-
-继续前应先：
-
-1. 审校该文章复原后是否在 220–300 词、20 个空位的语篇是否自然。
-2. 将完形内容和篇章校验接入 `web/src/content/manifest.ts` 与统一内容验证器。
-3. 让练习页在做完形题时显示整篇文章和当前空位，而不是只显示“请选择文中最合适的词”。
-4. 在完成第一篇端到端体验后，再按已确认主题轮转补齐其余 11 篇、共 240 空。
+下一步按已确认的主题顺序补齐其余 10 篇、共 200 空：健康习惯、志愿服务、工作选择、网络使用、环境保护、城市生活、时间管理、旅行体验、科学常识、成长故事。
 
 ## 后续优先级
 
