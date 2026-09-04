@@ -159,6 +159,56 @@ After a month, Chen Yu had more control over her time. She was [11] worried at n
 
 Her classmates noticed the change and asked for her advice. Chen Yu told them to begin [14] one small habit, writing tomorrow's list before bed. She also said they should be kind to [15] when a plan failed. Good time management means choosing what matters most, not filling every minute [16] work. People can make progress [17] they review their plans and change them when necessary. Chen Yu has busy days, but she now feels [18] of her choices. Her rule is simple: do one important thing, then do the next. This rule gives her a sense of [19] and helps her use each day more [20].`,
   },
+  {
+    id: 'cloze-passage-10',
+    type: 'cloze',
+    title: '旅行体验：一个人出发，也学会与人交流',
+    body: `Last summer, Wang Lei took his first trip alone. He had always traveled with family members, so he was excited but [1]. Before leaving, he checked the weather, booked a room, and made a list [2] things to carry.
+
+On the train, he met a woman visiting the same town. She gave him some [3] about local food and showed him [4] to reach the old street from the station. Wang Lei wrote the information down [5] he would not forget it.
+
+He woke up early and walked around the town. He saw small shops, old bridges, and people [6] breakfast outside. Although it started to rain, he did not return to the hotel [7]. He bought an umbrella and continued [8].
+
+At noon, he chose a restaurant. The menu was only in Chinese, but the owner was patient and [9] him choose a simple meal. Wang Lei found that talking with local people was more [10] than following a guidebook.
+
+Later he got lost while looking for the bus stop. Instead of feeling angry, he asked a student for [11]. The student walked with him and pointed [12] the right road. Wang Lei thanked her and learned that asking questions is sometimes the [13] way to solve a problem.
+
+When the trip ended, Wang Lei had taken many photos, but his best memories were not only about places. He had become more [14] and willing [15] new situations. He knew that travel can teach people [16] themselves and other cultures. His parents were surprised [17] how much he had changed in a few days. Wang Lei is now planning another trip, [18] he will prepare more carefully. He believes that a good traveler should respect local rules, keep public places [19], and be open [20] new experiences.`,
+  },
+  {
+    id: 'cloze-passage-11',
+    type: 'cloze',
+    title: '科学常识：从观察和记录中寻找答案',
+    body: `At a school science fair, Mr. Gao's class [1] a simple experiment about plants. The students wanted [2] why some seeds grew faster than others. They placed the same kind of seeds in three boxes and gave each box a different amount of light.
+
+Before the experiment began, the students made a [3]. Some thought the seeds near the window would grow [4]. Others believed that water was more important [5] light. Mr. Gao told them not to guess without keeping records.
+
+Every day, one student measured the plants and wrote the results [6] a notebook. Another student checked [7] the soil was too dry. After two weeks, the group had enough information [8] the three boxes.
+
+The seeds with regular light and enough water grew [9] than the others. The students were surprised because one box had received [10] water but almost no light. They learned that a plant needs several conditions to grow [11].
+
+Mr. Gao then asked the class [12] their findings. Each group made a poster and explained what had happened. [13] some results were different from their first ideas, nobody thought the experiment had failed. Instead, the students saw mistakes as [14] to ask better questions.
+
+At the end of the fair, several parents visited their posters. One parent asked [15] the students had enjoyed most. A girl answered that science was not only about finding the right answer. It was also about being [16], working with others, and checking facts. The class understood that science can be part of [17] life. They promised to look more [18] at the world around them and to test ideas [19] accepting them. For the students, the experiment was a small but important [20].`,
+  },
+  {
+    id: 'cloze-passage-12',
+    type: 'cloze',
+    title: '成长故事：从不敢开口到勇敢表达',
+    body: `Two years ago, Liu Na was afraid of speaking English in class. She knew many words, but she worried [1] making mistakes. When asked a question, Liu Na often looked [2] her book.
+
+One day, the teacher put students into small groups and asked them [3] a short story. Her friends encouraged her, and she finally agreed [4] the task.
+
+At first, her voice was quiet. She forgot one sentence and wanted to stop. [5], her group members smiled and waited for her. Liu Na took a deep breath and continued. When she finished, the teacher said that she had done [6] job.
+
+After that day, Liu Na made a plan. She would speak English for five minutes every morning and record [7]. She listened to the recordings and tried [8] her weak points.
+
+Progress did not come [9]. Some days she still felt nervous. But each time she spoke, she became a little more [10]. She learned that confidence grows [11] people practice, not when they wait until they feel perfect.
+
+Liu Na gave a talk to the class. Her classmates were surprised [12] her clear voice. She was not the best speaker, [13] she was much braver than before. A mistake can be a chance [14] more.
+
+Liu Na now helps younger students who have the same fear. She tells them that they do not need to change [15] one day. They only need to take one small step [16] a time. Her own story has made her more patient [17] others and more willing to try new things. She believes that growth begins [18] accepting what you cannot do yet. Then, little by little, you can turn [19] into a skill. For Liu Na, courage became a habit, not a special [20].`,
+  },
 ]
 
 export const clozeQuestions = [
@@ -359,5 +409,71 @@ export const clozeQuestions = [
     ['形容词搭配', ['sure', 'afraid', 'tired'], 'sure', 'feel sure of one\'s choices 表示对选择有把握。', 'afraid/tired 不符合积极变化。'],
     ['名词搭配', ['control', 'weather', 'silence'], 'control', 'a sense of control 表示掌控感。', 'weather/silence 不合时间管理语境。'],
     ['副词用法', ['wisely', 'slowly', 'quietly'], 'wisely', 'use each day wisely 表示明智地利用每一天。', 'slowly/quietly 不表示有效利用时间。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-10', 181, [
+    ['形容词词义', ['nervous', 'hungry', 'late'], 'nervous', '第一次独自旅行，兴奋同时也会紧张。', 'hungry/late 不与 excited 形成心理状态对比。'],
+    ['介词搭配', ['of', 'with', 'for'], 'of', 'a list of things 表示物品清单。', 'list 后常用 of 引出内容。'],
+    ['名词搭配', ['advice', 'weather', 'practice'], 'advice', 'give somebody advice about 表示就某事给建议。', 'weather/practice 不可与 local food 搭配。'],
+    ['疑问词加不定式', ['how', 'where', 'when'], 'how', 'show somebody how to do 表示告诉某人如何做。', '这里强调到达方式，不是地点或时间。'],
+    ['目的连词', ['so', 'but', 'unless'], 'so', '记下信息的目的是不忘记，用 so 表结果或目的。', 'but/unless 不表达这种关系。'],
+    ['非谓语', ['eating', 'eat', 'ate'], 'eating', 'see somebody doing 表示看见某人正在做。', '这里描述街头正在吃早餐的人。'],
+    ['副词用法', ['immediately', 'quietly', 'nearly'], 'immediately', '下雨后他没有立刻回酒店，而是继续游览。', 'quietly/nearly 不表示时间先后。'],
+    ['非谓语', ['walking', 'walk', 'walked'], 'walking', 'continue doing 表示继续做某事。', 'continue 后用动名词表示持续动作。'],
+    ['动词搭配', ['helped', 'forced', 'watched'], 'helped', 'help somebody do 表示帮助某人做事。', 'force/watch 不符合友善服务语境。'],
+    ['形容词词义', ['useful', 'expensive', 'quiet'], 'useful', '与当地人交流比只看指南更有用。', 'expensive/quiet 不表示信息价值。'],
+    ['名词搭配', ['help', 'work', 'money'], 'help', 'ask somebody for help 表示向某人求助。', 'work/money 不适合迷路求助。'],
+    ['动词短语', ['out', 'away', 'down'], 'out', 'point out 表示指出。', 'point away/down 不能表示指出正确道路。'],
+    ['形容词最高级', ['best', 'first', 'last'], 'best', 'the best way 表示最好的办法。', 'first/last 不表示解决问题的效果。'],
+    ['形容词词义', ['independent', 'silent', 'famous'], 'independent', '独自完成旅行后会更独立。', 'silent/famous 不表示成长变化。'],
+    ['非谓语', ['to face', 'facing', 'faced'], 'to face', 'be willing to do 表示愿意做某事。', 'willing 后通常接不定式。'],
+    ['介词搭配', ['about', 'from', 'under'], 'about', 'teach people about 表示教给人们有关……的知识。', 'from/under 不表示话题内容。'],
+    ['形容词搭配', ['at', 'with', 'for'], 'at', 'be surprised at 表示对某事感到惊讶。', 'with/for 不构成该搭配。'],
+    ['逻辑连接', ['but', 'so', 'because'], 'but', '要再旅行，但会准备得更充分，前后带有转折补充。', 'so/because 不表达这种语气。'],
+    ['形容词词义', ['clean', 'open', 'quiet'], 'clean', '旅行者应保持公共场所干净。', 'open/quiet 不与 keep public places 搭配。'],
+    ['介词搭配', ['to', 'with', 'from'], 'to', 'be open to new experiences 表示乐于接受新体验。', 'open 后固定接 to。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-11', 201, [
+    ['动词词义', ['prepared', 'forgot', 'missed'], 'prepared', '班级为科学展准备实验，用 prepared。', 'forgot/missed 不符合组织实验。'],
+    ['非谓语', ['to find out', 'finding out', 'found out'], 'to find out', 'want to do 表示想要做某事。', 'want 后通常接不定式。'],
+    ['名词词义', ['prediction', 'ticket', 'holiday'], 'prediction', '实验前对结果作出的猜测是 prediction。', 'ticket/holiday 与科学实验无关。'],
+    ['副词比较级', ['faster', 'fast', 'fastest'], 'faster', '种子之间作比较，用比较级 faster。', 'fastest 需要三者中最高级的明确语境。'],
+    ['比较结构', ['than', 'as', 'for'], 'than', 'more important than 表示比……更重要。', '比较级后接 than。'],
+    ['介词搭配', ['in', 'on', 'at'], 'in', 'write results in a notebook 表示把结果记在笔记本里。', 'on/at 不表示记录载体。'],
+    ['宾语从句', ['whether', 'that', 'what'], 'whether', 'check whether 表示检查是否。', 'that 不表达是否这一不确定性。'],
+    ['非谓语', ['to compare', 'comparing', 'compared'], 'to compare', 'enough information to do 表示有足够信息去做某事。', 'information 后用不定式说明用途。'],
+    ['副词比较级', ['better', 'best', 'well'], 'better', '与其他种子比较，长得更好用 better。', 'best 需最高级语境。'],
+    ['比较级', ['more', 'much', 'most'], 'more', '与前文不同，第三盒得到更多水，用 more water。', 'much 不能表达比较。'],
+    ['副词用法', ['well', 'good', 'better'], 'well', 'grow well 表示长得好，grow 后用副词。', 'good 是形容词，不能修饰 grow。'],
+    ['非谓语', ['to share', 'sharing', 'shared'], 'to share', 'ask somebody to do 表示要求某人做事。', 'ask 后接人时用不定式。'],
+    ['让步连词', ['Although', 'Because', 'So'], 'Although', '结果和原先想法不同，但实验没有失败，表示让步。', 'because/so 不表达这种对比。'],
+    ['名词词义', ['chances', 'rules', 'roads'], 'chances', 'mistakes as chances to ask 表示把错误看成提问的机会。', 'rules/roads 不符合学习语境。'],
+    ['宾语从句', ['what', 'that', 'whether'], 'what', 'asked what ... enjoyed most，what 作 enjoyed 的宾语。', 'that/whether 不能同时承担该成分。'],
+    ['形容词词义', ['curious', 'careless', 'empty'], 'curious', '科学需要好奇心，用 being curious。', 'careless 与检查事实的要求相反。'],
+    ['形容词词义', ['daily', 'private', 'ancient'], 'daily', 'science can be part of daily life 表示科学与日常生活相关。', 'private/ancient 不合语境。'],
+    ['副词用法', ['carefully', 'suddenly', 'nearly'], 'carefully', '观察世界需要仔细，用 look carefully at。', 'suddenly/nearly 不说明观察方式。'],
+    ['介词搭配', ['before', 'after', 'during'], 'before', '先检验想法再接受，用 before accepting。', 'after 会颠倒科学探究顺序。'],
+    ['名词词义', ['lesson', 'station', 'chance'], 'lesson', '一次实验带来重要的学习收获，是 a lesson。', 'station/chance 不概括实验意义。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-12', 221, [
+    ['介词搭配', ['about', 'for', 'with'], 'about', 'worry about doing 表示担心做某事。', 'worry 后固定搭配 about。'],
+    ['介词搭配', ['at', 'for', 'with'], 'at', 'look at a book 表示看着书本。', 'look for 表示寻找。'],
+    ['非谓语', ['to prepare', 'preparing', 'prepared'], 'to prepare', 'ask somebody to do 表示要求某人做事。', 'ask 后接人时用不定式。'],
+    ['非谓语', ['to take', 'taking', 'took'], 'to take', 'agree to do 表示同意做某事。', 'agree 后通常接不定式。'],
+    ['逻辑连接', ['However', 'Therefore', 'Besides'], 'However', '她想停下，但组员鼓励等待，前后转折。', 'therefore/besides 不表达转折。'],
+    ['冠词', ['a', 'an', 'the'], 'a', 'job 是单数可数名词，good 以辅音音素开头。', 'an 应用于元音音素开头的词。'],
+    ['反身代词', ['herself', 'himself', 'themselves'], 'herself', 'Liu Na 指女性单数，record herself。', 'himself/themselves 与主语不一致。'],
+    ['非谓语', ['to improve', 'improving', 'improved'], 'to improve', 'try to do 表示努力去做某事。', 'try 后接不定式表达尝试改进。'],
+    ['副词用法', ['quickly', 'quietly', 'nearly'], 'quickly', '进步没有很快到来，用 quickly。', 'quietly/nearly 不说明速度。'],
+    ['形容词比较级', ['confident', 'silent', 'afraid'], 'confident', '每次开口都会更自信，用 more confident。', 'silent/afraid 不符合练习后的变化。'],
+    ['时间连词', ['when', 'unless', 'because'], 'when', '信心在人们练习时增长，用 when 引导时间状语。', 'unless/because 不说明练习发生的时间。'],
+    ['介词搭配', ['by', 'with', 'for'], 'by', 'be surprised by 表示被某事所惊讶。', 'with/for 不构成该搭配。'],
+    ['逻辑连接', ['but', 'so', 'because'], 'but', '不是最好的演讲者，但比以前勇敢，表示转折。', 'so/because 不表达对比。'],
+    ['非谓语', ['to learn', 'learning', 'learned'], 'to learn', 'a chance to do 表示做某事的机会。', 'chance 后用不定式说明机会内容。'],
+    ['介词搭配', ['in', 'at', 'on'], 'in', 'change in one day 表示在一天内改变。', 'at/on 不表示时间范围。'],
+    ['介词搭配', ['at', 'in', 'for'], 'at', 'one step at a time 表示一次迈出一小步。', 'in/for 不构成该固定表达。'],
+    ['介词搭配', ['with', 'for', 'to'], 'with', 'be patient with somebody 表示对某人有耐心。', 'patient 后固定搭配 with。'],
+    ['介词搭配', ['with', 'from', 'under'], 'with', 'begin with doing 表示从做某事开始。', 'from/under 不构成该表达。'],
+    ['名词词义', ['weakness', 'ticket', 'silence'], 'weakness', 'turn weakness into a skill 表示把弱点转化为技能。', 'ticket/silence 不可转化为技能。'],
+    ['名词词义', ['moment', 'project', 'reason'], 'moment', 'courage became a habit, not a special moment 表示勇气成为日常习惯。', 'project/reason 不对应勇气出现的时刻。'],
   ]),
 ]
