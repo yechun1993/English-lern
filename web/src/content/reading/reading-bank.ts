@@ -82,6 +82,30 @@ Rui also made a small list at the end of each meeting. It named the person respo
 
 After the month ended, the manager kept the new format. Rui learned that improving a process does not always require a large plan. Sometimes it begins with asking what information people truly need and removing the rest.`,
   },
+  {
+    id: 'reading-passage-05',
+    type: 'reading',
+    title: '城市记忆：一座旧工厂的新故事',
+    body: `Near the railway station in Yonghe City, there is an old brick factory that no longer makes anything. For many years, people passed it without looking at it. The windows were broken, the walls were covered with dust, and the land around it was empty. Some residents wanted the building removed so that new apartments could be built there.
+
+However, a group of local teachers had another idea. They found old photographs showing that the factory had once employed hundreds of people. Former workers remembered the sound of machines in the morning and the small market that opened outside the gate at lunchtime. They spoke with great pride about their shared work. The teachers believed these stories were part of the city’s history.
+
+With support from the local government, the building was cleaned and repaired. Today, one room displays workers’ tools and photographs. Another room is used for art classes and weekend talks. Schoolchildren can interview older visitors and write down what they learn. The area outside has become a small park where families rest in the evening.
+
+The project did not try to make the old factory look new. Instead, it preserved important parts of the building and gave them a new purpose. More residents now visit the place, not because it is perfect, but because it helps them understand how their city has changed.`,
+  },
+  {
+    id: 'reading-passage-06',
+    type: 'reading',
+    title: '健康科普：晚间光线与更好的睡眠',
+    body: `Many people feel tired in the morning even after spending enough hours in bed. One possible reason is the light they see before sleeping. Our bodies use light as a signal. Bright light in the morning helps us become alert, while strong light late at night can make it harder for the body to prepare for sleep.
+
+This does not mean that every lamp is harmful. The problem is usually a long period of bright light from a phone, computer, or television. When people keep checking messages or watching videos in bed, their minds may also remain active. They may be physically tired but still find it difficult to relax. The room should also feel calm and comfortable.
+
+Sleep experts often suggest a simple routine. About half an hour before bed, lower the lights and stop using bright screens when possible. Some people choose to read a paper book, listen to quiet music, or prepare clothes for the next day. These activities give the mind a clear message that the busy part of the day is ending.
+
+Good sleep habits do not require a perfect schedule. A person who has one late night does not need to worry. What matters more is a regular pattern over time. By paying attention to light and evening activities, people can make it easier for their bodies to rest.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -108,5 +132,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “routine” most nearly mean in “routine news”?', ['Regular and ordinary.', 'Secret and private.', 'Difficult to understand.', 'Related to customers only.'], 'Regular and ordinary.', 'routine 指日常、常规的信息，不必占用会议时间逐一说明。', '不要把 routine 理解为“机密”或“复杂”。', 'foundation'],
     ['推断判断', 'Why did most coworkers change their minds after two weeks?', ['They no longer had to attend meetings.', 'They saw that the new format saved time and improved discussion.', 'The manager stopped asking for updates.', 'They received more money for their work.'], 'They saw that the new format saved time and improved discussion.', '会议变短且可集中讨论难题，说明新方式带来了实际好处。', '原文没有说取消会议或增加薪水。', 'standard'],
     ['主旨概括', 'What lesson did Rui learn from the experience?', ['Every company needs a large management plan.', 'A small change can improve a process when it focuses on useful information.', 'Employees should avoid writing updates.', 'Meetings should never include difficult questions.'], 'A small change can improve a process when it focuses on useful information.', '末段点明：改进流程不一定需要大计划，关键是保留真正需要的信息。', '不要把“减少无用信息”误解为“完全不讨论难题”。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-05', 17, [
+    ['细节定位', 'What can visitors see in one room of the repaired factory?', ['New apartments for workers.', 'Workers’ tools and photographs.', 'A railway station office.', 'A large food market.'], 'Workers’ tools and photographs.', '第三段明确说明一个房间展示工人的工具和照片。', '不要把工厂过去门外的午间市场当成如今的展览内容。', 'foundation'],
+    ['词义猜测', 'What does “preserved” most nearly mean in the last paragraph?', ['Protected and kept.', 'Sold at a high price.', 'Painted in bright colors.', 'Moved to another city.'], 'Protected and kept.', 'preserve important parts 表示保护并保留建筑的重要部分。', '不要把“赋予新用途”误解为推倒或搬走建筑。', 'foundation'],
+    ['推断判断', 'Why did the teachers collect former workers’ stories?', ['They wanted to open a new market.', 'They believed the stories were valuable to the city’s history.', 'They needed workers to repair the building.', 'They planned to build apartments.'], 'They believed the stories were valuable to the city’s history.', '第二段直接说明教师认为这些故事属于城市历史的一部分。', '不要把“收集故事”误解为寻找维修工人。', 'standard'],
+    ['主旨概括', 'What is the main idea of the passage?', ['Old factories should always become apartments.', 'A city reused an old factory to connect people with local history.', 'Schoolchildren should learn to repair machines.', 'Railway stations need more parks.'], 'A city reused an old factory to connect people with local history.', '全文讲述旧工厂被保护、再利用，并帮助居民理解城市变化。', '不要只抓住艺术课或公园等某一个细节。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-06', 21, [
+    ['细节定位', 'What do sleep experts suggest doing before bed?', ['Using bright screens for thirty minutes.', 'Lowering lights and reducing screen use.', 'Doing difficult work in bed.', 'Checking messages more often.'], 'Lowering lights and reducing screen use.', '第三段建议睡前调暗灯光，并尽量停止使用明亮屏幕。', '不要选择文中描述为问题行为的选项。', 'foundation'],
+    ['词义猜测', 'What does “signal” most nearly mean in the first paragraph?', ['A message that gives information.', 'A type of comfortable bed.', 'A loud sound from a machine.', 'A short period of sleep.'], 'A message that gives information.', '身体把光线当作提示信息，以判断该保持清醒还是准备休息。', '不要把 signal 只理解为交通信号灯。', 'foundation'],
+    ['推断判断', 'Why might reading a paper book help before sleep?', ['It gives the mind a calmer activity without bright screens.', 'It makes people sleep fewer hours.', 'It is more exciting than watching videos.', 'It replaces the need for a regular routine.'], 'It gives the mind a calmer activity without bright screens.', '纸质阅读是第三段列出的安静替代活动，传达一天即将结束的信息。', '文章没有说纸质书可取代规律作息。', 'standard'],
+    ['主旨概括', 'What is the main point of the passage?', ['All lamps should be removed from bedrooms.', 'Evening light and activities can affect sleep, so simple habits may help.', 'People need exactly eight hours of sleep every night.', 'Television is the only cause of poor sleep.'], 'Evening light and activities can affect sleep, so simple habits may help.', '文章说明晚间强光和活动会影响入睡，并给出可执行的小建议。', '不要把建议绝对化为“所有灯都不能用”或“唯一原因”。', 'standard'],
   ]),
 ]

@@ -72,6 +72,9 @@ describe('validateClozeAssignments', () => {
   it('requires every cloze item to point to an existing numbered blank', () => {
     expect(validateClozeAssignments([clozeQuestion], [clozePassage]).issues).toEqual([])
     expect(validateClozeAssignments([
+      clozeQuestion,
+    ], [clozePassage, { ...readingPassage, body: 'too short' }]).issues).toEqual([])
+    expect(validateClozeAssignments([
       { ...clozeQuestion, blankIndex: 2 },
     ], [clozePassage]).issues).toContain('完形题 cloze-001 引用的第 2 空不存在。')
   })

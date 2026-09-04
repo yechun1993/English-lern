@@ -93,5 +93,11 @@ export function validateClozeAssignments(
   questions: Question[],
   rawPassages: unknown[],
 ): ClozeAssignmentValidation {
-  return validatePassageAssignments(questions.filter((question) => question.type === 'cloze'), rawPassages)
+  const clozePassages = rawPassages.filter(
+    (passage) => typeof passage === 'object'
+      && passage !== null
+      && (passage as { type?: unknown }).type === 'cloze',
+  )
+
+  return validatePassageAssignments(questions.filter((question) => question.type === 'cloze'), clozePassages)
 }
