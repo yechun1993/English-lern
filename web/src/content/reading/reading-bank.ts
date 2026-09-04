@@ -106,6 +106,30 @@ Sleep experts often suggest a simple routine. About half an hour before bed, low
 
 Good sleep habits do not require a perfect schedule. A person who has one late night does not need to worry. What matters more is a regular pattern over time. By paying attention to light and evening activities, people can make it easier for their bodies to rest.`,
   },
+  {
+    id: 'reading-passage-07',
+    type: 'reading',
+    title: '校园服务：一个自行车维修角的诞生',
+    body: `At Lakeside College, many students used bicycles to travel between classrooms, dormitories, and shops. Yet broken bicycles often stayed near dormitory doors for weeks. A flat tire or a loose chain was a small problem, but students did not always know how to repair it. Taking a bicycle to a shop also cost money and time. The problem affected students every day.
+
+Tim, a second-year student, noticed this during his first winter at college. He asked three friends if they would help him start a weekly repair corner. A local bicycle shop agreed to lend basic tools, and a retired mechanic offered to teach simple skills. The college gave the group a small covered space near the dining hall.
+
+Every Sunday afternoon, students could bring bicycles to the corner. Volunteers showed them how to check tires, adjust brakes, and clean chains. They did not repair every problem for visitors. Instead, they explained each step and asked visitors to try it themselves. This made some students more confident about using tools.
+
+After two months, the repair corner had fixed more than eighty bicycles. It also became a place where students met people from other departments. Tim says the most valuable result was not the number of repairs. It was seeing students help one another with a skill they had learned only a few weeks earlier.`,
+  },
+  {
+    id: 'reading-passage-08',
+    type: 'reading',
+    title: '理性消费：二手物品为什么值得考虑',
+    body: `Buying something new is often seen as the easiest choice. However, second-hand markets have become more popular in many cities. People sell books, furniture, clothes, and small electronic products that they no longer need. For buyers, the main attraction is often price. A useful item may cost much less than a similar new one.
+
+Price is not the only reason to consider second-hand goods. Reusing an item can also reduce the amount of waste sent away. Making a new product usually requires materials, energy, and transport. When a product is used for a longer time, these resources may be used more effectively. Some local groups organize exchange days, where residents bring usable items and meet their neighbors. This can make reuse more social as well as practical.
+
+Of course, buying second-hand requires care. A buyer should read the description closely, ask questions, and check the condition of the item. Some online platforms allow buyers and sellers to rate each other after a sale. These ratings can offer useful information, but they are not a complete guarantee. People still need to make their own decisions.
+
+For many families, second-hand shopping is not about choosing the cheapest thing every time. It is about comparing value. An item that is affordable, useful, and in good condition may be a better choice than a new item that will soon be forgotten.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -144,5 +168,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “signal” most nearly mean in the first paragraph?', ['A message that gives information.', 'A type of comfortable bed.', 'A loud sound from a machine.', 'A short period of sleep.'], 'A message that gives information.', '身体把光线当作提示信息，以判断该保持清醒还是准备休息。', '不要把 signal 只理解为交通信号灯。', 'foundation'],
     ['推断判断', 'Why might reading a paper book help before sleep?', ['It gives the mind a calmer activity without bright screens.', 'It makes people sleep fewer hours.', 'It is more exciting than watching videos.', 'It replaces the need for a regular routine.'], 'It gives the mind a calmer activity without bright screens.', '纸质阅读是第三段列出的安静替代活动，传达一天即将结束的信息。', '文章没有说纸质书可取代规律作息。', 'standard'],
     ['主旨概括', 'What is the main point of the passage?', ['All lamps should be removed from bedrooms.', 'Evening light and activities can affect sleep, so simple habits may help.', 'People need exactly eight hours of sleep every night.', 'Television is the only cause of poor sleep.'], 'Evening light and activities can affect sleep, so simple habits may help.', '文章说明晚间强光和活动会影响入睡，并给出可执行的小建议。', '不要把建议绝对化为“所有灯都不能用”或“唯一原因”。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-07', 25, [
+    ['细节定位', 'Who offered to teach simple repair skills?', ['A dining hall worker.', 'A retired mechanic.', 'The college president.', 'A bicycle shop owner.'], 'A retired mechanic.', '第二段说明一位退休机械师愿意教授基本技能。', '自行车店借出了工具，但教授技能的是退休机械师。', 'foundation'],
+    ['词义猜测', 'What does “adjust” most nearly mean in “adjust brakes”?', ['Make small changes to improve them.', 'Buy new brakes immediately.', 'Remove the brakes completely.', 'Paint the brakes a new color.'], 'Make small changes to improve them.', 'adjust 表示作小幅调整，使刹车处于合适状态。', '不要把调整误解为必须更换或拆除。', 'foundation'],
+    ['推断判断', 'Why did volunteers ask visitors to try each repair step themselves?', ['To finish repairs more slowly.', 'To help visitors gain repair confidence and skills.', 'To avoid using any tools.', 'To charge visitors for lessons.'], 'To help visitors gain repair confidence and skills.', '第三段说志愿者解释步骤并让来访者亲自尝试，结果是学生更有信心使用工具。', '文章没有提到收费或故意拖慢维修。', 'standard'],
+    ['主旨概括', 'What is the main idea of the passage?', ['A student group created a repair corner that taught skills and built community.', 'Bicycle shops should repair every bicycle for free.', 'Students should stop using bicycles in winter.', 'College dormitories need larger doors.'], 'A student group created a repair corner that taught skills and built community.', '全文讲述学生建立维修角，既解决实际问题又促成互助交流。', '不要把“修了八十辆车”这个细节当成全文唯一重点。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-08', 29, [
+    ['细节定位', 'What can ratings on some online platforms provide?', ['A complete guarantee for every sale.', 'Useful information about buyers and sellers.', 'Free transport for all products.', 'A new product for each buyer.'], 'Useful information about buyers and sellers.', '第三段说明评价可提供有用信息，但并非完整保证。', '不要忽略原文的限定，把 ratings 理解成绝对保证。', 'foundation'],
+    ['词义猜测', 'What does “affordable” most nearly mean in the last paragraph?', ['Not too expensive for a buyer.', 'Very difficult to find.', 'Completely new and unused.', 'Made in another country.'], 'Not too expensive for a buyer.', 'affordable 表示价格在购买者能够负担的范围内。', '不要把 affordable 误解为“一定最便宜”。', 'foundation'],
+    ['推断判断', 'Why does the passage advise buyers to check an item carefully?', ['Second-hand items can vary in condition and need personal judgment.', 'Online platforms never show descriptions.', 'New items are always of low quality.', 'Second-hand goods cannot be useful.'], 'Second-hand items can vary in condition and need personal judgment.', '文章强调看说明、提问、检查状况，并说明评价不是完全保证。', '不要把谨慎购买理解为否定二手物品的价值。', 'standard'],
+    ['主旨概括', 'Which statement best summarizes the passage?', ['Second-hand shopping can offer value and reduce waste when people buy carefully.', 'People should always buy the cheapest product.', 'Only books should be bought second-hand.', 'Making new products never uses energy.'], 'Second-hand shopping can offer value and reduce waste when people buy carefully.', '文章从价格、环保和谨慎检查三方面说明理性购买二手物品的价值。', '不要遗漏“谨慎检查”这一重要条件。', 'standard'],
   ]),
 ]
