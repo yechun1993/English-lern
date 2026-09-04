@@ -59,6 +59,20 @@ The group met twice a week. Members compared notes, explained new terms, and che
 
 He still became tired near exam time, [13] he no longer worked alone in silence. He spoke [14] a tutor and learned that most students improved [15] small steps. Lin realized that a good student did not need to [16] everything immediately. He did need to [17] his time wisely. If he kept [18] small progress every week, his goal could be [19] at the end of the term. The experience taught him [20] steady effort matters more than last-minute worry.`,
   },
+  {
+    id: 'cloze-passage-03',
+    type: 'cloze',
+    title: '健康习惯：从小改变开始',
+    body: `At the beginning of the term, the school nurse [1] that many students came to class tired. They often [2] late to watch videos or finish homework. She wanted to help them build healthier routines [3] of only giving advice.
+
+The nurse invited ten students to keep a simple daily [4]. Each student chose two goals, such as getting [5] sleep and eating breakfast [6] school. The group also agreed to take some [7] every afternoon, [8] sitting at a desk for the whole day.
+
+During the first week, the students found the plan hard. One student said he had little [9] in the morning. Another forgot to bring fruit for lunch. The nurse reminded them that small [10] need time. She asked them to write down how they felt [11] they followed their goals.
+
+By the third week, several students could see a difference. They arrived at school [12] time and felt more [13] in class. [14] no one followed the plan perfectly, the group encouraged one another. They learned [15] their goals when a rule was too difficult.
+
+At the end of the month, the nurse asked the students to look [16] their notes. Most of them had [17] changed their daily lives. They did not become perfect, but they had formed useful [18]. The students understood that health improves [19] of repeated choices, not one big decision. Their first month gave them confidence to continue, and that was already a [20].`,
+  },
 ]
 
 export const clozeQuestions = [
@@ -105,5 +119,27 @@ export const clozeQuestions = [
     ['非谓语', ['making', 'make', 'made'], 'making', 'keep doing 表示持续做某事。', 'keep 后不能直接接动词原形表示持续。'],
     ['被动语态', ['reached', 'reaching', 'reach'], 'reached', 'goal 与 reach 是被动关系：goal could be reached。', 'could be 后必须接过去分词。'],
     ['宾语从句', ['that', 'what', 'whether'], 'that', 'taught him that ... 中 that 连接完整陈述从句。', 'what 在从句中需充当成分。'],
+  ]),
+  ...createClozeQuestions('cloze-passage-03', 41, [
+    ['动词辨析', ['noticed', 'forgot', 'promised'], 'noticed', 'nurse noticed that 表示护士注意到一个事实。', 'forgot/promise 与后面的事实从句不合。'],
+    ['动词短语', ['stayed up', 'gave up', 'put up'], 'stayed up', 'stay up late 表示“熬夜”。', 'give up 表放弃，语义不合。'],
+    ['固定搭配', ['instead', 'again', 'still'], 'instead', 'instead of 后接动名词，表示“而不是”。', 'again/still 不能构成 instead of 结构。'],
+    ['名词词义', ['schedule', 'ticket', 'message'], 'schedule', 'daily schedule 表示“每日安排”。', 'ticket/message 不能记录生活习惯。'],
+    ['形容词搭配', ['enough', 'little', 'few'], 'enough', 'get enough sleep 表示获得足够睡眠。', 'sleep 不可数，few 不能修饰。'],
+    ['介词辨析', ['before', 'after', 'during'], 'before', '上学前吃早餐，用 before school。', 'after school 会变成放学后。'],
+    ['名词搭配', ['exercise', 'noise', 'weather'], 'exercise', 'take some exercise 表示进行锻炼。', 'take noise/weather 不合搭配。'],
+    ['逻辑连接', ['rather than', 'because of', 'as well as'], 'rather than', 'rather than 表示“而不是久坐”。', 'as well as 表“也”，不表示替代。'],
+    ['语境词义', ['energy', 'money', 'space'], 'energy', '早晨没精神，常说 have little energy。', 'money/space 与疲倦无关。'],
+    ['名词辨析', ['changes', 'meetings', 'reasons'], 'changes', '生活方式改变需要时间，用 small changes。', 'meetings/reasons 不符合上下文。'],
+    ['时间连词', ['when', 'unless', 'because'], 'when', '记录感受发生在完成目标的时候，用 when。', 'unless 表条件，不合句意。'],
+    ['介词搭配', ['on', 'at', 'in'], 'on', 'arrive on time 表示“准时到达”。', 'in time 表及时赶上，语义不同。'],
+    ['形容词比较级', ['healthier', 'health', 'healthily'], 'healthier', 'feel more + 形容词，用 healthier。', 'health 是名词，healthily 是副词。'],
+    ['让步连词', ['Although', 'Because', 'So'], 'Although', '虽然没人完全做到，但大家相互鼓励，前后让步。', 'because/so 不表示转折。'],
+    ['非谓语', ['to follow', 'following', 'followed'], 'to follow', 'learn to do 表示“学会做某事”。', 'learn 后不能直接接过去分词。'],
+    ['介词搭配', ['at', 'for', 'with'], 'at', 'look at notes 表示查看笔记。', 'look for 表示寻找。'],
+    ['副词用法', ['gradually', 'nearly', 'hardly'], 'gradually', '生活变化是逐渐发生的，用 gradually。', 'nearly/hardly 不说明过程。'],
+    ['名词搭配', ['habits', 'projects', 'objects'], 'habits', 'form useful habits 表示形成有用习惯。', 'project/object 不合健康主题。'],
+    ['介词搭配', ['because', 'because of', 'despite'], 'because', '空后已有 of，因此填 because 构成 because of + 名词短语。', '填 because of 会与后面的 of 重复。'],
+    ['语境词义', ['success', 'mistake', 'question'], 'success', '获得继续的信心本身就是一种成功。', 'mistake/question 与积极结果相反。'],
   ]),
 ]
