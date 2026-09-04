@@ -154,6 +154,30 @@ One observation may not mean much by itself. However, thousands of observations 
 
 Citizen science does not replace professional research. Instead, it gives scientists more information and gives residents a closer look at nature around them. People who take part often say that they notice parks and streets differently after they begin watching carefully.`,
   },
+  {
+    id: 'reading-passage-11',
+    type: 'reading',
+    title: '终身学习：重新走进晚间课堂',
+    body: `At the age of forty-seven, Han Mei decided to take an evening class in digital skills. She had worked in a food company for more than twenty years and knew her job well. However, more orders and records were moving online. Han Mei could use a phone for messages, but she felt nervous when she had to create a document or join an online meeting.
+
+The class met twice a week at a local learning center. On the first evening, Han Mei worried that the younger students would learn much faster. She was also afraid of pressing the wrong button. The teacher told the class that making mistakes was part of learning and asked everyone to help a partner when possible.
+
+Han Mei began to practice for fifteen minutes after dinner each day. She wrote short notes, sent files to herself, and tried simple tables. Two classmates became her friends. When one of them understood a new task quickly, that person explained it in different words until the others understood too.
+
+After three months, Han Mei was not an expert, but she no longer avoided technology. At work, she showed a coworker how to organize a shared file. She says the class taught her more than computer skills. It reminded her that learning can begin again whenever a person is willing to take a small first step.`,
+  },
+  {
+    id: 'reading-passage-12',
+    type: 'reading',
+    title: '网络信息：分享前先花一分钟核查',
+    body: `Online information can travel from one person to thousands of people in a very short time. This makes it easy to learn about useful events, new ideas, and important news. It also makes it easy for an unclear or false message to spread. A surprising headline may make people want to share it before they have asked whether it is true.
+
+One simple habit can reduce this problem: pause before sharing. First, look at the source. Is the message from an organization, a known news service, or an individual account with no clear background? Next, check the date. An old story may be true but no longer useful in a new situation.
+
+It is also helpful to look for evidence. Does the message explain where its facts came from? Can the same information be found on more than one reliable website? A photograph or a short video can be powerful, but it may not show the whole situation. Images can be old, edited, or taken in a different place. Before sharing, people can also ask whether the message uses strong emotional words without giving clear facts. This is a reason to slow down, not a reason to argue.
+
+Checking information does not mean that people must become professional reporters. It means they should be careful with what they pass to friends and family. A short pause can prevent confusion and help online conversations become more useful.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -216,5 +240,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “patterns” most nearly mean in the third paragraph?', ['Repeated changes or regular trends.', 'Pictures of different birds.', 'Rules for using a park.', 'Personal opinions about science.'], 'Repeated changes or regular trends.', '多年大量观测可显示鸟类到达时间或数量变化的规律。', '不要把 patterns 仅理解为衣服图案。', 'foundation'],
     ['推断判断', 'Why are thousands of observations more useful than one observation?', ['They can reveal changes that are hard to see from a single report.', 'They make professional research unnecessary.', 'They guarantee every bird is correctly named.', 'They stop birds from moving to new places.'], 'They can reveal changes that are hard to see from a single report.', '第三段说明长期大量数据能够呈现季节和区域变化的模式。', '文章强调 citizen science 补充而非取代专业研究。', 'standard'],
     ['主旨概括', 'What is the main idea of the passage?', ['Only scientists can observe birds correctly.', 'Citizen science lets residents contribute useful bird observations while learning about nature.', 'Phone applications are more important than parks.', 'Birds should be kept away from cities.'], 'Citizen science lets residents contribute useful bird observations while learning about nature.', '全文说明居民记录鸟类既能为研究提供信息，也能增进对身边自然的观察。', '不要忽略普通居民参与和科学家复核之间的合作关系。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-11', 41, [
+    ['细节定位', 'What did Han Mei practice after dinner each day?', ['Writing notes, sending files, and making simple tables.', 'Cooking new meals for classmates.', 'Repairing food company machines.', 'Teaching evening classes.'], 'Writing notes, sending files, and making simple tables.', '第三段列出她每天练习的三项数字技能。', '不要把她在食品公司的工作内容当成课后练习。', 'foundation'],
+    ['词义猜测', 'What does “avoided” most nearly mean in the last paragraph?', ['Tried to stay away from.', 'Learned very quickly.', 'Paid money for.', 'Explained to others.'], 'Tried to stay away from.', 'no longer avoided technology 表示她不再回避或躲开技术问题。', '不要把 avoid 理解为“熟练使用”。', 'foundation'],
+    ['推断判断', 'Why did Han Mei become more confident in the class?', ['She was the youngest student there.', 'She practiced regularly and received support from classmates.', 'The teacher completed every task for her.', 'Her company stopped using online records.'], 'She practiced regularly and received support from classmates.', '她每天练习，且同学会换种说法解释新任务，这些都帮助她进步。', '文章没有说老师替她完成任务或公司停止线上工作。', 'standard'],
+    ['主旨概括', 'What is the main message of the passage?', ['Learning new skills is possible at different ages when people take small steps.', 'Only young people should learn digital skills.', 'Online meetings are easier than documents.', 'Food companies should offer free phones.'], 'Learning new skills is possible at different ages when people take small steps.', '末段点明终身学习的核心：愿意迈出小的第一步，就能重新开始学习。', '不要把数字技能这一具体例子误当成唯一主题。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-12', 45, [
+    ['细节定位', 'What does the passage suggest checking after looking at the source?', ['The date of the message.', 'The price of a phone.', 'The number of followers only.', 'The writer’s favorite event.'], 'The date of the message.', '第二段建议先看来源，接着检查信息日期。', '不要把未被建议的关注者数量当作核查步骤。', 'foundation'],
+    ['词义猜测', 'What does “source” most nearly mean in the passage?', ['Where information comes from.', 'A type of online picture.', 'The final result of a search.', 'A person who shares every message.'], 'Where information comes from.', 'source 指消息来自哪个机构、媒体或个人账号。', '不要把 source 只理解为“搜索结果”。', 'foundation'],
+    ['推断判断', 'Why does the passage advise finding the same information on more than one reliable website?', ['It can provide stronger support for a claim.', 'It makes a headline more surprising.', 'It guarantees that all images are new.', 'It removes the need to check dates.'], 'It can provide stronger support for a claim.', '多个可靠来源的一致信息能为消息提供更强的证据。', '多来源核对也不能替代检查日期和图片背景。', 'standard'],
+    ['主旨概括', 'What is the main purpose of the passage?', ['To teach people to pause and check online information before sharing it.', 'To stop people from using online news services.', 'To explain how to become a professional reporter.', 'To show that all online photographs are false.'], 'To teach people to pause and check online information before sharing it.', '全文围绕“分享前暂停、核查来源日期和证据”的实用习惯展开。', '不要把“保持谨慎”扩大成“完全不相信网络信息”。', 'standard'],
   ]),
 ]
