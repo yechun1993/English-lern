@@ -56,6 +56,32 @@ At the end, the second group remembered more key ideas and made fewer careless m
 
 For everyday study, this suggests a simple method. Choose one small task, focus on it, and then take a planned break. Before resting, decide what you will do next. This makes it easier to begin again. Short breaks are not a way to avoid effort; they are a way to use effort more wisely.`,
   },
+  {
+    id: 'reading-passage-03',
+    type: 'reading',
+    title: '日常环保：从减少家庭食物浪费开始',
+    body: `Food waste is often discussed as a problem for restaurants and supermarkets. However, many households also throw away food that was still safe to eat. This usually happens for ordinary reasons: people buy more than they need, forget what is in the refrigerator, or cook large meals without a plan.
+
+One neighborhood group tried to understand this problem. For one month, volunteers asked fifty families to keep a simple record of food they threw away. The families wrote down the food, the reason, and whether it had been stored correctly. At the end of the month, vegetables and bread appeared most often on the lists.
+
+The group did not tell people to stop buying fresh food. Instead, it suggested small changes. Families could check the refrigerator before shopping, make a list, and put older food where it could be seen first. They could also freeze extra bread or share a large meal with a neighbor.
+
+Several families said the record changed their habits. They had not realized how often small amounts of food were being wasted. The purpose was not to make people feel guilty. It was to help them notice a pattern and use food with more care. Reducing waste can save money, but it also shows respect for the water, energy, and work that brought food to the table.`,
+  },
+  {
+    id: 'reading-passage-04',
+    type: 'reading',
+    title: '工作管理：一次会议形式的小改变',
+    body: `Rui started work at a small design company shortly after graduation. In her first month, she noticed that weekly meetings often lasted too long. People gave updates one by one, but they rarely made clear decisions. When the meeting ended, some employees were still unsure about what to do next.
+
+Rui did not complain. She asked her manager if she could try a new format for one month. Before each meeting, everyone would write a short update: what they had finished, what problem they had, and what help they needed. During the meeting, the group would discuss only problems that required a decision.
+
+At first, a few coworkers worried that writing updates would create more work. But after two weeks, most of them changed their minds. The meetings became shorter, and employees could read routine news before they entered the room. They had more time to talk about difficult tasks and customers' needs.
+
+Rui also made a small list at the end of each meeting. It named the person responsible for each next step and the date to finish it. The list was sent to the group on the same day. As a result, fewer tasks were forgotten.
+
+After the month ended, the manager kept the new format. Rui learned that improving a process does not always require a large plan. Sometimes it begins with asking what information people truly need and removing the rest.`,
+  },
 ]
 
 export const readingQuestions = [
@@ -70,5 +96,17 @@ export const readingQuestions = [
     ['词义猜测', 'What does “recover” most nearly mean in the first paragraph?', ['Regain its ability.', 'Become more expensive.', 'Move to another place.', 'Forget everything.'], 'Regain its ability.', 'attention recover 表示注意力在休息后恢复、重新能够集中。', '不要把 recover 只理解为“找到丢失物品”。', 'foundation'],
     ['推断判断', 'Why does the passage advise deciding the next task before resting?', ['It makes the break longer.', 'It helps the learner restart more easily.', 'It removes the need for effort.', 'It guarantees perfect results.'], 'It helps the learner restart more easily.', '末段直接说明预先决定下一步会使再次开始更容易。', '不要把“更容易开始”夸大为“不必努力”或“保证满分”。', 'standard'],
     ['主旨概括', 'Which statement best summarizes the passage?', ['Any break will improve study results.', 'Long study sessions are always harmful.', 'Short, planned, low-distraction breaks can support focused study.', 'Students should study only twenty-five minutes a day.'], 'Short, planned, low-distraction breaks can support focused study.', '文章强调的是有计划、低干扰的短休息有助于保持专注。', '不要忽略“有计划、低干扰”的限定，把结论扩大为任何休息都有效。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-03', 9, [
+    ['细节定位', 'What did the fifty families record for one month?', ['Their shopping costs only.', 'Food they threw away and the reasons for it.', 'The names of local restaurants.', 'Their favorite fresh foods.'], 'Food they threw away and the reasons for it.', '第二段说明家庭记录了丢弃的食物、原因以及储存情况。', '不要把“购买清单”误认为本次记录的内容。', 'foundation'],
+    ['词义猜测', 'What does “guilty” most nearly mean in the passage?', ['Responsible for doing something wrong.', 'Ready to buy more food.', 'Unable to remember a list.', 'Interested in cooking.'], 'Responsible for doing something wrong.', 'feel guilty 表示因做错事而感到内疚。', '不要把“避免内疚”误解为“鼓励继续浪费”。', 'foundation'],
+    ['推断判断', 'Why does the group suggest putting older food where it can be seen first?', ['To make the refrigerator look larger.', 'To help families use it before it is wasted.', 'To keep it colder than new food.', 'To make shopping take longer.'], 'To help families use it before it is wasted.', '把旧食物放在显眼处，是为了优先使用，减少被遗忘和浪费。', '不要把储存位置的建议理解成改变温度。', 'standard'],
+    ['主旨概括', 'What is the main purpose of the passage?', ['To criticize families for buying fresh food.', 'To show how small household habits can reduce food waste.', 'To compare restaurants with supermarkets.', 'To explain how to grow vegetables.'], 'To show how small household habits can reduce food waste.', '全文通过社区记录和小建议说明日常习惯可以减少家庭食物浪费。', '文章不是要求不买新鲜食物，而是提倡更有计划地使用。', 'standard'],
+  ]),
+  ...createReadingQuestions('reading-passage-04', 13, [
+    ['细节定位', 'What did employees write before each meeting in Rui’s new format?', ['A short update about work and needed help.', 'A full report for customers.', 'A list of every future meeting.', 'A personal plan for weekends.'], 'A short update about work and needed help.', '第二段明确列出：已完成事项、遇到的问题和需要的帮助。', '不要把会后责任清单误认为会前更新内容。', 'foundation'],
+    ['词义猜测', 'What does “routine” most nearly mean in “routine news”?', ['Regular and ordinary.', 'Secret and private.', 'Difficult to understand.', 'Related to customers only.'], 'Regular and ordinary.', 'routine 指日常、常规的信息，不必占用会议时间逐一说明。', '不要把 routine 理解为“机密”或“复杂”。', 'foundation'],
+    ['推断判断', 'Why did most coworkers change their minds after two weeks?', ['They no longer had to attend meetings.', 'They saw that the new format saved time and improved discussion.', 'The manager stopped asking for updates.', 'They received more money for their work.'], 'They saw that the new format saved time and improved discussion.', '会议变短且可集中讨论难题，说明新方式带来了实际好处。', '原文没有说取消会议或增加薪水。', 'standard'],
+    ['主旨概括', 'What lesson did Rui learn from the experience?', ['Every company needs a large management plan.', 'A small change can improve a process when it focuses on useful information.', 'Employees should avoid writing updates.', 'Meetings should never include difficult questions.'], 'A small change can improve a process when it focuses on useful information.', '末段点明：改进流程不一定需要大计划，关键是保留真正需要的信息。', '不要把“减少无用信息”误解为“完全不讨论难题”。', 'standard'],
   ]),
 ]

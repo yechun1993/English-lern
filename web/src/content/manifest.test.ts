@@ -49,7 +49,7 @@ describe('题库清单', () => {
     expect(readingAssignmentIssues).toEqual([])
 
     if (readingQuestionBank.success) {
-      expect(readingQuestionBank.questions).toHaveLength(8)
+      expect(readingQuestionBank.questions).toHaveLength(16)
       const questionsByPassage = new Map<string, typeof readingQuestionBank.questions>()
       for (const question of readingQuestionBank.questions) {
         const questions = questionsByPassage.get(question.passageId ?? '') ?? []
@@ -57,7 +57,7 @@ describe('题库清单', () => {
         questionsByPassage.set(question.passageId ?? '', questions)
       }
 
-      expect(questionsByPassage.size).toBe(2)
+      expect(questionsByPassage.size).toBe(4)
       expect([...questionsByPassage.values()].every((questions) => questions.length === 4)).toBe(true)
     }
   })
