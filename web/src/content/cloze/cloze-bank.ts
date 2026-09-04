@@ -147,17 +147,17 @@ After several months, Zhao no longer felt like a visitor. He had made friends an
     id: 'cloze-passage-09',
     type: 'cloze',
     title: '时间管理：把重要的事排在前面',
-    body: `Chen Yu worked part-time while taking classes. At first, she tried to remember every task in her head. This made her feel [1], because she often forgot [2] a report or reply to an email.
+    body: `Chen Yu worked part-time while taking classes. This made her feel [1], because she often forgot [2] a report or reply to an email.
 
-Her teacher suggested that she make a weekly [3]. Chen Yu wrote down class times, work hours, and family plans. Then she divided large tasks [4] smaller steps. She put the most important task at the [5] of each day.
+Her teacher suggested that she make a weekly [3]. Chen Yu wrote down classes and other plans. Then she divided large tasks [4] smaller steps. She put the most important task at the [5] of each day.
 
 At first, following the plan was not easy. Friends sometimes invited her out, and unexpected work appeared. [6], she learned to leave some empty time in her schedule. If a task took longer [7] expected, she could move a smaller task to the next day.
 
 Chen Yu also stopped trying to do several things at once. When she studied, she turned [8] messages for thirty minutes. This helped her finish work more [9] and make fewer mistakes. She took a short break [10] completing each important step.
 
-After a month, Chen Yu had more control over her time. She was [11] worried at night, because she knew what to do the next morning. She understood that a plan does not have to be [12]. It only needs to be [13] enough to guide action.
+After a month, Chen Yu had more control over her time. She was [11] worried at night, because she knew what to do. She understood that a plan does not have to be [12]. It only needs to be [13] enough to guide action.
 
-Her classmates noticed the change and asked for her advice. Chen Yu told them to begin [14] one small habit, such as writing tomorrow's list before bed. She also said they should be kind to [15] when a plan failed. Good time management means choosing what matters most, not filling every minute [16] work. People can make progress [17] they review their plans and change them when necessary. Chen Yu still has busy days, but she now feels [18] of her choices. Her rule is simple: do one important thing, then do the next. This rule gives her a sense of [19] and helps her use each day more [20].`,
+Her classmates noticed the change and asked for her advice. Chen Yu told them to begin [14] one small habit, writing tomorrow's list before bed. She also said they should be kind to [15] when a plan failed. Good time management means choosing what matters most, not filling every minute [16] work. People can make progress [17] they review their plans and change them when necessary. Chen Yu has busy days, but she now feels [18] of her choices. Her rule is simple: do one important thing, then do the next. This rule gives her a sense of [19] and helps her use each day more [20].`,
   },
 ]
 
