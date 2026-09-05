@@ -1,17 +1,14 @@
 import { useMemo, useState } from 'react'
 import {
-  allQuestions,
-  clozeAssignmentIssues,
-  clozeQuestionBank,
-  diagnosticQuestions,
-  foundationTopicBanks,
-  allPassages,
-  readingAssignmentIssues,
-  readingQuestionBank,
-  translationQuestionBank,
-  translationTopicBanks,
-  writingQuestionBank,
-} from './content/manifest'
+  loadAllQuestionsForReview,
+  loadClozePractice,
+  loadDiagnosticPractice,
+  loadGrammarTopics,
+  loadReadingPractice,
+  loadTranslationPractice,
+  loadWritingPractice,
+} from './content/loaders'
+import { studyContentSummary } from './content/summary'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
@@ -47,59 +44,14 @@ function App() {
   const [subjectiveTarget, setSubjectiveTarget] = useState<SubjectiveTarget | null>(null)
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
   const [dashboard, setDashboard] = useState(() => repository.getDashboard())
+  const [topicBanks, setTopicBanks] = useState<TopicBank[]>([])
+  const [clozeBanks, setClozeBanks] = useState<ClozeBank[]>([])
+  const [readingBanks, setReadingBanks] = useState<ReadingBank[]>([])
+  const [translationBanks, setTranslationBanks] = useState<SubjectiveTopicBank[]>([])
+  const [writingBanks, setWritingBanks] = useState<SubjectiveTopicBank[]>([])
+  const [isContentLoading, setIsContentLoading] = useState(false)
+  const [contentError, setContentError] = useState<string | null>(null)
   const remainingDays = daysUntilExam(new Date())
-  const clozeBanks = useMemo<ClozeBank[]>(() => {
-    if (!clozeQuestionBank.success || clozeAssignmentIssues.length > 0) {
-      return []
-    }
-
-    return allPassages
-      .filter((passage) => passage.type === 'cloze')
-      .map((passage) => ({
-        passage,
-        questions: clozeQuestionBank.questions.filter((question) => question.passageId === passage.id),
-      }))
-  }, [])
-  const readingBanks = useMemo<ReadingBank[]>(() => {
-    if (!readingQuestionBank.success || readingAssignmentIssues.length > 0) {
-      return []
-    }
-
-    return allPassages
-      .filter((passage) => passage.type === 'reading')
-      .map((passage) => ({
-        passage,
-        questions: readingQuestionBank.questions.filter((question) => question.passageId === passage.id),
-      }))
-  }, [])
-  const translationBanks = useMemo<SubjectiveTopicBank[]>(() => (
-    translationQuestionBank.success ? translationTopicBanks : []
-  ), [])
-  const writingBanks = useMemo<SubjectiveTopicBank[]>(() => (
-    writingQuestionBank.success
-      ? writingQuestionBank.questions.map((question) => ({ topic: question.topic, questions: [question] }))
-      : []
-  ), [])
-  const dueReviewQuestions = useMemo(() => {
-    if (!allQuestions.success) {
-      return []
-    }
-
-    const questionsById = new Map(allQuestions.questions.map((question) => [question.id, question]))
-    return repository
-      .listDueReviews(new Date())
-      .map(({ questionId }) => questionsById.get(questionId))
-      .filter((question): question is Question => question !== undefined)
-  }, [dashboard.dueReviewCount, repository])
-
-  if (!diagnosticQuestions.success) {
-    return (
-      <main className="app-shell">
-        <h1>题库暂时无法加载</h1>
-        <p>{diagnosticQuestions.issues.join('；')}</p>
-      </main>
-    )
-  }
 
   function startPractice(
     title: string,
@@ -121,6 +73,123 @@ function App() {
       createdAt: new Date().toISOString(),
     })
     setDashboard(repository.getDashboard())
+  }
+
+  function reportContentIssues(issues: string[]) {
+    setContentError(issues.length > 0 ? issues.join('；') : '题库暂时无法加载，请稍后重试。')
+  }
+
+  async function runContentLoad(task: () => Promise<void>) {
+    setIsContentLoading(true)
+    setContentError(null)
+
+    try {
+      await task()
+    } catch {
+      setContentError('题库加载失败，请检查网络或刷新页面后重试。')
+    } finally {
+      setIsContentLoading(false)
+    }
+  }
+
+  function openDiagnosticPractice() {
+    void runContentLoad(async () => {
+      const questionBank = await loadDiagnosticPractice()
+      if (!questionBank.success) {
+        reportContentIssues(questionBank.issues)
+        return
+      }
+
+      startPractice('诊断练习', questionBank.questions)
+    })
+  }
+
+  function openTopicHub() {
+    void runContentLoad(async () => {
+      setTopicBanks(await loadGrammarTopics())
+      setScreen('topics')
+    })
+  }
+
+  function openClozeHub() {
+    void runContentLoad(async () => {
+      const content = await loadClozePractice()
+      if (!content.questionBank.success || content.assignmentIssues.length > 0) {
+        reportContentIssues(content.questionBank.success ? content.assignmentIssues : content.questionBank.issues)
+        return
+      }
+
+      setClozeBanks(content.passages.map((passage) => ({
+        passage,
+        questions: content.questionBank.questions.filter((question) => question.passageId === passage.id),
+      })))
+      setScreen('cloze')
+    })
+  }
+
+  function openReadingHub() {
+    void runContentLoad(async () => {
+      const content = await loadReadingPractice()
+      if (!content.questionBank.success || content.assignmentIssues.length > 0) {
+        reportContentIssues(content.questionBank.success ? content.assignmentIssues : content.questionBank.issues)
+        return
+      }
+
+      setReadingBanks(content.passages.map((passage) => ({
+        passage,
+        questions: content.questionBank.questions.filter((question) => question.passageId === passage.id),
+      })))
+      setScreen('reading')
+    })
+  }
+
+  function openTranslationHub() {
+    void runContentLoad(async () => {
+      const content = await loadTranslationPractice()
+      if (!content.questionBank.success) {
+        reportContentIssues(content.questionBank.issues)
+        return
+      }
+
+      setTranslationBanks(content.topicBanks)
+      setScreen('translation')
+    })
+  }
+
+  function openWritingHub() {
+    void runContentLoad(async () => {
+      const content = await loadWritingPractice()
+      if (!content.questionBank.success) {
+        reportContentIssues(content.questionBank.issues)
+        return
+      }
+
+      setWritingBanks(content.questions.map((question) => ({ topic: question.topic, questions: [question] })))
+      setScreen('writing')
+    })
+  }
+
+  function openDueReviews() {
+    void runContentLoad(async () => {
+      const questionBank = await loadAllQuestionsForReview()
+      if (!questionBank.success) {
+        reportContentIssues(questionBank.issues)
+        return
+      }
+
+      const questionsById = new Map(questionBank.questions.map((question) => [question.id, question]))
+      const dueReviewQuestions = repository
+        .listDueReviews(new Date())
+        .map(({ questionId }) => questionsById.get(questionId))
+        .filter((question): question is Question => question !== undefined)
+
+      if (dueReviewQuestions.length === 0) {
+        setContentError('暂时没有可开始的到期复习题。')
+        return
+      }
+
+      startPractice('到期复习', dueReviewQuestions)
+    })
   }
 
   function startSubjective(
@@ -179,7 +248,7 @@ function App() {
   if (screen === 'topics') {
     return (
       <TopicHub
-        banks={foundationTopicBanks}
+        banks={topicBanks}
         onBack={() => setScreen('dashboard')}
         onStart={(bank: TopicBank) => startPractice(bank.topic, bank.questions, 'topics')}
       />
@@ -248,7 +317,7 @@ function App() {
           <p className="subtitle">按题型逐点突破，先稳定拿到及格分。</p>
         </div>
         <div className="header-actions">
-          <button className="topic-entry" onClick={() => setScreen('topics')} type="button">专项突破</button>
+          <button className="topic-entry" disabled={isContentLoading} onClick={openTopicHub} type="button">专项突破</button>
           <div className="exam-countdown" aria-label="考试倒计时">
             <span>距离 10 月 17 日</span>
             <strong>{remainingDays} 天</strong>
@@ -263,6 +332,9 @@ function App() {
         </div>
         <p className="progress-text">已完成 <strong>{dashboard.attemptCount}</strong> 题</p>
       </section>
+
+      {isContentLoading && <p className="content-status" role="status">正在加载题库…</p>}
+      {contentError && <p className="content-error" role="alert">{contentError}</p>}
 
       <section aria-labelledby="study-plan-title">
         <div className="section-heading">
@@ -279,46 +351,38 @@ function App() {
               title: '语法与词汇',
               detail: '先做 20 题诊断，确定最该补的基础点',
               action: '开始练习',
-              onClick: () => startPractice('诊断练习', diagnosticQuestions.questions),
+              onClick: openDiagnosticPractice,
             },
             {
               title: '完形填空',
-              detail: `${clozeBanks.length} 篇 · ${clozeBanks.reduce((total, bank) => total + bank.questions.length, 0)} 空`,
+              detail: `${studyContentSummary.cloze.passages} 篇 · ${studyContentSummary.cloze.questions} 空`,
               action: '选择篇章',
-              onClick: clozeQuestionBank.success && clozeAssignmentIssues.length === 0
-                ? () => setScreen('cloze')
-                : undefined,
+              onClick: openClozeHub,
             },
             {
               title: '阅读理解',
-              detail: `${readingBanks.length} 篇 · ${readingBanks.reduce((total, bank) => total + bank.questions.length, 0)} 题`,
+              detail: `${studyContentSummary.reading.passages} 篇 · ${studyContentSummary.reading.questions} 题`,
               action: '选择阅读',
-              onClick: readingQuestionBank.success && readingAssignmentIssues.length === 0
-                ? () => setScreen('reading')
-                : undefined,
+              onClick: openReadingHub,
             },
             {
               title: '汉译英',
-              detail: `${translationBanks.length} 个专题 · ${translationBanks.reduce((total, bank) => total + bank.questions.length, 0)} 句`,
+              detail: `${studyContentSummary.translation.topics} 个专题 · ${studyContentSummary.translation.questions} 句`,
               action: '选择专题',
-              onClick: translationQuestionBank.success
-                ? () => setScreen('translation')
-                : undefined,
+              onClick: openTranslationHub,
             },
             {
               title: '写作',
-              detail: `${writingBanks.length} 个题目 · 含三点提纲和范文`,
+              detail: `${studyContentSummary.writing.prompts} 个题目 · 含三点提纲和范文`,
               action: '选择题目',
-              onClick: writingQuestionBank.success
-                ? () => setScreen('writing')
-                : undefined,
+              onClick: openWritingHub,
             },
             {
               title: '错题回顾',
               detail: `有 ${dashboard.dueReviewCount} 题到期复习`,
               action: '去复习',
-              onClick: dueReviewQuestions.length > 0
-                ? () => startPractice('到期复习', dueReviewQuestions)
+              onClick: dashboard.dueReviewCount > 0
+                ? openDueReviews
                 : undefined,
             },
           ].map((task, index) => (
@@ -328,7 +392,7 @@ function App() {
               <p>{task.detail}</p>
               <button
                 type="button"
-                disabled={!task.onClick}
+                disabled={!task.onClick || isContentLoading}
                 onClick={task.onClick}
               >
                 {task.action}

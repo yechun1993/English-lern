@@ -22,4 +22,12 @@ describe('写作专项题库', () => {
       return checklistLength >= 3 && checklistLength <= 5
     })).toBe(true)
   })
+
+  it('keeps audited digital-life and volunteering expressions natural', () => {
+    const internetEssay = writingQuestions.find((question) => question.topic === '网络使用与自律')
+    const volunteeringEssay = writingQuestions.find((question) => question.topic === '志愿服务')
+
+    expect(internetEssay?.referenceAnswer).toContain('turn off unnecessary notifications')
+    expect(volunteeringEssay?.referenceAnswer).toContain('make a community a warmer place')
+  })
 })

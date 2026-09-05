@@ -44,7 +44,7 @@ const writingEntries: WritingEntry[] = [
 
 However, using the Internet without control can cause problems. Some people spend too much time watching short videos or checking messages. As a result, they sleep late, lose attention in class, and have less time for exercise or family talks.
 
-In my opinion, we should use the Internet as a helpful tool instead of letting it control us. We can set a time limit for entertainment, turn off unnecessary notices, and choose reliable learning materials. With self-control, the Internet can make our lives richer and more useful.`,
+In my opinion, we should use the Internet as a helpful tool instead of letting it control us. We can set a time limit for entertainment, turn off unnecessary notifications, and choose reliable learning materials. With self-control, the Internet can make our lives richer and more useful.`,
     explanation: '采用“便利—问题—建议”的三段结构。第二段用 As a result 说明后果，结尾回到 self-control。',
     misconception: '不要只罗列手机坏处而不回应“如何明智使用”的题目。',
     difficulty: 'foundation',
@@ -79,7 +79,7 @@ I know that healthy habits need patience. Instead of making an unrealistic promi
     topic: '志愿服务',
     prompt: 'Directions: Write a composition on the topic “The Value of Volunteering”.',
     outline: ['介绍你所了解的一项志愿服务', '说明志愿服务对他人和自己的意义', '表达是否愿意参加及原因'],
-    referenceAnswer: `Volunteering is a simple way to make a community warmer. In my neighborhood, some young people visit older residents on weekends. They help with small jobs, listen to stories, and teach them how to use a smartphone.
+    referenceAnswer: `Volunteering is a simple way to make a community a warmer place. In my neighborhood, some young people visit older residents on weekends. They help with small jobs, listen to stories, and teach them how to use a smartphone.
 
 This work is helpful to older people because it gives them practical support and company. At the same time, volunteers learn to be patient and responsible. They also understand that a few hours of help can mean a lot to someone who lives alone.
 
