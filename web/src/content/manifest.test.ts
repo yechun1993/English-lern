@@ -72,4 +72,14 @@ describe('题库清单', () => {
       expect(new Set(translations.map((question) => question.topic))).toHaveLength(8)
     }
   })
+
+  it('includes all 16 writing prompts in the validated content collection', () => {
+    expect(allQuestions.success).toBe(true)
+
+    if (allQuestions.success) {
+      const writingQuestions = allQuestions.questions.filter((question) => question.type === 'writing')
+      expect(writingQuestions).toHaveLength(16)
+      expect(writingQuestions.every((question) => question.checklist?.length === 5)).toBe(true)
+    }
+  })
 })

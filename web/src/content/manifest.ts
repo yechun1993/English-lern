@@ -24,6 +24,7 @@ import {
   translationQuestions as translationItems,
   translationTopicBanks as translationBanks,
 } from './translation/translation-bank'
+import { writingQuestions as writingItems } from './writing/writing-bank'
 import { validateClozeAssignments, validatePassageAssignments, type Passage } from '../domain/passage'
 
 export const diagnosticQuestions = validateQuestionBank(diagnosticItems)
@@ -77,6 +78,7 @@ export const grammarAdvancedQuestions = validateQuestionBank(grammarAdvancedItem
 export const clozeQuestionBank = validateQuestionBank(clozeItems)
 export const readingQuestionBank = validateQuestionBank(readingItems)
 export const translationQuestionBank = validateQuestionBank(translationItems)
+export const writingQuestionBank = validateQuestionBank(writingItems)
 export const translationTopicBanks = translationBanks
 export const allPassages: Passage[] = [...clozePassages, ...readingPassages]
 export const clozeAssignmentIssues = clozeQuestionBank.success
@@ -92,4 +94,5 @@ export const allQuestions = validateQuestionBank([
   ...clozeItems,
   ...readingItems,
   ...translationItems,
+  ...writingItems,
 ])

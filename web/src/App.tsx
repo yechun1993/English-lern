@@ -10,6 +10,7 @@ import {
   readingQuestionBank,
   translationQuestionBank,
   translationTopicBanks,
+  writingQuestionBank,
 } from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
@@ -23,7 +24,7 @@ import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'practice' | 'subjective'
+type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'practice' | 'subjective'
 
 interface PracticeTarget {
   title: string
@@ -72,6 +73,11 @@ function App() {
   }, [])
   const translationBanks = useMemo<SubjectiveTopicBank[]>(() => (
     translationQuestionBank.success ? translationTopicBanks : []
+  ), [])
+  const writingBanks = useMemo<SubjectiveTopicBank[]>(() => (
+    writingQuestionBank.success
+      ? writingQuestionBank.questions.map((question) => ({ topic: question.topic, questions: [question] }))
+      : []
   ), [])
   const dueReviewQuestions = useMemo(() => {
     if (!allQuestions.success) {
@@ -203,8 +209,30 @@ function App() {
     return (
       <SubjectiveHub
         banks={translationBanks}
+        cardHint="先翻译后对照"
+        description="每次练一个句型专题。先独立写出英文，再主动查看参考译文和自检清单。"
+        eyebrow="汉译英 · 先输出后自检"
+        itemUnit="句"
         onBack={() => setScreen('dashboard')}
         onStart={(bank) => startSubjective(`汉译英 · ${bank.topic}`, bank.questions, 'translation')}
+        sectionLabel="汉译英专项"
+        title="汉译英"
+      />
+    )
+  }
+
+  if (screen === 'writing') {
+    return (
+      <SubjectiveHub
+        banks={writingBanks}
+        cardHint="先写后对照"
+        description="每次只写一个题目。先按三点提纲完成自己的作文，再主动查看范文和自检清单。"
+        eyebrow="写作 · 先完成自己的表达"
+        itemUnit="题"
+        onBack={() => setScreen('dashboard')}
+        onStart={(bank) => startSubjective(`写作 · ${bank.topic}`, bank.questions, 'writing')}
+        sectionLabel="写作题目"
+        title="写作"
       />
     )
   }
@@ -273,6 +301,14 @@ function App() {
               action: '选择专题',
               onClick: translationQuestionBank.success
                 ? () => setScreen('translation')
+                : undefined,
+            },
+            {
+              title: '写作',
+              detail: `${writingBanks.length} 个题目 · 含三点提纲和范文`,
+              action: '选择题目',
+              onClick: writingQuestionBank.success
+                ? () => setScreen('writing')
                 : undefined,
             },
             {

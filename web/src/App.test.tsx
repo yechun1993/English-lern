@@ -73,6 +73,31 @@ describe('App', () => {
     })
   })
 
+  it('lets the learner choose one writing prompt and draft before reading the model essay', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '选择题目' }))
+    expect(screen.getByRole('heading', { name: '写作' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '网络使用与自律 · 1 题' }))
+    expect(screen.getByText('写作 · 网络使用与自律')).toBeInTheDocument()
+
+    await user.type(screen.getByRole('textbox', { name: '我的作文' }), 'The Internet is useful.')
+    await user.click(screen.getByRole('button', { name: '保存草稿并查看参考答案' }))
+
+    expect(screen.getByRole('region', { name: '参考答案与自检' })).toHaveTextContent(
+      'The Internet has become an important part of daily life.',
+    )
+    expect(JSON.parse(window.localStorage.getItem('szu-degree-english.study-state.v1') ?? '{}')).toMatchObject({
+      drafts: {
+        'writing-001': {
+          content: 'The Internet is useful.',
+        },
+      },
+    })
+  })
+
   it('opens a 20-question grammar micro-topic from the topic hub', async () => {
     const user = userEvent.setup()
     render(<App />)
