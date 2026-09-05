@@ -9,4 +9,11 @@ describe('完形填空练习内容', () => {
     expect(clozeQuestions.every((question) => question.options.length === 3)).toBe(true)
     expect(validateClozeAssignments(clozeQuestions, clozePassages).issues).toEqual([])
   })
+
+  it('uses a natural phrase for improving through small steps', () => {
+    const question = clozeQuestions.find((item) => item.id === 'cloze-035')
+
+    expect(question?.answer).toBe('by taking')
+    expect(question?.options).toContain('by taking')
+  })
 })

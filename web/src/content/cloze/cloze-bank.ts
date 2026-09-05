@@ -249,7 +249,7 @@ export const clozeQuestions = [
     ['形容词搭配', ['confident', 'careful', 'silent'], 'confident', 'feel confident when speaking 表示发言更有信心。', 'careful/silent 不表达信心。'],
     ['逻辑连接', ['although', 'because', 'unless'], 'although', '虽临近考试疲惫，却不再独自学习，形成让步。', 'because 表原因，逻辑不通。'],
     ['介词搭配', ['with', 'at', 'for'], 'with', 'speak with somebody 表示“与某人交谈”。', 'speak at 不表示交谈对象。'],
-    ['介词搭配', ['in', 'by', 'on'], 'in', 'improve in small steps 表示在小步骤中逐步提升。', 'by small steps 可表方式，但此处固定表达优先用 in。'],
+    ['介词搭配', ['by taking', 'with taking', 'for taking'], 'by taking', 'by + 动名词表示“通过做某事”；take small steps 表示采取循序渐进的小步骤。', '不要只按中文把“逐步”译为 in small steps；本句需要说明改善的方式。'],
     ['情态动词后动词', ['know', 'knowing', 'known'], 'know', 'need to 后接动词原形 know。', 'knowing/known 不能直接跟在 need to 后。'],
     ['动词搭配', ['use', 'lose', 'change'], 'use', 'use time wisely 表示“明智地利用时间”。', 'lose time 与 wisely 语义冲突。'],
     ['非谓语', ['making', 'make', 'made'], 'making', 'keep doing 表示持续做某事。', 'keep 后不能直接接动词原形表示持续。'],
