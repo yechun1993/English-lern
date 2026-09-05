@@ -19,6 +19,7 @@ import { ClozeHub, type ClozeBank } from './features/ClozeHub'
 import { ReadingHub, type ReadingBank } from './features/ReadingHub'
 import { SubjectiveHub, type SubjectiveTopicBank } from './features/SubjectiveHub'
 import { SubjectiveSession } from './features/SubjectiveSession'
+import { PwaUpdateNotice } from './components/PwaUpdateNotice'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
@@ -239,6 +240,7 @@ function App() {
 
   return (
     <main className="app-shell">
+      <PwaUpdateNotice />
       <header className="site-header">
         <div>
           <p className="eyebrow">深圳大学学位英语 · 60 分攻关</p>

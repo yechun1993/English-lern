@@ -1,0 +1,62 @@
+.pwa-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+  padding: 14px 16px;
+  border: 1px solid #99f6e4;
+  border-radius: 14px;
+  background: #f0fdfa;
+  color: #134e4a;
+}
+
+.pwa-notice-update {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+.pwa-notice strong,
+.pwa-notice p {
+  margin: 0;
+}
+
+.pwa-notice p {
+  margin-top: 3px;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.pwa-notice-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.pwa-notice button {
+  width: auto;
+  white-space: nowrap;
+}
+
+.pwa-secondary-button {
+  background: transparent;
+  color: inherit;
+  box-shadow: inset 0 0 0 1px currentcolor;
+}
+
+.pwa-secondary-button:hover {
+  background: rgb(15 118 110 / 0.08);
+}
+
+@media (max-width: 560px) {
+  .pwa-notice,
+  .pwa-notice-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pwa-notice button {
+    width: 100%;
+  }
+}
