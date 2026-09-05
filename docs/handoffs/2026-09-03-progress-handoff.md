@@ -18,8 +18,8 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 已提交的最新提交：`68fb7bd feat: add offline PWA support`
-- 主观题工作流、汉译英、写作、内容报告和离线 PWA 均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
+- 已提交的最新提交：`6fe90da test: add desktop and mobile acceptance coverage`
+- 主观题工作流、汉译英、写作、内容报告、离线 PWA 和浏览器验收配置均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
 
 已提交的近期关键提交：
 
@@ -35,6 +35,7 @@
 10. `d6edd09 feat: add guided writing practice`
 11. `f0e201f chore: add content reporting and audit tools`
 12. `68fb7bd feat: add offline PWA support`
+13. `6fe90da test: add desktop and mobile acceptance coverage`
 
 ## 已实现且已验证的功能
 
@@ -143,7 +144,7 @@ TypeScript 编译和 Vite 生产构建通过
 2. **专题页细化**：根据每个专题的实际分层显示“基础”或“基础至冲刺”；之后可加入薄弱专题推荐和主观题草稿完成提示。
 3. **跨设备同步**：Supabase 登录、待同步队列的远端适配和 RLS 迁移；需要用户创建并提供 Supabase 项目配置后才可真实启用。
 4. **首包优化**：按题型动态导入内容与页面，消除当前超过 500 kB 的构建性能提示；PWA 预缓存总量约 541 kB。
-5. **发布验收**：配置 Playwright 端到端测试，完成静态部署以及电脑/手机/平板的安装、离线、草稿恢复实测。
+5. **发布验收**：执行已配置的 Playwright 桌面/手机用例，完成静态部署以及电脑/手机/平板的安装、离线、草稿恢复实测。
 
 ## 继续工作时的注意事项
 
@@ -156,5 +157,5 @@ TypeScript 编译和 Vite 生产构建通过
 
 1. 根据 `web/docs/content-audit.md` 对待复核模块进行人工语言审校；每次只勾选实际审读过的题号，并保留日期和理由。
 2. 以动态导入把内容银行和练习页面按题型拆分，重新运行生产构建并比较主包大小。
-3. 配置 Playwright 的桌面与手机端项目，覆盖客观题核对、主观题草稿恢复和 PWA 离线入口。
+3. Playwright 已配置两个用例：桌面端“主动核对后看解析”、手机端“保存后恢复汉译英草稿”。目前 `npx playwright test --list` 已确认配置可发现用例；本机 Playwright Chromium 下载在网络传输阶段停滞，尚未实际运行。网络可用后执行 `npx playwright install chromium`，再运行 `npm run test:e2e`。
 4. 需要真实跨设备同步或部署时，先由用户提供 Supabase 项目配置和部署渠道；在此之前只完善离线网页与验收测试。
