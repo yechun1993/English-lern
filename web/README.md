@@ -1,32 +1,42 @@
-# React + TypeScript + Vite
+# 深圳大学学位英语 60 分攻关
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+这是一个面向深圳大学高等学历继续教育学士学位英语考试的响应式专项学习网站。学习设计以“先稳定及格”为目标：按题型和微专题短练，不要求学习者一开始完成整套模拟卷。
 
-Currently, two official plugins are available:
+## 已有内容
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| 模块 | 内容量 | 学习方式 |
+| --- | ---: | --- |
+| 诊断 | 20 题 | 先定位语法与词汇基础 |
+| 语法与词汇 | 360 题 | 18 个微专题，每次 20 题 |
+| 完形填空 | 12 篇、240 空 | 每次完整练一篇 20 空文章 |
+| 阅读理解 | 16 篇、64 题 | 每篇 4 题，覆盖细节、词义、推断与主旨 |
+| 汉译英 | 80 句 | 8 个专项，每次 10 句，先写后对照 |
+| 写作 | 16 题 | 每次 1 题，三点提纲、范文与自检清单 |
+| 合计 | 780 题 | 全部通过统一内容校验 |
 
-## React Compiler
+客观题需要学习者主动核对答案；主观题先保存草稿，随后才显示参考译文或范文和自检清单。作答、草稿与复习状态保存在浏览器 LocalStorage 中。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 本地运行
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 质量检查与内容工具
+
+```bash
+npm run test:run          # 运行单元与交互测试
+npm run validate:content  # 校验题库 schema、ID 和篇章关联
+npm run report:content    # 输出题型、难度与专题数量
+npm run export:content    # 生成本地 content-backup.json 备份
+npm run build             # TypeScript 检查与生产构建
+```
+
+内容自动验证和人工审校状态见 [docs/content-audit.md](docs/content-audit.md)。
+
+## 当前边界
+
+- 当前版本为本地浏览器学习版，尚未配置真实跨设备同步、账户登录或公开部署。
+- `content-backup.json` 是本地导出文件，已被 Git 忽略，不会提交到仓库。
+- 所有题干、文章、解析、参考译文和范文均按官方样卷的基础至中等难度原创编写；人工语言审校仍按 `docs/content-audit.md` 中的清单持续进行。
