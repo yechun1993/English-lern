@@ -31,6 +31,8 @@ npm run validate:content  # 校验题库 schema、ID 和篇章关联
 npm run report:content    # 输出题型、难度与专题数量
 npm run export:content    # 生成本地 content-backup.json 备份
 npm run build             # TypeScript 检查与生产构建
+npx playwright install chromium  # 首次安装浏览器验收运行时
+npm run test:e2e          # 桌面与手机视口浏览器验收
 ```
 
 内容自动验证和人工审校状态见 [docs/content-audit.md](docs/content-audit.md)。
