@@ -18,7 +18,7 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 已提交的最新提交：`6fe90da test: add desktop and mobile acceptance coverage`
+- 已提交的最新提交：`5857f3d perf: load practice content by question type`
 - 主观题工作流、汉译英、写作、内容报告、离线 PWA 和浏览器验收配置均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
 
 已提交的近期关键提交：
@@ -36,6 +36,8 @@
 11. `f0e201f chore: add content reporting and audit tools`
 12. `68fb7bd feat: add offline PWA support`
 13. `6fe90da test: add desktop and mobile acceptance coverage`
+14. `cbd76c0 docs: note browser acceptance status`
+15. `5857f3d perf: load practice content by question type`
 
 ## 已实现且已验证的功能
 
@@ -47,6 +49,7 @@
 - LocalStorage 保存作答记录、草稿、掌握度和待同步事件；当前没有远端账号，因此仅本地持久化。
 - 首页已不再显示固定演示进度：显示实际“已完成 N 题”、实际到期复习数量；有到期题时“去复习”可直接开启相应练习。
 - 距离 10 月 17 日的倒计时按设备当地日历日自动计算，考试后最小显示 0 天。
+- 首次打开首页时不再静态装入整套 780 题：诊断、语法、完形、阅读、汉译英、写作在点击相应入口后按题型加载；到期复习才加载全集用于题号匹配。加载期间会禁用重复点击并显示中文状态，加载异常会显示中文错误提示。
 
 ### 已入库内容
 
@@ -83,16 +86,19 @@
 
 ```text
 npm run test:run
-16 个测试文件通过，51 个测试通过
+19 个测试文件通过，58 个测试通过
 
 npm run validate:content
 题库校验通过：共 780 道题
 
+npm run lint
+无错误
+
 npm run build
-TypeScript 编译和 Vite 生产构建通过
+TypeScript 编译和 Vite 生产构建通过；初始 JavaScript 为 214.16 kB（gzip 67.17 kB）
 ```
 
-当前构建会给出一个非阻塞性能提示：主 JavaScript 压缩后约 534 kB，超过 Vite 默认 500 kB 阈值。功能和类型检查均通过；后续可用路由级动态导入进行代码拆分，但不要把提示误判为构建失败。
+本轮已完成按题型的内容分包：诊断、写作、汉译英、阅读、完形和语法分别作为独立资源；旧版主 JavaScript 约 536 kB 的 Vite 体积提示已消失。PWA 预缓存 14 个资源，共约 546 kB；离线能力保持不变。
 
 高频题库已人工抽检：每个十号题及所有 18 道冲刺题；审校中已修正一个重复干扰项和一个 `would rather` 的未来语境。
 
@@ -130,6 +136,7 @@ TypeScript 编译和 Vite 生产构建通过
 - 每道主观题都要求先输入自己的答案；点击“保存草稿并查看参考答案”后，才显示参考译文或范文、表达提示和 3–5 条自检清单。系统不伪造自动评分或掌握度。
 - 草稿通过 `LocalStudyRepository` 存入 LocalStorage；返回同一专题时会恢复相应草稿。当前仍未接入远端账户，所以该数据仅本机可见。
 - 写作题干会保留三点中文提纲；16 篇原创范文均通过自动测试，长度在 120–150 个英文词内。
+- 最新人工审校记录见 `web/docs/content-audit.md`：已完整审读 16 篇写作范文并修正两处英文搭配；已抽样审读汉译英 16 句和阅读 4 篇/16 题。其余未审内容仍明确标记为待复核。
 
 ### 已完成的离线 PWA 层
 
@@ -140,11 +147,10 @@ TypeScript 编译和 Vite 生产构建通过
 
 ## 后续优先级
 
-1. **内容审校与报告**：实现 `report:content` / 内容备份脚本，完成全库抽样审校记录，特别复核 16 篇写作范文和主观题参考答案的自然度。
+1. **内容审校与报告**：继续按 `web/docs/content-audit.md` 的待审范围复核：诊断 20 题、基础语法抽样、完形 12 篇关键空、阅读剩余 12 篇、汉译英剩余 64 句。
 2. **专题页细化**：根据每个专题的实际分层显示“基础”或“基础至冲刺”；之后可加入薄弱专题推荐和主观题草稿完成提示。
-3. **跨设备同步**：Supabase 登录、待同步队列的远端适配和 RLS 迁移；需要用户创建并提供 Supabase 项目配置后才可真实启用。
-4. **首包优化**：按题型动态导入内容与页面，消除当前超过 500 kB 的构建性能提示；PWA 预缓存总量约 541 kB。
-5. **发布验收**：执行已配置的 Playwright 桌面/手机用例，完成静态部署以及电脑/手机/平板的安装、离线、草稿恢复实测。
+3. **发布验收**：执行已配置的 Playwright 桌面/手机用例，完成静态部署以及电脑/手机/平板的安装、离线、草稿恢复实测。
+4. **跨设备同步**：Supabase 登录、待同步队列的远端适配和 RLS 迁移；需要用户创建并提供 Supabase 项目配置后才可真实启用。
 
 ## 继续工作时的注意事项
 
@@ -155,7 +161,6 @@ TypeScript 编译和 Vite 生产构建通过
 
 ## 下一轮的精确续接点
 
-1. 根据 `web/docs/content-audit.md` 对待复核模块进行人工语言审校；每次只勾选实际审读过的题号，并保留日期和理由。
-2. 以动态导入把内容银行和练习页面按题型拆分，重新运行生产构建并比较主包大小。
-3. Playwright 已配置两个用例：桌面端“主动核对后看解析”、手机端“保存后恢复汉译英草稿”。目前 `npx playwright test --list` 已确认配置可发现用例；本机 Playwright Chromium 下载在网络传输阶段停滞，尚未实际运行。网络可用后执行 `npx playwright install chromium`，再运行 `npm run test:e2e`。
-4. 需要真实跨设备同步或部署时，先由用户提供 Supabase 项目配置和部署渠道；在此之前只完善离线网页与验收测试。
+1. 根据 `web/docs/content-audit.md` 对待复核模块进行人工语言审校；每次只记录实际审读过的题号和结果。下一步可从诊断 20 题或完形每篇的“搭配、逻辑连接、词形”三项复核开始。
+2. Playwright 已配置两个用例：桌面端“主动核对后看解析”、手机端“保存后恢复汉译英草稿”。目前 `npx playwright test --list` 已确认配置可发现用例；2026-09-05 两次 `npx playwright install chromium` 都在下载 191.8 MiB Chromium 时持续停留于 0%，进程随后退出且未留下浏览器缓存，因此尚未实际运行。网络可用后先执行安装，再运行 `npm run test:e2e`。
+3. 需要真实跨设备同步或部署时，先由用户提供 Supabase 项目配置和部署渠道；在此之前只完善离线网页与验收测试。
