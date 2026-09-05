@@ -18,8 +18,8 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 已提交的最新提交：`d6edd09 feat: add guided writing practice`
-- 主观题工作流、汉译英和写作内容均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
+- 已提交的最新提交：`68fb7bd feat: add offline PWA support`
+- 主观题工作流、汉译英、写作、内容报告和离线 PWA 均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
 
 已提交的近期关键提交：
 
@@ -33,6 +33,8 @@
 8. `c9ea369 content: complete reading practice collection`
 9. `3bb3581 feat: add translation practice workflow`
 10. `d6edd09 feat: add guided writing practice`
+11. `f0e201f chore: add content reporting and audit tools`
+12. `68fb7bd feat: add offline PWA support`
 
 ## 已实现且已验证的功能
 
@@ -128,13 +130,20 @@ TypeScript 编译和 Vite 生产构建通过
 - 草稿通过 `LocalStudyRepository` 存入 LocalStorage；返回同一专题时会恢复相应草稿。当前仍未接入远端账户，所以该数据仅本机可见。
 - 写作题干会保留三点中文提纲；16 篇原创范文均通过自动测试，长度在 120–150 个英文词内。
 
+### 已完成的离线 PWA 层
+
+- 生产构建会生成中文 `manifest.webmanifest`、原创 SVG 应用图标、`sw.js` 与 Workbox 缓存文件；网页可作为独立应用安装到支持 PWA 的电脑、手机和平板浏览器。
+- service worker 预缓存网站入口、编译后的页面资源、题库资源和 manifest；已打开过的网站在断网时会回退到应用入口，本机 LocalStorage 中的作答和草稿不会丢失。
+- 首次缓存成功后，页面会显示“已可离线使用”；检测到更新后，用户可以选择“立即更新”或稍后更新。更新由用户主动触发，不会在作答中途强制刷新。
+- PWA 不等于跨设备同步：离线缓存和学习记录仍以当前浏览器为单位。真实同步仍需要后续 Supabase 项目、认证和 RLS 配置。
+
 ## 后续优先级
 
 1. **内容审校与报告**：实现 `report:content` / 内容备份脚本，完成全库抽样审校记录，特别复核 16 篇写作范文和主观题参考答案的自然度。
 2. **专题页细化**：根据每个专题的实际分层显示“基础”或“基础至冲刺”；之后可加入薄弱专题推荐和主观题草稿完成提示。
-3. **PWA 与跨设备同步**：离线缓存、Supabase 登录和待同步队列的远端适配；需要用户创建并提供 Supabase 项目配置后才可真实启用。
-4. **首包优化**：按题型动态导入内容与页面，消除当前超过 500 kB 的构建性能提示。
-5. **发布验收**：Playwright 端到端测试、静态部署和电脑/手机/平板实测。
+3. **跨设备同步**：Supabase 登录、待同步队列的远端适配和 RLS 迁移；需要用户创建并提供 Supabase 项目配置后才可真实启用。
+4. **首包优化**：按题型动态导入内容与页面，消除当前超过 500 kB 的构建性能提示；PWA 预缓存总量约 541 kB。
+5. **发布验收**：配置 Playwright 端到端测试，完成静态部署以及电脑/手机/平板的安装、离线、草稿恢复实测。
 
 ## 继续工作时的注意事项
 
@@ -145,7 +154,7 @@ TypeScript 编译和 Vite 生产构建通过
 
 ## 下一轮的精确续接点
 
-1. 检查 `web/package.json` 与现有 `scripts/validate-content.ts`，补齐内容统计报告和 JSON 备份脚本；先为脚本写失败测试。
-2. 建立 `web/docs/content-audit.md`，按验证证据记录题库数量、抽样题号、答案正确性、解析清晰度、样卷难度和原创性审校结果；未阅读的内容不能预先勾选。
-3. 以动态导入把内容银行和练习页面按题型拆分，重新运行生产构建并比较主包大小。
+1. 根据 `web/docs/content-audit.md` 对待复核模块进行人工语言审校；每次只勾选实际审读过的题号，并保留日期和理由。
+2. 以动态导入把内容银行和练习页面按题型拆分，重新运行生产构建并比较主包大小。
+3. 配置 Playwright 的桌面与手机端项目，覆盖客观题核对、主观题草稿恢复和 PWA 离线入口。
 4. 需要真实跨设备同步或部署时，先由用户提供 Supabase 项目配置和部署渠道；在此之前只完善离线网页与验收测试。
