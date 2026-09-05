@@ -18,7 +18,7 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 已提交的最新提交：`81e1705 content: refine cloze expression`
+- 最近功能提交：`81e1705 content: refine cloze expression`
 - 主观题工作流、汉译英、写作、内容报告、离线 PWA 和浏览器验收配置均已提交；下次开始前先用 `git status --short` 确认工作树是否干净。
 
 已提交的近期关键提交：
