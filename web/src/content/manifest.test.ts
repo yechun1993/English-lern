@@ -5,6 +5,7 @@ import {
   diagnosticQuestions,
   readingAssignmentIssues,
   readingQuestionBank,
+  allQuestions,
 } from './manifest'
 
 describe('题库清单', () => {
@@ -59,6 +60,16 @@ describe('题库清单', () => {
 
       expect(questionsByPassage.size).toBe(16)
       expect([...questionsByPassage.values()].every((questions) => questions.length === 4)).toBe(true)
+    }
+  })
+
+  it('includes all 80 translation sentences in the validated content collection', () => {
+    expect(allQuestions.success).toBe(true)
+
+    if (allQuestions.success) {
+      const translations = allQuestions.questions.filter((question) => question.type === 'translation')
+      expect(translations).toHaveLength(80)
+      expect(new Set(translations.map((question) => question.topic))).toHaveLength(8)
     }
   })
 })

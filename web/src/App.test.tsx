@@ -48,6 +48,31 @@ describe('App', () => {
     expect(screen.getByRole('region', { name: '阅读文章' })).toHaveTextContent('East Street Library')
   })
 
+  it('lets the learner choose a translation topic, save a draft, and then view the reference', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '选择专题' }))
+    expect(screen.getByRole('heading', { name: '汉译英' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '基础句序与主谓一致 · 10 句' }))
+    expect(screen.getByText('汉译英 · 基础句序与主谓一致')).toBeInTheDocument()
+
+    await user.type(screen.getByRole('textbox', { name: '我的译文' }), 'I get up at seven every morning.')
+    await user.click(screen.getByRole('button', { name: '保存草稿并查看参考答案' }))
+
+    expect(screen.getByRole('region', { name: '参考答案与自检' })).toHaveTextContent(
+      'I get up at seven every morning.',
+    )
+    expect(JSON.parse(window.localStorage.getItem('szu-degree-english.study-state.v1') ?? '{}')).toMatchObject({
+      drafts: {
+        'translation-001': {
+          content: 'I get up at seven every morning.',
+        },
+      },
+    })
+  })
+
   it('opens a 20-question grammar micro-topic from the topic hub', async () => {
     const user = userEvent.setup()
     render(<App />)

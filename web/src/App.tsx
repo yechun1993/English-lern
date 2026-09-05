@@ -8,18 +8,22 @@ import {
   allPassages,
   readingAssignmentIssues,
   readingQuestionBank,
+  translationQuestionBank,
+  translationTopicBanks,
 } from './content/manifest'
 import { LocalStudyRepository } from './data/study-repository'
 import { PracticeSession } from './features/PracticeSession'
 import { TopicHub, type TopicBank } from './features/TopicHub'
 import { ClozeHub, type ClozeBank } from './features/ClozeHub'
 import { ReadingHub, type ReadingBank } from './features/ReadingHub'
+import { SubjectiveHub, type SubjectiveTopicBank } from './features/SubjectiveHub'
+import { SubjectiveSession } from './features/SubjectiveSession'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'practice'
+type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'practice' | 'subjective'
 
 interface PracticeTarget {
   title: string
@@ -28,9 +32,17 @@ interface PracticeTarget {
   returnTo: Exclude<Screen, 'practice'>
 }
 
+interface SubjectiveTarget {
+  title: string
+  questions: Question[]
+  returnTo: Exclude<Screen, 'subjective'>
+  initialDrafts: Record<string, string>
+}
+
 function App() {
   const [screen, setScreen] = useState<Screen>('dashboard')
   const [practiceTarget, setPracticeTarget] = useState<PracticeTarget | null>(null)
+  const [subjectiveTarget, setSubjectiveTarget] = useState<SubjectiveTarget | null>(null)
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
   const [dashboard, setDashboard] = useState(() => repository.getDashboard())
   const remainingDays = daysUntilExam(new Date())
@@ -58,6 +70,9 @@ function App() {
         questions: readingQuestionBank.questions.filter((question) => question.passageId === passage.id),
       }))
   }, [])
+  const translationBanks = useMemo<SubjectiveTopicBank[]>(() => (
+    translationQuestionBank.success ? translationTopicBanks : []
+  ), [])
   const dueReviewQuestions = useMemo(() => {
     if (!allQuestions.success) {
       return []
@@ -101,6 +116,35 @@ function App() {
     setDashboard(repository.getDashboard())
   }
 
+  function startSubjective(
+    title: string,
+    questions: Question[],
+    returnTo: SubjectiveTarget['returnTo'] = 'translation',
+  ) {
+    const initialDrafts: Record<string, string> = {}
+    for (const question of questions) {
+      const draft = repository.getDraft(question.id)
+      if (draft) {
+        initialDrafts[question.id] = draft.content
+      }
+    }
+
+    setSubjectiveTarget({ title, questions, returnTo, initialDrafts })
+    setScreen('subjective')
+  }
+
+  function saveSubjectiveDraft(question: Question, content: string) {
+    repository.saveDraft({
+      questionId: question.id,
+      content,
+      updatedAt: new Date().toISOString(),
+    })
+    setSubjectiveTarget((target) => target
+      ? { ...target, initialDrafts: { ...target.initialDrafts, [question.id]: content } }
+      : target)
+    setDashboard(repository.getDashboard())
+  }
+
   if (screen === 'practice' && practiceTarget) {
     return (
       <PracticeSession
@@ -109,6 +153,18 @@ function App() {
         passages={practiceTarget.passages}
         questions={practiceTarget.questions}
         title={practiceTarget.title}
+      />
+    )
+  }
+
+  if (screen === 'subjective' && subjectiveTarget) {
+    return (
+      <SubjectiveSession
+        initialDrafts={subjectiveTarget.initialDrafts}
+        onComplete={() => setScreen(subjectiveTarget.returnTo)}
+        onSaveDraft={saveSubjectiveDraft}
+        questions={subjectiveTarget.questions}
+        title={subjectiveTarget.title}
       />
     )
   }
@@ -139,6 +195,16 @@ function App() {
         banks={readingBanks}
         onBack={() => setScreen('dashboard')}
         onStart={(bank) => startPractice(`阅读理解 · ${bank.passage.title}`, bank.questions, 'reading', [bank.passage])}
+      />
+    )
+  }
+
+  if (screen === 'translation') {
+    return (
+      <SubjectiveHub
+        banks={translationBanks}
+        onBack={() => setScreen('dashboard')}
+        onStart={(bank) => startSubjective(`汉译英 · ${bank.topic}`, bank.questions, 'translation')}
       />
     )
   }
@@ -199,6 +265,14 @@ function App() {
               action: '选择阅读',
               onClick: readingQuestionBank.success && readingAssignmentIssues.length === 0
                 ? () => setScreen('reading')
+                : undefined,
+            },
+            {
+              title: '汉译英',
+              detail: `${translationBanks.length} 个专题 · ${translationBanks.reduce((total, bank) => total + bank.questions.length, 0)} 句`,
+              action: '选择专题',
+              onClick: translationQuestionBank.success
+                ? () => setScreen('translation')
                 : undefined,
             },
             {

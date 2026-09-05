@@ -37,6 +37,23 @@ describe('QuestionSchema', () => {
 
     expect(result.success).toBe(false)
   })
+
+  it('requires a reference translation and three to five self-checks for a translation item', () => {
+    const incompleteTranslation = {
+      ...singleChoiceQuestion,
+      id: 'translation-001',
+      type: 'translation',
+      stem: '请将下列句子译成英语：我每天步行去上班。',
+      options: [],
+    }
+
+    expect(QuestionSchema.safeParse(incompleteTranslation).success).toBe(false)
+    expect(QuestionSchema.safeParse({
+      ...incompleteTranslation,
+      referenceAnswer: 'I walk to work every day.',
+      checklist: ['主语是否完整？', '时态是否正确？'],
+    }).success).toBe(false)
+  })
 })
 
 describe('validateQuestionBank', () => {

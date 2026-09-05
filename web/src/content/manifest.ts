@@ -20,6 +20,10 @@ import { referenceLogic } from './advanced/reference-logic'
 import { verbNounCollocations } from './advanced/verb-noun-collocations'
 import { clozePassages, clozeQuestions as clozeItems } from './cloze/cloze-bank'
 import { readingPassages, readingQuestions as readingItems } from './reading/reading-bank'
+import {
+  translationQuestions as translationItems,
+  translationTopicBanks as translationBanks,
+} from './translation/translation-bank'
 import { validateClozeAssignments, validatePassageAssignments, type Passage } from '../domain/passage'
 
 export const diagnosticQuestions = validateQuestionBank(diagnosticItems)
@@ -72,6 +76,8 @@ export const grammarFoundationQuestions = validateQuestionBank(grammarFoundation
 export const grammarAdvancedQuestions = validateQuestionBank(grammarAdvancedItems)
 export const clozeQuestionBank = validateQuestionBank(clozeItems)
 export const readingQuestionBank = validateQuestionBank(readingItems)
+export const translationQuestionBank = validateQuestionBank(translationItems)
+export const translationTopicBanks = translationBanks
 export const allPassages: Passage[] = [...clozePassages, ...readingPassages]
 export const clozeAssignmentIssues = clozeQuestionBank.success
   ? validateClozeAssignments(clozeQuestionBank.questions, allPassages).issues
@@ -85,4 +91,5 @@ export const allQuestions = validateQuestionBank([
   ...grammarAdvancedItems,
   ...clozeItems,
   ...readingItems,
+  ...translationItems,
 ])

@@ -70,11 +70,19 @@ export const QuestionSchema = z
       })
     }
 
-    if (question.type === 'writing' && !question.referenceAnswer) {
+    if ((question.type === 'translation' || question.type === 'writing') && !question.referenceAnswer) {
       context.addIssue({
         code: z.ZodIssueCode.custom,
         path: ['referenceAnswer'],
-        message: '写作题必须提供范文或参考答案。',
+        message: '主观题必须提供范文或参考答案。',
+      })
+    }
+
+    if ((question.type === 'translation' || question.type === 'writing') && (!question.checklist || question.checklist.length < 3 || question.checklist.length > 5)) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['checklist'],
+        message: '主观题必须提供 3 至 5 条自检清单。',
       })
     }
   })

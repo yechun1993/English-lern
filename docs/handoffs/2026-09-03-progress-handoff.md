@@ -18,21 +18,19 @@
 
 - 实现工作树：`I:\CodexProjects\学位英语攻关\.worktrees\degree-english-platform`
 - 分支：`feat/degree-english-platform`
-- 本次已提交的最新提交：`a0a6e05 content: complete cloze practice collection`
+- 已提交的最新提交：`c9ea369 content: complete reading practice collection`
+- 当前工作区有**未提交的进行中改动**；不要在切换分支或清理工作区时丢弃它们。具体文件和续接方式见本文末尾“明天的精确续接点”。
 
 已提交的近期关键提交：
 
-1. `c670e9d feat: add grammar topic hub`
-2. `65886d5 feat: show live study progress and exam countdown`
-3. `4b1d686 content: add high-frequency grammar and collocation bank`
-4. `486c2b1 feat: add cloze passage practice flow`
-5. `9290bf1 feat: add selectable cloze passages`
-6. `bb666b6 content: add healthy habits cloze passage`
-7. `3116752 content: add volunteer and career cloze passages`
-8. `7eed322 content: add online and environmental cloze passages`
-9. `88bf584 content: add city and time management cloze passages`
-10. `3d8980f content: fit time management cloze length`
-11. `a0a6e05 content: complete cloze practice collection`
+1. `da38fad feat: add reading practice flow`
+2. `aba087c content: add community and workplace reading passages`
+3. `902eb00 content: add history and health reading passages`
+4. `af13a2e content: add campus service and consumer reading passages`
+5. `4f80a5b content: add travel and science reading passages`
+6. `0a8ec63 content: add learning and information reading passages`
+7. `cf50963 content: add community and exercise reading passages`
+8. `c9ea369 content: complete reading practice collection`
 
 ## 已实现且已验证的功能
 
@@ -47,7 +45,7 @@
 
 ### 已入库内容
 
-当前已**提交并接入页面**的题目共 **620 道**：
+当前已**提交并接入页面**的题目共 **684 道**：
 
 | 内容 | 数量 | 状态 |
 | --- | ---: | --- |
@@ -55,7 +53,8 @@
 | 基础语法与词汇 | 180 | 9 个专题、每个 20 题，可练习 |
 | 高频易错语法与搭配 | 180 | 9 个专题、每个 20 题，可练习 |
 | 完形填空 | 240 | 12 篇原创文章、每篇 20 空，可练习 |
-| 合计 | 620 | 已通过校验 |
+| 阅读理解 | 64 | 16 篇原创文章、每篇 4 题，可练习 |
+| 合计 | 684 | 已通过校验 |
 
 高频易错层的 9 个专题：
 
@@ -73,14 +72,14 @@
 
 ## 最近验证证据
 
-以下验证在两篇完形内容接入后完成，结果均成功：
+以下验证在阅读理解 16 篇、64 题完成并接入后完成，结果均成功：
 
 ```text
 npm run test:run
-12 个测试文件通过，35 个测试通过
+13 个测试文件通过，41 个测试通过
 
 npm run validate:content
-题库校验通过：共 620 道题
+题库校验通过：共 684 道题
 
 npm run build
 TypeScript 编译和 Vite 生产构建通过
@@ -107,18 +106,53 @@ TypeScript 编译和 Vite 生产构建通过
   12. 《成长故事：从不敢开口到勇敢表达》，复原后 299 词。
 - 首页先进入篇章选择页，每次只练一篇 20 空文章；作答页展示全文并高亮当前空位，完成后回到篇章列表。
 
-完形填空 12 篇、240 空的内容目标已经完成；下一优先级转为阅读理解的 16 篇文章和 64 道题。
+### 已完成的阅读理解训练闭环
+
+- 首页可进入“阅读理解”篇章选择页；每次选择一篇文章练习，避免一开始进入整套模拟卷。
+- 每篇文章均为原创、220–300 词，并绑定 4 道四选一题：细节理解、词义或短语、推断、主旨或作者态度。
+- 作答页会显示完整文章；文章 ID 与题目绑定关系经过内容校验，缺文、错文或题目数量不符时不会进入可用题库。
+- 已完成 16 篇 / 64 题，主题覆盖社区图书馆、学习休息、家庭食物浪费、会议形式、旧工厂历史、睡眠、维修角、二手消费、旅行地图、观鸟公民科学、终身学习、核验网络信息、技能分享、运动习惯、书店兼职和科技社区服务。
+
+完形和阅读两类客观篇章训练目标均已完成；下一优先级是让汉译英与写作也形成“先独立输出、再对照参考、自检修改”的闭环。
 
 ## 后续优先级
 
-1. **阅读、汉译英、写作内容与界面**：16 篇阅读/64 题、80 道汉译英、16 篇提纲作文；主观题需先有独立输入区，再显示参考答案和自检清单。
-2. **专题页细化**：根据每个专题的实际分层显示“基础”或“基础至冲刺”；之后可加入薄弱专题推荐。
-3. **PWA 与跨设备同步**：离线缓存、Supabase 登录和待同步队列的远端适配；需要用户创建并提供 Supabase 项目配置后才可真实启用。
-4. **发布验收**：内容统计报告、完整人工审校记录、Playwright 端到端测试、静态部署和多设备实测。
+1. **汉译英**：完成 8 个专项、每项 10 句（共 80 句），并把专题入口接入首页；每题必须有自然参考译文和 3–5 条自检清单。
+2. **写作**：完成 16 个题目、提纲、120–150 词原创范文及 3–5 条自检清单，并复用主观题输出界面。
+3. **专题页细化**：根据每个专题的实际分层显示“基础”或“基础至冲刺”；之后可加入薄弱专题推荐。
+4. **PWA 与跨设备同步**：离线缓存、Supabase 登录和待同步队列的远端适配；需要用户创建并提供 Supabase 项目配置后才可真实启用。
+5. **发布验收**：内容统计报告、完整人工审校记录、Playwright 端到端测试、静态部署和多设备实测。
 
 ## 继续工作时的注意事项
 
 - 当前工作树是一个功能分支，不要在项目主目录直接覆盖修改。
 - `web/.npm-install-conflict-20260901` 是被忽略的旧安装残留；Vitest 已限制只扫描 `src/**/*.test.{ts,tsx}`，不要为清理它执行宽泛删除操作。
-- `PracticeSession` 目前只处理客观题；翻译和写作的草稿 UI 未实现，虽然本地仓库已支持保存草稿。
+- `PracticeSession` 仍只处理客观题；翻译和写作应使用新增的 `SubjectiveSession`，不能把主观题塞进客观题选择器。
 - 不要声明“已跨设备同步”或“已发布”，当前仅完成本地离线状态层和前端代码。
+
+## 明天的精确续接点（进行中，尚未提交）
+
+当前未提交文件：
+
+- `web/src/features/SubjectiveSession.tsx`
+- `web/src/features/SubjectiveSession.css`
+- `web/src/features/SubjectiveSession.test.tsx`
+- `web/src/domain/question.ts`
+- `web/src/domain/question.test.ts`
+- `web/src/content/translation/translation-bank.test.ts`
+
+已经完成但尚未提交的部分：
+
+- `SubjectiveSession` 已实现“我的译文/我的作文”文本框、显式“保存草稿”、保存后查看参考答案、展示自检清单、逐题前进/完成返回的交互；它不会伪造自动评分或自动掌握度。
+- 组件单测已修正文本定位歧义，并曾独立通过：`npm run test:run -- SubjectiveSession.test.tsx`。
+- `LocalStudyRepository` 早已支持 `saveDraft()` / `getDraft()`；下一步在 `App.tsx` 的入口中读取已有草稿并把保存回调接入即可。
+- 已先写失败测试，要求翻译题库为 8 个专项、每项 10 句、合计 80 句，且每句有参考译文和 3–5 条自检清单。
+- 已开始收紧题目 schema：翻译与写作都必须具备参考答案及 3–5 条自检清单。测试首次失败符合预期，因为 `translation-bank.ts` 尚未创建；不要把这一失败误判为回归。
+
+推荐续接顺序：
+
+1. 创建 `web/src/content/translation/translation-bank.ts`，完成 80 句原创汉译英数据；通过刚创建的内容测试。
+2. 将翻译题库导入 `web/src/content/manifest.ts`，把它纳入总题数和内容校验，并补充 manifest 测试期望。
+3. 创建翻译专题选择页或通用主观题专题选择页；在 `App.tsx` 增加“汉译英”卡片、8 个专题入口和草稿读取/保存回调。
+4. 先运行相关单测，随后运行完整的 `npm run test:run`、`npm run validate:content`、`npm run build`；只有三项都通过才提交主观题这一阶段。
+5. 再按同样结构完成 16 个写作题，并把写作入口接入同一主观题训练框架。
