@@ -15,7 +15,7 @@ const notice = '仅授权个人学习使用，禁止转发、复制、售卖'
 
 async function createFixture() {
   const root = await mkdtemp(join(tmpdir(), 'szu-degree-english-package-'))
-  const buildDirectory = join(root, 'dist')
+  const buildDirectory = join(root, 'web', 'dist')
   const assetsDirectory = join(buildDirectory, 'assets')
   const outputRoot = join(root, 'output')
   await mkdir(assetsDirectory, { recursive: true })
@@ -106,12 +106,42 @@ test('uses encrypted 7z flags and records a password-free delivery ledger', asyn
 
     assert.ok(archiveCall)
     assert.deepEqual(archiveCall.args.slice(0, 4), ['a', '-t7z', '-mhe=on', `-p${password}`])
+    assert.equal(archiveCall.args.at(-1), '深大学位英语_个人授权_SZU-2026-001')
     assert.equal((await readdir(fixture.outputRoot)).includes('深大学位英语_个人授权_SZU-2026-001.7z'), true)
     assert.equal(result.sha256.length, 64)
     assert.equal(JSON.parse(ledger).authorizationId, 'SZU-2026-001')
     assert.equal(JSON.parse(ledger).fileName, '深大学位英语_个人授权_SZU-2026-001.7z')
     assert.equal(license.includes(password), false)
     assert.equal(ledger.includes(password), false)
+  } finally {
+    await rm(fixture.root, { recursive: true, force: true })
+  }
+})
+
+test('uses the Windows command processor for the production npm build', async () => {
+  const fixture = await createFixture()
+  const calls = []
+  try {
+    await createAuthorizedPackage({
+      authorizationId: 'SZU-2026-BUILD',
+      password: 'Secret_2026!',
+      outputRoot: fixture.outputRoot,
+      projectRoot: fixture.root,
+      nodePath: join(fixture.root, 'node-source.exe'),
+      serverSourcePath: join(fixture.root, 'server.mjs'),
+      launcherTemplatePath: join(fixture.root, 'launcher.template.cmd'),
+      sevenZipPath: join(fixture.root, '7z.exe'),
+      run: async (command, args) => {
+        calls.push({ command, args })
+        if (args[0] === 'a') {
+          await writeFile(args[4], 'encrypted archive placeholder')
+        }
+        return { stdout: '', stderr: '' }
+      },
+    })
+
+    assert.equal(calls[0].command, process.env.ComSpec ?? 'cmd.exe')
+    assert.deepEqual(calls[0].args, ['/d', '/s', '/c', 'npm.cmd run build'])
   } finally {
     await rm(fixture.root, { recursive: true, force: true })
   }

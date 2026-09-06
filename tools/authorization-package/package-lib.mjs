@@ -159,7 +159,11 @@ export async function createAuthorizedPackage({
 
   try {
     if (!buildDirectory) {
-      await run(process.platform === 'win32' ? 'npm.cmd' : 'npm', ['run', 'build'], {
+      const npmCommand = process.platform === 'win32' ? process.env.ComSpec ?? 'cmd.exe' : 'npm'
+      const npmArguments = process.platform === 'win32'
+        ? ['/d', '/s', '/c', 'npm.cmd run build']
+        : ['run', 'build']
+      await run(npmCommand, npmArguments, {
         cwd: join(projectRoot, 'web'),
       })
     }
@@ -181,7 +185,7 @@ export async function createAuthorizedPackage({
       '-mhe=on',
       `-p${password}`,
       archivePath,
-      `${staged.packageDirectory}\\*`,
+      packageName(validatedAuthorizationId),
     ], { cwd: stagingDirectory })
 
     const sha256 = await sha256File(archivePath)

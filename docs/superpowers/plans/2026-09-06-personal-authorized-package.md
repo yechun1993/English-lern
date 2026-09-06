@@ -45,7 +45,7 @@
 | `授权包输出/.gitkeep` | Default local output directory, with generated content ignored by Git. |
 | `.gitignore` | Excludes staged release directories, generated archives, and seller ledger from Git. |
 | `web/package.json` | Adds `test:package` to run the Node package tests. |
-| `README.md` | Documents seller prerequisites, safe password delivery, package generation, and buyer operation. |
+| `web/README.md` | Documents seller prerequisites, safe password delivery, package generation, and buyer operation. |
 
 ### Task 1: Make authorization information a tested part of every browser screen
 
@@ -64,7 +64,7 @@
 - Consumes: browser `fetch` and a JSON object with `authorizationId` and `notice` strings.
 - Produces: `type LicenseState = { status: 'ready'; authorizationId: string; notice: string } | { status: 'error' }`, `async function loadLicense(fetchImpl?: typeof fetch): Promise<LicenseState>`, and `<LicenseNotice state={state} />`.
 
-- [ ] **Step 1: Write the license-domain failure tests**
+- [x] **Step 1: Write the license-domain failure tests**
 
 Create `web/src/license/license.test.ts` with these exact cases:
 
@@ -95,13 +95,13 @@ describe('loadLicense', () => {
 })
 ```
 
-- [ ] **Step 2: Run the new test to verify it fails**
+- [x] **Step 2: Run the new test to verify it fails**
 
 Run: `npm run test:run -- src/license/license.test.ts`
 
 Expected: FAIL because `./license` does not exist.
 
-- [ ] **Step 3: Implement strict authorization parsing**
+- [x] **Step 3: Implement strict authorization parsing**
 
 Create `web/src/license/license.ts` with this implementation:
 
@@ -141,13 +141,13 @@ export async function loadLicense(fetchImpl: typeof fetch = fetch): Promise<Lice
 }
 ```
 
-- [ ] **Step 4: Run the license tests to verify they pass**
+- [x] **Step 4: Run the license tests to verify they pass**
 
 Run: `npm run test:run -- src/license/license.test.ts`
 
 Expected: 2 passing tests.
 
-- [ ] **Step 5: Write the notice component failure test**
+- [x] **Step 5: Write the notice component failure test**
 
 Create `web/src/components/LicenseNotice.test.tsx`:
 
@@ -176,13 +176,13 @@ describe('LicenseNotice', () => {
 })
 ```
 
-- [ ] **Step 6: Run the notice test to verify it fails**
+- [x] **Step 6: Run the notice test to verify it fails**
 
 Run: `npm run test:run -- src/components/LicenseNotice.test.tsx`
 
 Expected: FAIL because `./LicenseNotice` does not exist.
 
-- [ ] **Step 7: Implement the notice and its visual treatment**
+- [x] **Step 7: Implement the notice and its visual treatment**
 
 Create `web/src/components/LicenseNotice.tsx`:
 
@@ -250,7 +250,7 @@ Create `web/src/components/LicenseNotice.css`:
 }
 ```
 
-- [ ] **Step 8: Mount the notice for every App screen and add the development fixture**
+- [x] **Step 8: Mount the notice for every App screen and add the development fixture**
 
 Create `web/public/license.json`:
 
@@ -287,7 +287,7 @@ globIgnores: ['**/license.json'],
 
 inside the existing `workbox` object, so a staged buyer package always fetches its own root `license.json`.
 
-- [ ] **Step 9: Add a cross-screen application test**
+- [x] **Step 9: Add a cross-screen application test**
 
 Change the Vitest import in `web/src/App.test.tsx` to `import { afterEach, describe, expect, it, vi } from 'vitest'`, add `afterEach(() => vi.unstubAllGlobals())` immediately inside `describe('App', () => {`, and append this test:
 
@@ -306,7 +306,7 @@ it('keeps the authorization notice visible after entering a practice screen', as
 })
 ```
 
-- [ ] **Step 10: Run browser tests and commit the authorization UI**
+- [x] **Step 10: Run browser tests and commit the authorization UI**
 
 Run: `npm run test:run -- src/license/license.test.ts src/components/LicenseNotice.test.tsx src/App.test.tsx`
 
@@ -329,7 +329,7 @@ git commit -m "feat: show personal authorization notice"
 - Consumes: `createAuthorizedServer({ packageRoot, host, port })` options.
 - Produces: `createAuthorizedServer(options): Promise<{ server: import('node:http').Server; url: string }>` and CLI execution via `node server.mjs --open`.
 
-- [ ] **Step 1: Write the server integration test**
+- [x] **Step 1: Write the server integration test**
 
 Create a temporary package root containing `site/index.html`, `site/assets/app.js`, and root `license.json`. Test these requests after starting the exported server on `127.0.0.1` port `0`:
 
@@ -344,13 +344,13 @@ assert.equal((await fetch(`${url}/`, { method: 'POST' })).status, 405)
 
 The test must close the server and delete its unique temporary directory in `finally`.
 
-- [ ] **Step 2: Run the server test to verify it fails**
+- [x] **Step 2: Run the server test to verify it fails**
 
 Run: `node --test tools/authorization-package/server.test.mjs`
 
 Expected: FAIL because `server.mjs` does not exist.
 
-- [ ] **Step 3: Implement the constrained HTTP server**
+- [x] **Step 3: Implement the constrained HTTP server**
 
 Implement `createAuthorizedServer` in `tools/authorization-package/server.mjs` using `node:http`, `node:fs/promises`, `node:path`, `node:url`, and `node:os`. The implementation must:
 
@@ -371,13 +371,13 @@ For every pathname, call `decodeURIComponent`, reject decoding errors with `400`
 
 When run directly, listen on `0.0.0.0:4173`, print `本机地址：http://127.0.0.1:4173/` plus every non-internal IPv4 LAN address from `networkInterfaces()`, and when `--open` is present launch the local URL with `cmd.exe /c start "" <url>` after listen succeeds.
 
-- [ ] **Step 4: Run the server test to verify it passes**
+- [x] **Step 4: Run the server test to verify it passes**
 
 Run: `node --test tools/authorization-package/server.test.mjs`
 
 Expected: 1 passing test with all five HTTP assertions satisfied.
 
-- [ ] **Step 5: Commit the buyer server**
+- [x] **Step 5: Commit the buyer server**
 
 ```powershell
 git add -- tools/authorization-package/server.mjs tools/authorization-package/server.test.mjs
@@ -400,7 +400,7 @@ git commit -m "feat: add restricted buyer local server"
 - Consumes: `createAuthorizedPackage({ authorizationId, password, outputRoot, projectRoot, run, now })` where `run(command, args, options)` returns `{ stdout, stderr }` or throws.
 - Produces: `{ archivePath, sha256, ledgerPath }`, a staged folder named `深大学位英语_个人授权_<authorizationId>`, and archive name `深大学位英语_个人授权_<authorizationId>.7z`.
 
-- [ ] **Step 1: Write pure generator tests before implementation**
+- [x] **Step 1: Write pure generator tests before implementation**
 
 Create `tools/authorization-package/package-lib.test.mjs` with tests that:
 
@@ -410,13 +410,13 @@ Create `tools/authorization-package/package-lib.test.mjs` with tests that:
 4. use an injected fake `run` function and assert its 7-Zip arguments include `a`, `-t7z`, `-mhe=on`, and exactly one `-p<password>` argument; assert the password does not occur in the generated license, Chinese instruction content, or ledger;
 5. assert the ledger line parses as JSON and has `generatedAt`, `authorizationId`, `fileName`, and a 64-character lowercase `sha256` field.
 
-- [ ] **Step 2: Run the packager tests to verify they fail**
+- [x] **Step 2: Run the packager tests to verify they fail**
 
 Run: `node --test tools/authorization-package/package-lib.test.mjs`
 
 Expected: FAIL because `package-lib.mjs` does not exist.
 
-- [ ] **Step 3: Implement the packager library with an explicit allowlist**
+- [x] **Step 3: Implement the packager library with an explicit allowlist**
 
 In `tools/authorization-package/package-lib.mjs`, export these exact functions:
 
@@ -447,12 +447,12 @@ export { validateAuthorizationId, createLicense, stageBuyerPackage, createAuthor
 `createAuthorizedPackage` must call `npm run build` in `web/`, find `7z.exe` first from `SEVEN_ZIP_PATH`, then `C:\Program Files\7-Zip\7z.exe`, then `C:\Program Files (x86)\7-Zip\7z.exe`, and throw `未找到 7-Zip 命令行工具。请安装 7-Zip 后重试。` if none exists. It must run:
 
 ```text
-7z.exe a -t7z -mhe=on -p<password> <archivePath> <packageDirectory>\*
+7z.exe a -t7z -mhe=on -p<password> <archivePath> 深大学位英语_个人授权_<授权编号>
 ```
 
 After archive creation, calculate SHA-256 with `crypto.createHash('sha256')`, append one JSON line to `授权包输出/授权交付清单.jsonl`, and use `finally` to remove the temporary staging directory and partial archive after any failure. Never print the password.
 
-- [ ] **Step 4: Add the interactive generator and two CMD files**
+- [x] **Step 4: Add the interactive generator and two CMD files**
 
 `tools/authorization-package/generate-package.mjs` must prompt `授权编号：`, then masked `压缩包密码：` and `再次输入密码：`. It must exit with code 1 if passwords are empty or unequal, call `createAuthorizedPackage`, and print only the archive path, authorization ID, SHA-256, and `请通过与压缩包不同的渠道发送密码。`.
 
@@ -503,7 +503,7 @@ Add this package script to `web/package.json`:
 "test:package": "node --test ../tools/authorization-package/*.test.mjs"
 ```
 
-- [ ] **Step 5: Run focused package tests and commit**
+- [x] **Step 5: Run focused package tests and commit**
 
 Run: `npm run test:package`
 
@@ -519,7 +519,7 @@ git commit -m "feat: add encrypted personal package generator"
 ### Task 4: Document, generate, and prove one AES-256 buyer package
 
 **Files:**
-- Modify: `README.md`
+- Modify: `web/README.md`
 - Modify: `docs/superpowers/plans/2026-09-06-personal-authorized-package.md`
 - Create outside Git: `I:\codexoutput\文档\深大学位英语授权包\深大学位英语_个人授权_<授权编号>.7z`
 
@@ -527,11 +527,11 @@ git commit -m "feat: add encrypted personal package generator"
 - Consumes: the double-click generator, a seller-chosen nonempty authorization ID, and a password sent separately from the archive.
 - Produces: a real encrypted archive whose buyer directory starts and serves the licensed site.
 
-- [ ] **Step 1: Write the seller and buyer operating guide**
+- [x] **Step 1: Write the seller and buyer operating guide**
 
-Append a `个人授权包（卖家操作）` section to `README.md` covering these exact facts: install 7-Zip on the seller machine; double-click `生成个人授权包.cmd`; record the generated authorization ID and SHA-256 with the buyer order outside the package; send the archive and password through separate channels; buyers need a `.7z` extraction tool, then double-click the launch script; the app is LAN-only and browser data remains local to each device; AES-256, watermark, and ID improve deterrence and traceability but cannot technically prevent screenshots or copied files after decryption.
+Append a `个人授权包（卖家操作）` section to `web/README.md` covering these exact facts: install 7-Zip on the seller machine; double-click `生成个人授权包.cmd`; record the generated authorization ID and SHA-256 with the buyer order outside the package; send the archive and password through separate channels; buyers need a `.7z` extraction tool, then double-click the launch script; the app is LAN-only and browser data remains local to each device; AES-256, watermark, and ID improve deterrence and traceability but cannot technically prevent screenshots or copied files after decryption.
 
-- [ ] **Step 2: Verify all project checks before the live archive**
+- [x] **Step 2: Verify all project checks before the live archive**
 
 Run in `web/`:
 
@@ -546,7 +546,7 @@ npm run test:e2e
 
 Expected: every command exits 0. Record any count changes in the final handoff; do not claim success without command output.
 
-- [ ] **Step 3: Ensure the seller has the official 7-Zip CLI**
+- [x] **Step 3: Ensure the seller has the official 7-Zip CLI**
 
 Verify one of these paths exists before generation:
 
@@ -559,22 +559,26 @@ If neither path exists, install 7-Zip from its official distribution on the sell
 
 - [ ] **Step 4: Create an authorization package without disclosing its password in the project**
 
+**Current status:** The generator and AES-256 archive flow have been verified with temporary random passwords. Creating a retained buyer-specific archive remains intentionally unchecked until the seller enters the real authorization ID and password through `生成个人授权包.cmd`.
+
 Double-click `生成个人授权包.cmd`, enter a valid seller-chosen authorization ID and a nonempty password. The generator writes to `授权包输出/`. Copy only the completed archive into `I:\codexoutput\文档\深大学位英语授权包\`; do not copy the ledger or staging directory. The password must remain solely with the seller and be sent outside the archive.
 
-- [ ] **Step 5: Prove archive encryption and buyer contents**
+- [x] **Step 5: Prove archive encryption and buyer contents**
 
 Use `7z l -slt <archivePath>` and `7z t -p<known-password> <archivePath>` to verify listing and integrity. Attempt `7z t -p<wrong-password> <archivePath>` and require a nonzero exit. Extract the correct-password archive to a fresh temporary directory and assert it includes only the seven allowed root entries and `site/`, has no `node_modules`, source `.ts/.tsx` files, generator, password, or ledger.
 
 - [ ] **Step 6: Prove buyer startup and visible authorization**
 
+**Current status:** The extracted package's embedded `node.exe`, local server, and Microsoft Edge rendering have been verified with a temporary authorization ID. A final retained buyer-specific archive will be checked by double-clicking its launch script when Step 4 is performed.
+
 Start the extracted buyer launch script, make an HTTP request to `http://127.0.0.1:4173/license.json` and the browser landing page, and require HTTP 200. Open the landing page in Microsoft Edge and inspect that the exact authorization ID and fixed notice are visible. Navigate to an objective practice session and a subjective exercise to prove the notice remains visible. Stop the server cleanly after verification.
 
-- [ ] **Step 7: Update completion state and commit documentation**
+- [x] **Step 7: Update completion state and commit documentation**
 
 Mark only the completed checkboxes in this plan. Commit the README and plan update:
 
 ```powershell
-git add -- README.md docs/superpowers/plans/2026-09-06-personal-authorized-package.md
+git add -- web/README.md docs/superpowers/plans/2026-09-06-personal-authorized-package.md
 git commit -m "docs: explain personal authorization package"
 ```
 
