@@ -10,7 +10,7 @@ test('手机端可保存并恢复汉译英草稿', async ({ page }) => {
 
   const draft = page.getByRole('textbox', { name: '我的译文' })
   await draft.fill('I get up at seven every morning.')
-  await page.getByRole('button', { name: '保存草稿' }).click()
+  await page.getByRole('button', { name: '保存草稿', exact: true }).click()
 
   await page.goto('/')
   await page.getByRole('button', { name: '选择专题' }).click()

@@ -9,14 +9,14 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'desktop-chromium',
+      name: 'desktop-edge',
       testMatch: 'learning-flow.spec.ts',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },
     },
     {
-      name: 'mobile-chromium',
+      name: 'mobile-edge',
       testMatch: 'mobile-writing.spec.ts',
-      use: { ...devices['Pixel 7'] },
+      use: { ...devices['Pixel 7'], channel: 'msedge' },
     },
   ],
   webServer: {
