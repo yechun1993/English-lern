@@ -17,7 +17,7 @@ export const basicTenses = createFoundationQuestions('一般时、进行时、�
   ['She ___ never ___ to Beijing before last summer.', ['had, been', 'has, been', 'did, go', 'was, going'], 'had, been', 'before last summer 是过去参照点，之前的经历用过去完成时 had been。', 'has been 的参照点是现在，不适合本题。'],
   ['I ___ the email as soon as I get to the office.', ['will send', 'sent', 'have sent', 'was sending'], 'will send', '主句表示将来动作；as soon as 从句虽用一般现在时，主句仍用 will send。', '不要把 get 的现在时错误地套到主句。'],
   ['The shop ___ at nine every morning.', ['opens', 'is opening', 'opened', 'has opened'], 'opens', '营业时间属于固定事实，用一般现在时 opens。', '现在进行时不用于长期固定安排。'],
-  ['They ___ for an hour when the bus finally came.', ['had waited', 'have waited', 'wait', 'will wait'], 'had waited', '等待发生在过去 bus came 之前，持续一段时间，用过去完成时。', 'have waited 的时间线延伸到现在，和 came 不一致。'],
+  ['They ___ for an hour when the bus finally came.', ['had been waiting', 'have waited', 'wait', 'will wait'], 'had been waiting', '等待持续到过去的 came 发生前，用过去完成进行时 had been waiting 突出过程和时长。', 'have waited 的时间线延伸到现在，和 came 不一致。'],
   ['I cannot answer the phone because I ___ a shower.', ['am taking', 'take', 'took', 'have taken'], 'am taking', 'cannot now 与正在洗澡的当前动作对应，使用现在进行时。', '一般现在时不能说明此刻无法接电话的原因。'],
   ['After she ___ the letter, she went to bed.', ['had written', 'has written', 'writes', 'will write'], 'had written', '写信完成在 went to bed 之前，过去完成时可清楚表示先后。', 'has written 不能与 went 的过去时间线搭配。'],
   ['We ___ dinner when the lights suddenly went out.', ['were having', 'had', 'have had', 'will have'], 'were having', '灯熄灭时晚餐正在进行，用过去进行时 were having。', 'had dinner 更像完成动作，缺少“当时正在”的含义。'],

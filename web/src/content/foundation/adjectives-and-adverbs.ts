@@ -5,7 +5,7 @@ export const adjectivesAndAdverbs = createFoundationQuestions('形容词、副�
   ['Please listen ___ so that you do not miss the instructions.', ['carefully', 'careful', 'carefulness', 'more careful'], 'carefully', 'listen 是动词，需要副词 carefully 修饰。', 'careful 是形容词，不能直接修饰 listen。'],
   ['This box is ___ heavy for me to carry alone.', ['too', 'very', 'so', 'such'], 'too', 'too + 形容词 + for sb. to do 表示“太……而不能……”。', 'very heavy 只表示程度高，不含不能完成的结果。'],
   ['Her answer was as ___ as mine.', ['clear', 'clearly', 'clearest', 'more clear'], 'clear', 'as...as 中间用形容词原级，修饰 answer。', 'clearly 是副词，不能直接作 answer 的表语。'],
-  ['The new road is ___ crowded than the old one.', ['less', 'least', 'little', 'few'], 'less', '不可数或抽象程度的比较可用 less + 形容词，表示“较不拥挤”。', 'least 是最高级，不适用于两者比较。'],
+  ['The new road is ___ crowded than the old one.', ['less', 'least', 'little', 'few'], 'less', 'less + 形容词 + than 表示“较不……/没那么……”，用于比较程度。', 'least 是最高级，不适用于两者比较。'],
   ['This is one of the ___ books I have ever read.', ['best', 'better', 'good', 'well'], 'best', 'one of the + 最高级 + 复数名词是固定结构。', 'better 是比较级，前面没有明确两者比较。'],
   ['The room is warm ___ for us to stay without a coat.', ['enough', 'too', 'very', 'so'], 'enough', '形容词后接 enough，warm enough 表示“足够暖”。', 'enough 的位置通常在形容词或副词之后。'],
   ['The film was ___ interesting that we watched it twice.', ['so', 'such', 'too', 'very'], 'so', 'so + 形容词 + that 从句，表示“如此……以至于……”。', 'such 后通常接名词短语，如 such an interesting film。'],

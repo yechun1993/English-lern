@@ -19,6 +19,6 @@ export const nounsAndPronouns = createFoundationQuestions('名词、代词与可
   ['The children enjoyed ___ at the party.', ['themselves', 'their', 'them', 'they'], 'themselves', 'enjoy oneself 表示“玩得开心”，children 对应 themselves。', 'their 是形容词性物主代词，后面还需要名词。'],
   ['I lost my pen. Could I borrow ___?', ['yours', 'your', 'you', 'yourself'], 'yours', 'yours 是名词性物主代词，代替 your pen。', 'your 后面必须再接名词，不能单独作宾语。'],
   ['The police ___ looking for the witness.', ['are', 'is', 'was', 'has'], 'are', 'police 表示警方人员时通常作复数，谓语用 are。', '不要把 police 当作单数的 a police。'],
-  ['I bought ___ at the market this morning.', ['some fruit', 'a fruit', 'many fruit', 'few fruits'], 'some fruit', 'fruit 泛指水果时通常作不可数名词，用 some fruit。', 'many 和 few 后需要可数名词复数。'],
+  ['I bought ___ at the market this morning.', ['some fruit', 'a fruit', 'many fruit', 'few fruit'], 'some fruit', 'fruit 泛指水果时通常作不可数名词，用 some fruit。', 'many 和 few 后需要可数名词复数。'],
   ['The teacher gave ___ a homework assignment.', ['each of us', 'we each', 'our each', 'us every'], 'each of us', 'give each of us sth. 表示“给我们每个人某物”。', 'we 是主格，不能直接作 give 的宾语。'],
 ])
