@@ -30,6 +30,7 @@ export default defineConfig({
       registerType: 'prompt',
       workbox: {
         cleanupOutdatedCaches: true,
+        globIgnores: ['**/license.json'],
         navigateFallback: '/index.html',
       },
     }),

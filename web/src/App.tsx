@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { type ReactNode, useEffect, useMemo, useState } from 'react'
 import {
   loadAllQuestionsForReview,
   loadClozePractice,
@@ -16,10 +16,12 @@ import { ClozeHub, type ClozeBank } from './features/ClozeHub'
 import { ReadingHub, type ReadingBank } from './features/ReadingHub'
 import { SubjectiveHub, type SubjectiveTopicBank } from './features/SubjectiveHub'
 import { SubjectiveSession } from './features/SubjectiveSession'
+import { LicenseNotice } from './components/LicenseNotice'
 import { PwaUpdateNotice } from './components/PwaUpdateNotice'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
+import { loadLicense, type LicenseState } from './license/license'
 import './App.css'
 
 type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'practice' | 'subjective'
@@ -51,7 +53,12 @@ function App() {
   const [writingBanks, setWritingBanks] = useState<SubjectiveTopicBank[]>([])
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [contentError, setContentError] = useState<string | null>(null)
+  const [licenseState, setLicenseState] = useState<LicenseState>({ status: 'error' })
   const remainingDays = daysUntilExam(new Date())
+
+  useEffect(() => {
+    void loadLicense().then(setLicenseState)
+  }, [])
 
   function startPractice(
     title: string,
@@ -221,8 +228,12 @@ function App() {
     setDashboard(repository.getDashboard())
   }
 
+  function withLicense(content: ReactNode) {
+    return <><LicenseNotice state={licenseState} />{content}</>
+  }
+
   if (screen === 'practice' && practiceTarget) {
-    return (
+    return withLicense(
       <PracticeSession
         onAnswer={recordAnswer}
         onComplete={() => setScreen(practiceTarget.returnTo)}
@@ -234,7 +245,7 @@ function App() {
   }
 
   if (screen === 'subjective' && subjectiveTarget) {
-    return (
+    return withLicense(
       <SubjectiveSession
         initialDrafts={subjectiveTarget.initialDrafts}
         onComplete={() => setScreen(subjectiveTarget.returnTo)}
@@ -246,7 +257,7 @@ function App() {
   }
 
   if (screen === 'topics') {
-    return (
+    return withLicense(
       <TopicHub
         banks={topicBanks}
         onBack={() => setScreen('dashboard')}
@@ -256,7 +267,7 @@ function App() {
   }
 
   if (screen === 'cloze') {
-    return (
+    return withLicense(
       <ClozeHub
         banks={clozeBanks}
         onBack={() => setScreen('dashboard')}
@@ -266,7 +277,7 @@ function App() {
   }
 
   if (screen === 'reading') {
-    return (
+    return withLicense(
       <ReadingHub
         banks={readingBanks}
         onBack={() => setScreen('dashboard')}
@@ -276,7 +287,7 @@ function App() {
   }
 
   if (screen === 'translation') {
-    return (
+    return withLicense(
       <SubjectiveHub
         banks={translationBanks}
         cardHint="先翻译后对照"
@@ -292,7 +303,7 @@ function App() {
   }
 
   if (screen === 'writing') {
-    return (
+    return withLicense(
       <SubjectiveHub
         banks={writingBanks}
         cardHint="先写后对照"
@@ -307,7 +318,7 @@ function App() {
     )
   }
 
-  return (
+  return withLicense(
     <main className="app-shell">
       <PwaUpdateNotice />
       <header className="site-header">
