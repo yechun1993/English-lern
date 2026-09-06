@@ -147,10 +147,20 @@ async function runCli() {
     port: 4173,
   })
   const urls = listLanUrls(4173)
+  let authorizationId
+  try {
+    const license = JSON.parse(await readFile(join(process.cwd(), 'license.json'), 'utf8'))
+    authorizationId = typeof license.authorizationId === 'string' ? license.authorizationId : undefined
+  } catch {
+    authorizationId = undefined
+  }
 
   console.log(`本机地址：${urls[0]}`)
   for (const url of urls.slice(1)) {
     console.log(`同一可信 Wi-Fi 的平板地址：${url}`)
+  }
+  if (authorizationId) {
+    console.log(`授权编号：${authorizationId}`)
   }
   console.log('仅授权个人学习使用，禁止转发、复制、售卖')
 

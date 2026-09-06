@@ -14,3 +14,7 @@ web/.env.local
 web/.env.*.local
 .DS_Store
 Thumbs.db
+
+# Generated personal-authorization releases and seller records.
+授权包输出/*
+!授权包输出/.gitkeep
