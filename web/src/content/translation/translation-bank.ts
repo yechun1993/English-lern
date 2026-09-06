@@ -233,9 +233,9 @@ export const translationTopicBanks: TranslationTopicBank[] = [
     },
     {
       chinese: '离开教室前，所有的灯都被关掉了。',
-      referenceAnswer: 'All the lights were turned off before the classroom was left.',
-      explanation: '叙述过去发生的被动动作，使用 were turned off。',
-      misconception: '不要把 turn off 后的宾语省掉后仍使用主动语态。',
+      referenceAnswer: 'All the lights were turned off before everyone left the classroom.',
+      explanation: '关灯是过去发生的被动动作，使用 were turned off；before 后用 everyone left the classroom 说明离开的人，表达自然清晰。',
+      misconception: '不要把“离开教室”硬译成 the classroom was left；需要说清离开的人。',
       difficulty: 'standard',
     },
     {
@@ -518,7 +518,7 @@ export const translationTopicBanks: TranslationTopicBank[] = [
       chinese: '即使毕业后，我们也应该保持联系。',
       referenceAnswer: 'We should keep in touch even after graduation.',
       explanation: 'keep in touch 表示“保持联系”；after graduation 中 graduation 是名词。',
-      misconception: '不要写成 keep touch 或 keep contact with each other。',
+      misconception: '不要遗漏 keep in touch 中的 in；after 后接名词或动名词。',
       difficulty: 'foundation',
     },
     {
