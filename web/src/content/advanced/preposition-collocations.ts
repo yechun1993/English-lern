@@ -1,7 +1,7 @@
 import { createAdvancedQuestions } from './advanced-utils'
 
 export const prepositionCollocations = createAdvancedQuestions('高频介词与形容词搭配', 301, [
-  ['Many young people are interested ___ learning a second language.', ['at', 'in', 'on', 'for'], 'in', 'be interested in 后接名词或动名词。', '不要受 learn 是动词影响而误选 to。'],
+  ['Many young people are interested ___ learning a second language.', ['at', 'in', 'on', 'for'], 'in', 'be interested in 后接名词或动名词。', '不要把 be interested in 与 be good at 混淆。'],
   ['My sister is very good ___ drawing cartoons.', ['in', 'at', 'for', 'with'], 'at', 'be good at 表示“擅长”。', 'be good for 表示“对……有益”。'],
   ['Each team member is responsible ___ one part of the report.', ['to', 'for', 'with', 'of'], 'for', 'be responsible for 表示“对……负责”。', 'responsible to 表示向某人负责，搭配对象不同。'],
   ['The child is afraid ___ sleeping alone in the dark.', ['from', 'of', 'with', 'at'], 'of', 'be afraid of 后接名词或动名词。', '不要把 afraid 与 from 搭配。'],
