@@ -23,6 +23,23 @@ npm install
 npm run dev
 ```
 
+## 电脑与平板局域网访问
+
+此版本不需要公网发布、登录或 Supabase。电脑与平板连接到同一个可信 Wi-Fi 后，可由电脑临时提供学习网站，平板直接用浏览器访问。
+
+1. 在电脑的 `web` 目录执行：
+
+   ```bash
+   npm run build
+   npm run serve:lan
+   ```
+
+2. 在电脑的 PowerShell 执行 `ipconfig`，找到正在使用的 Wi-Fi 或以太网连接的 IPv4 地址，例如 `192.168.1.23`。
+3. 在平板浏览器打开 `http://192.168.1.23:4173`；请将示例 IP 替换为电脑实际地址。
+4. 如果 Windows 弹出防火墙提示，只允许“专用网络”。电脑不能关机或关闭该终端；终端停止后，平板将无法继续访问。
+
+局域网地址只适合家庭或受信任网络，切勿在公共 Wi-Fi 上开放。每台设备仍将学习记录、错题和草稿独立存入自己的浏览器 LocalStorage；在本地局域网版本中，电脑与平板之间不会同步数据。通过局域网 `http` 地址访问时，部分浏览器会限制 PWA 安装和离线缓存；这是浏览器对非 HTTPS 地址的安全限制，不影响直接在浏览器中学习。
+
 ## 质量检查与内容工具
 
 ```bash
@@ -31,8 +48,7 @@ npm run validate:content  # 校验题库 schema、ID 和篇章关联
 npm run report:content    # 输出题型、难度与专题数量
 npm run export:content    # 生成本地 content-backup.json 备份
 npm run build             # TypeScript 检查与生产构建
-npx playwright install chromium  # 首次安装浏览器验收运行时
-npm run test:e2e          # 桌面与手机视口浏览器验收
+npm run test:e2e          # 使用本机 Microsoft Edge 运行桌面与手机视口验收
 ```
 
 内容自动验证和人工审校状态见 [docs/content-audit.md](docs/content-audit.md)。
@@ -43,6 +59,6 @@ npm run test:e2e          # 桌面与手机视口浏览器验收
 
 ## 当前边界
 
-- 当前版本为本地浏览器学习版，尚未配置真实跨设备同步、账户登录或公开部署。
+- 当前版本为同一可信局域网内的本地浏览器学习版，尚未配置真实跨设备同步、账户登录或公开部署。
 - `content-backup.json` 是本地导出文件，已被 Git 忽略，不会提交到仓库。
 - 所有题干、文章、解析、参考译文和范文均按官方样卷的基础至中等难度原创编写；人工语言审校仍按 `docs/content-audit.md` 中的清单持续进行。
