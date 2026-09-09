@@ -15,10 +15,6 @@ web/.env.*.local
 .DS_Store
 Thumbs.db
 
-# Generated personal-authorization releases and seller records.
-授权包输出/*
-!授权包输出/.gitkeep
-
 # Generated public release archives and temporary staging directories.
 发布包输出/*
 !发布包输出/.gitkeep
