@@ -22,6 +22,7 @@ import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import { daysUntilExam } from './domain/exam-date'
 import { loadLicense, type LicenseState } from './license/license'
+import { applyLicenseState } from './license/license-state'
 import './App.css'
 
 type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'practice' | 'subjective'
@@ -57,7 +58,17 @@ function App() {
   const remainingDays = daysUntilExam(new Date())
 
   useEffect(() => {
-    void loadLicense().then(setLicenseState)
+    let isCurrent = true
+
+    void loadLicense().then((nextLicenseState) => {
+      if (isCurrent) {
+        setLicenseState((currentLicenseState) => applyLicenseState(currentLicenseState, nextLicenseState))
+      }
+    })
+
+    return () => {
+      isCurrent = false
+    }
   }, [])
 
   function startPractice(
