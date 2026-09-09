@@ -78,4 +78,28 @@ describe('LocalStudyRepository', () => {
       correctReviewDays: [],
     })
   })
+
+  it('persists a deduplicated mastered-word queue without changing question metrics', () => {
+    const storage = new MemoryStorage()
+    const repository = new LocalStudyRepository(storage)
+
+    repository.markWordMastered('word-0001')
+    repository.markWordMastered('word-0001')
+    repository.markWordMastered('word-0002')
+
+    expect(repository.listMasteredWordIds()).toEqual(['word-0001', 'word-0002'])
+    expect(repository.getDashboard()).toMatchObject({ attemptCount: 0, correctCount: 0, dueReviewCount: 0 })
+    expect(new LocalStudyRepository(storage).listMasteredWordIds()).toEqual(['word-0001', 'word-0002'])
+  })
+
+  it('accepts existing v1 study data that has no mastered-word field', () => {
+    const storage = new MemoryStorage()
+    storage.setItem('legacy', JSON.stringify({ attempts: [], drafts: {}, masteryByQuestion: {}, pending: [] }))
+
+    const repository = new LocalStudyRepository(storage, 'legacy')
+    expect(repository.listMasteredWordIds()).toEqual([])
+    repository.markWordMastered('word-0003')
+    repository.unmarkWordMastered('word-0003')
+    expect(repository.listMasteredWordIds()).toEqual([])
+  })
 })

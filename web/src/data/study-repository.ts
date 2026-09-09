@@ -48,6 +48,7 @@ interface PersistedStudyState {
   attempts: AttemptEvent[]
   drafts: Record<string, Draft>
   masteryByQuestion: Record<string, MasteryState>
+  masteredWordIds: string[]
   pending: PendingEvent[]
 }
 
@@ -56,6 +57,7 @@ function createEmptyState(): PersistedStudyState {
     attempts: [],
     drafts: {},
     masteryByQuestion: {},
+    masteredWordIds: [],
     pending: [],
   }
 }
@@ -118,6 +120,27 @@ export class LocalStudyRepository {
     return this.read().masteryByQuestion[questionId]
   }
 
+  markWordMastered(wordId: string): void {
+    const state = this.read()
+    if (!state.masteredWordIds.includes(wordId)) {
+      state.masteredWordIds.push(wordId)
+      this.write(state)
+    }
+  }
+
+  unmarkWordMastered(wordId: string): void {
+    const state = this.read()
+    const remainingIds = state.masteredWordIds.filter((id) => id !== wordId)
+    if (remainingIds.length !== state.masteredWordIds.length) {
+      state.masteredWordIds = remainingIds
+      this.write(state)
+    }
+  }
+
+  listMasteredWordIds(): string[] {
+    return [...this.read().masteredWordIds]
+  }
+
   listDueReviews(now: Date): DueReview[] {
     const nowIso = now.toISOString()
     return Object.entries(this.read().masteryByQuestion)
@@ -155,7 +178,16 @@ export class LocalStudyRepository {
 
     try {
       const parsed: unknown = JSON.parse(raw)
-      return isPersistedState(parsed) ? parsed : createEmptyState()
+      if (!isPersistedState(parsed)) {
+        return createEmptyState()
+      }
+
+      return {
+        ...parsed,
+        masteredWordIds: Array.isArray(parsed.masteredWordIds)
+          ? [...new Set(parsed.masteredWordIds.filter((id): id is string => typeof id === 'string'))]
+          : [],
+      }
     } catch {
       return createEmptyState()
     }
