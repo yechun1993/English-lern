@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { afterEach, vi } from 'vitest'
 import App from './App'
 
 describe('App', () => {
-  afterEach(() => vi.unstubAllGlobals())
-
   it('shows the daily learning entry point', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
+    expect(screen.getByLabelText('公开版提示')).toHaveTextContent('公开学习版 · 免费使用')
   })
 
   it('opens a diagnostic practice session from the dashboard', async () => {
@@ -171,16 +169,12 @@ describe('App', () => {
     expect(await screen.findByRole('heading', { name: '第 1 / 1 题' })).toBeInTheDocument()
   })
 
-  it('keeps the authorization notice visible after entering a practice screen', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response(JSON.stringify({
-      authorizationId: 'SZU-2026-001',
-      notice: '仅授权个人学习使用，禁止转发、复制、售卖',
-    }), { status: 200 })))
+  it('keeps the public edition notice visible after entering a practice screen', async () => {
     const user = userEvent.setup()
     render(<App />)
 
     await user.click(screen.getByRole('button', { name: '开始练习' }))
 
-    expect(await screen.findByLabelText('授权信息')).toHaveTextContent('仅授权个人学习使用，禁止转发、复制、售卖')
+    expect(await screen.findByLabelText('公开版提示')).toHaveTextContent('公开学习版 · 免费使用')
   })
 })
