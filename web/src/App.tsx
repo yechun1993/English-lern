@@ -16,14 +16,16 @@ import { ClozeHub, type ClozeBank } from './features/ClozeHub'
 import { ReadingHub, type ReadingBank } from './features/ReadingHub'
 import { SubjectiveHub, type SubjectiveTopicBank } from './features/SubjectiveHub'
 import { SubjectiveSession } from './features/SubjectiveSession'
+import { WordQuickStudy } from './features/WordQuickStudy'
 import { PublicEditionNotice } from './components/PublicEditionNotice'
 import { PwaUpdateNotice } from './components/PwaUpdateNotice'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
+import type { WordEntry } from './domain/word'
 import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
-type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'practice' | 'subjective'
+type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'words' | 'practice' | 'subjective'
 
 interface PracticeTarget {
   title: string
@@ -45,11 +47,13 @@ function App() {
   const [subjectiveTarget, setSubjectiveTarget] = useState<SubjectiveTarget | null>(null)
   const repository = useMemo(() => new LocalStudyRepository(window.localStorage), [])
   const [dashboard, setDashboard] = useState(() => repository.getDashboard())
+  const [masteredWordIds, setMasteredWordIds] = useState(() => repository.listMasteredWordIds())
   const [topicBanks, setTopicBanks] = useState<TopicBank[]>([])
   const [clozeBanks, setClozeBanks] = useState<ClozeBank[]>([])
   const [readingBanks, setReadingBanks] = useState<ReadingBank[]>([])
   const [translationBanks, setTranslationBanks] = useState<SubjectiveTopicBank[]>([])
   const [writingBanks, setWritingBanks] = useState<SubjectiveTopicBank[]>([])
+  const [words, setWords] = useState<readonly WordEntry[]>([])
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [contentError, setContentError] = useState<string | null>(null)
   const remainingDays = daysUntilExam(new Date())
@@ -168,6 +172,24 @@ function App() {
       setWritingBanks(content.questions.map((question) => ({ topic: question.topic, questions: [question] })))
       setScreen('writing')
     })
+  }
+
+  function openWordQuickStudy() {
+    void runContentLoad(async () => {
+      const { wordBank } = await import('./content/words/word-bank')
+      setWords(wordBank)
+      setScreen('words')
+    })
+  }
+
+  function markWordMastered(wordId: string) {
+    repository.markWordMastered(wordId)
+    setMasteredWordIds(repository.listMasteredWordIds())
+  }
+
+  function unmarkWordMastered(wordId: string) {
+    repository.unmarkWordMastered(wordId)
+    setMasteredWordIds(repository.listMasteredWordIds())
   }
 
   function openDueReviews() {
@@ -314,6 +336,18 @@ function App() {
     )
   }
 
+  if (screen === 'words') {
+    return withEditionNotice(
+      <WordQuickStudy
+        masteredWordIds={masteredWordIds}
+        onBack={() => setScreen('dashboard')}
+        onMarkMastered={markWordMastered}
+        onUnmarkMastered={unmarkWordMastered}
+        words={words}
+      />
+    )
+  }
+
   return withEditionNotice(
     <main className="app-shell">
       <PwaUpdateNotice />
@@ -325,6 +359,7 @@ function App() {
         </div>
         <div className="header-actions">
           <button className="topic-entry" disabled={isContentLoading} onClick={openTopicHub} type="button">专项突破</button>
+          <button className="topic-entry word-entry" onClick={openWordQuickStudy} type="button">单词速记</button>
           <div className="exam-countdown" aria-label="考试倒计时">
             <span>距离 10 月 17 日</span>
             <strong>{remainingDays} 天</strong>

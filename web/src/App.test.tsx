@@ -177,4 +177,14 @@ describe('App', () => {
 
     expect(await screen.findByLabelText('公开版提示')).toHaveTextContent('公开学习版 · 免费使用')
   })
+
+  it('opens the word quick-study page and returns to the dashboard', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '单词速记' }))
+    expect(await screen.findByRole('heading', { name: '单词速记' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '返回今日学习' }))
+    expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
+  })
 })

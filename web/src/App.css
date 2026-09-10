@@ -63,6 +63,8 @@ h2 {
 .header-actions {
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -75,6 +77,14 @@ h2 {
 
 .topic-entry:hover {
   background: #0f172a;
+}
+
+.word-entry {
+  background: #2563eb;
+}
+
+.word-entry:hover {
+  background: #1d4ed8;
 }
 
 .exam-countdown strong {
