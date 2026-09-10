@@ -28,6 +28,7 @@ describe('SubjectiveSession', () => {
       <SubjectiveSession
         title="汉译英 · 基础句序"
         questions={[translationQuestion]}
+        onBack={vi.fn()}
         onComplete={vi.fn()}
         onSaveDraft={onSaveDraft}
       />,
@@ -45,5 +46,26 @@ describe('SubjectiveSession', () => {
       'I walk to work every morning.',
     )
     expect(screen.getByText('主语是否放在句首？')).toBeInTheDocument()
+  })
+
+  it('saves the active draft before returning from an unfinished subjective set', async () => {
+    const user = userEvent.setup()
+    const onBack = vi.fn()
+    const onSaveDraft = vi.fn()
+    render(
+      <SubjectiveSession
+        title="汉译英"
+        questions={[translationQuestion]}
+        onBack={onBack}
+        onComplete={vi.fn()}
+        onSaveDraft={onSaveDraft}
+      />,
+    )
+
+    await user.type(screen.getByRole('textbox', { name: '我的译文' }), 'My saved return draft.')
+    await user.click(screen.getByRole('button', { name: '返回专项' }))
+
+    expect(onSaveDraft).toHaveBeenCalledWith(translationQuestion, 'My saved return draft.')
+    expect(onBack).toHaveBeenCalledOnce()
   })
 })

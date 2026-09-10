@@ -1,7 +1,7 @@
 .topic-shell {
   width: min(100% - 32px, 980px);
   margin: 0 auto;
-  padding: 42px 0 72px;
+  padding: 86px 0 72px;
 }
 
 .topic-header {
@@ -17,22 +17,6 @@
   margin-bottom: 0;
   color: #64748b;
   line-height: 1.6;
-}
-
-.back-button {
-  width: auto;
-  margin-bottom: 28px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #0f766e;
-  font-size: 0.9rem;
-}
-
-.back-button:hover {
-  background: transparent;
-  color: #115e59;
-  text-decoration: underline;
 }
 
 .topic-grid {
@@ -76,7 +60,7 @@
 @media (max-width: 700px) {
   .topic-shell {
     width: min(100% - 24px, 980px);
-    padding-top: 28px;
+    padding-top: 74px;
   }
 
   .topic-grid {

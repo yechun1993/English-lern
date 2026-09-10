@@ -1,7 +1,7 @@
 .cloze-shell {
   width: min(100% - 32px, 900px);
   margin: 0 auto;
-  padding: 42px 0 72px;
+  padding: 86px 0 72px;
 }
 
 .cloze-header {
@@ -60,7 +60,7 @@
 @media (max-width: 640px) {
   .cloze-shell {
     width: min(100% - 24px, 900px);
-    padding-top: 28px;
+    padding-top: 74px;
   }
 
   .cloze-grid {

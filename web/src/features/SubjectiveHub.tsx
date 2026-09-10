@@ -1,4 +1,5 @@
 import type { Question } from '../domain/question'
+import { FixedBackButton } from '../components/FixedBackButton'
 import './TopicHub.css'
 
 export interface SubjectiveTopicBank {
@@ -31,8 +32,8 @@ export function SubjectiveHub({
 }: SubjectiveHubProps) {
   return (
     <main className="topic-shell">
+      <FixedBackButton label="返回今日学习" onBack={onBack} />
       <header className="topic-header">
-        <button className="back-button" onClick={onBack} type="button">返回今日学习</button>
         <p className="eyebrow">{eyebrow}</p>
         <h1>{title}</h1>
         <p>{description}</p>

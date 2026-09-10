@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FixedBackButton } from '../components/FixedBackButton'
 import type { Question } from '../domain/question'
 import type { Passage } from '../domain/passage'
 import './PracticeSession.css'
@@ -7,11 +8,12 @@ export interface PracticeSessionProps {
   title: string
   questions: Question[]
   passages?: Passage[]
+  onBack: () => void
   onComplete: () => void
   onAnswer?: (question: Question, answer: string, correct: boolean, guessed: boolean) => void
 }
 
-export function PracticeSession({ title, questions, passages, onComplete, onAnswer }: PracticeSessionProps) {
+export function PracticeSession({ title, questions, passages, onBack, onComplete, onAnswer }: PracticeSessionProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [isChecked, setIsChecked] = useState(false)
@@ -22,10 +24,11 @@ export function PracticeSession({ title, questions, passages, onComplete, onAnsw
   if (!question) {
     return (
       <section className="practice-empty">
+        <FixedBackButton label="返回专项" onBack={onBack} />
         <h1>{title}</h1>
         <p>这一组题目正在准备中，请先回到学习首页。</p>
-        <button type="button" onClick={onComplete}>
-          返回首页
+        <button type="button" onClick={onBack}>
+          返回专项
         </button>
       </section>
     )
@@ -68,6 +71,7 @@ export function PracticeSession({ title, questions, passages, onComplete, onAnsw
 
   return (
     <main className="practice-shell">
+      <FixedBackButton label="返回专项" onBack={onBack} />
       <header className="practice-header">
         <div>
           <p className="eyebrow">{title}</p>

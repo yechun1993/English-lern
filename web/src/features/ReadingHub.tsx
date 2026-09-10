@@ -1,5 +1,6 @@
 import type { Question } from '../domain/question'
 import type { Passage } from '../domain/passage'
+import { FixedBackButton } from '../components/FixedBackButton'
 import './ReadingHub.css'
 
 export interface ReadingBank {
@@ -16,8 +17,8 @@ interface ReadingHubProps {
 export function ReadingHub({ banks, onBack, onStart }: ReadingHubProps) {
   return (
     <main className="reading-shell">
+      <FixedBackButton label="返回今日学习" onBack={onBack} />
       <header className="reading-header">
-        <button className="back-button" onClick={onBack} type="button">返回今日学习</button>
         <p className="eyebrow">4 题四选一 · 逐篇突破</p>
         <h1>阅读理解</h1>
         <p>每次选择一篇文章。先快速通读，再用细节、词义、推断和主旨四类题目检查理解。</p>

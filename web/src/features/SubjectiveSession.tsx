@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FixedBackButton } from '../components/FixedBackButton'
 import type { Question } from '../domain/question'
 import './SubjectiveSession.css'
 
@@ -6,6 +7,7 @@ export interface SubjectiveSessionProps {
   title: string
   questions: Question[]
   initialDrafts?: Record<string, string>
+  onBack: () => void
   onComplete: () => void
   onSaveDraft?: (question: Question, content: string) => void
 }
@@ -18,6 +20,7 @@ export function SubjectiveSession({
   title,
   questions,
   initialDrafts = {},
+  onBack,
   onComplete,
   onSaveDraft,
 }: SubjectiveSessionProps) {
@@ -29,9 +32,10 @@ export function SubjectiveSession({
   if (!question) {
     return (
       <main className="subjective-shell">
+        <FixedBackButton label="返回专项" onBack={onBack} />
         <h1>{title}</h1>
         <p>这一组题目正在准备中，请先回到学习首页。</p>
-        <button type="button" onClick={onComplete}>返回首页</button>
+        <button type="button" onClick={onBack}>返回专项</button>
       </main>
     )
   }
@@ -40,6 +44,11 @@ export function SubjectiveSession({
 
   function saveDraft() {
     onSaveDraft?.(question, draft)
+  }
+
+  function handleBack() {
+    saveDraft()
+    onBack()
   }
 
   function revealReference() {
@@ -61,6 +70,7 @@ export function SubjectiveSession({
 
   return (
     <main className="subjective-shell">
+      <FixedBackButton label="返回专项" onBack={handleBack} />
       <header className="subjective-header">
         <div>
           <p className="eyebrow">{title}</p>

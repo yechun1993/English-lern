@@ -230,6 +230,7 @@ function App() {
     return withEditionNotice(
       <PracticeSession
         onAnswer={recordAnswer}
+        onBack={() => setScreen(practiceTarget.returnTo)}
         onComplete={() => setScreen(practiceTarget.returnTo)}
         passages={practiceTarget.passages}
         questions={practiceTarget.questions}
@@ -242,6 +243,7 @@ function App() {
     return withEditionNotice(
       <SubjectiveSession
         initialDrafts={subjectiveTarget.initialDrafts}
+        onBack={() => setScreen(subjectiveTarget.returnTo)}
         onComplete={() => setScreen(subjectiveTarget.returnTo)}
         onSaveDraft={saveSubjectiveDraft}
         questions={subjectiveTarget.questions}

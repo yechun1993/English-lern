@@ -1,7 +1,7 @@
 .subjective-shell {
   width: min(100% - 32px, 760px);
   margin: 0 auto;
-  padding: 42px 0 72px;
+  padding: 86px 0 72px;
 }
 
 .subjective-header {
@@ -97,7 +97,7 @@
 @media (max-width: 560px) {
   .subjective-shell {
     width: min(100% - 24px, 760px);
-    padding-top: 28px;
+    padding-top: 74px;
   }
 
   .subjective-header {

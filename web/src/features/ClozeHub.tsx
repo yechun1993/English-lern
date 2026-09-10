@@ -1,5 +1,6 @@
 import type { Question } from '../domain/question'
 import type { Passage } from '../domain/passage'
+import { FixedBackButton } from '../components/FixedBackButton'
 import './ClozeHub.css'
 
 export interface ClozeBank {
@@ -16,8 +17,8 @@ interface ClozeHubProps {
 export function ClozeHub({ banks, onBack, onStart }: ClozeHubProps) {
   return (
     <main className="cloze-shell">
+      <FixedBackButton label="返回今日学习" onBack={onBack} />
       <header className="cloze-header">
-        <button className="back-button" onClick={onBack} type="button">返回今日学习</button>
         <p className="eyebrow">20 空三选一 · 逐篇突破</p>
         <h1>完形填空</h1>
         <p>每次选择一篇文章。先通读全文，再逐空核对搭配、逻辑和词义。</p>

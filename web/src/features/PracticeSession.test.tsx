@@ -28,7 +28,7 @@ describe('PracticeSession', () => {
   it('waits for the learner to check the answer before showing feedback', async () => {
     const user = userEvent.setup()
     const onComplete = vi.fn()
-    render(<PracticeSession title="诊断练习" questions={[question]} onComplete={onComplete} />)
+    render(<PracticeSession title="诊断练习" questions={[question]} onBack={vi.fn()} onComplete={onComplete} />)
 
     await user.click(screen.getByRole('button', { name: 'is' }))
 
@@ -47,7 +47,7 @@ describe('PracticeSession', () => {
     const user = userEvent.setup()
     const onAnswer = vi.fn()
     render(
-      <PracticeSession title="诊断练习" questions={[question]} onAnswer={onAnswer} onComplete={vi.fn()} />,
+      <PracticeSession title="诊断练习" questions={[question]} onAnswer={onAnswer} onBack={vi.fn()} onComplete={vi.fn()} />,
     )
 
     await user.click(screen.getByRole('button', { name: 'is' }))
@@ -71,10 +71,20 @@ describe('PracticeSession', () => {
             body: 'A short reading passage for the learner.',
           },
         ]}
+        onBack={vi.fn()}
         onComplete={vi.fn()}
       />,
     )
 
     expect(screen.getByRole('region', { name: '阅读文章' })).toHaveTextContent('A short reading passage')
+  })
+
+  it('lets the learner leave an unfinished objective practice set', async () => {
+    const user = userEvent.setup()
+    const onBack = vi.fn()
+    render(<PracticeSession title="诊断练习" questions={[question]} onBack={onBack} onComplete={vi.fn()} />)
+
+    await user.click(screen.getByRole('button', { name: '返回专项' }))
+    expect(onBack).toHaveBeenCalledOnce()
   })
 })
