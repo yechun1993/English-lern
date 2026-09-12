@@ -9,9 +9,12 @@ test('serves the public study site without any authorization route', async () =>
   const packageRoot = await mkdtemp(join(tmpdir(), 'szu-degree-english-public-server-'))
   const siteRoot = join(packageRoot, 'site')
   const assetsRoot = join(siteRoot, 'assets')
+  const audioRoot = join(siteRoot, 'audio', 'words')
   await mkdir(assetsRoot, { recursive: true })
+  await mkdir(audioRoot, { recursive: true })
   await writeFile(join(siteRoot, 'index.html'), '<main>公开题库</main>')
   await writeFile(join(assetsRoot, 'app.js'), 'console.log("ok")')
+  await writeFile(join(audioRoot, '0001.mp3'), 'fake audio')
 
   let server
   try {
@@ -22,6 +25,7 @@ test('serves the public study site without any authorization route', async () =>
     assert.equal((await fetch(`${url}/`)).status, 200)
     assert.match(await (await fetch(`${url}/unknown-route`)).text(), /公开题库/)
     assert.match(await (await fetch(`${url}/assets/app.js`)).text(), /console\.log/)
+    assert.equal((await fetch(`${url}/audio/words/0001.mp3`)).headers.get('content-type'), 'audio/mpeg')
     assert.equal((await fetch(`${url}/license.json`)).status, 404)
     assert.equal((await fetch(`${url}/..%2Fserver.mjs`)).status, 403)
     assert.equal((await fetch(`${url}/`, { method: 'POST' })).status, 405)

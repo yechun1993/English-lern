@@ -18,3 +18,12 @@ Thumbs.db
 # Generated public release archives and temporary staging directories.
 发布包输出/*
 !发布包输出/.gitkeep
+
+# Generated offline word audio and local TTS/model caches.
+web/public/audio/words/*.mp3
+!web/public/audio/words/.gitkeep
+tools/audio/.venv/
+tools/audio/cache/
+tools/audio/output/
+tools/audio/*.wav
+tools/audio/__pycache__/

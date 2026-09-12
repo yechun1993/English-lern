@@ -13,6 +13,8 @@
     "test:run": "vitest run",
     "test:e2e": "playwright test",
     "test:public-release": "node --test ../tools/public-release/*.test.mjs",
+    "generate:word-bank": "node ../tools/word-content/generate-word-bank.mjs",
+    "verify:word-audio": "node ../tools/audio/verify-word-audio.mjs",
     "validate:content": "tsx scripts/validate-content.ts",
     "report:content": "tsx scripts/content-report.ts",
     "export:content": "tsx scripts/export-content.ts"

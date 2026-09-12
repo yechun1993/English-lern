@@ -4,12 +4,16 @@ import { copyFile, cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/p
 import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { verifyWordAudio } from '../audio/verify-word-audio.mjs'
 
-const releaseVersion = '1.0.0'
+const releaseVersion = '1.1.0'
 const packageDirectoryName = `深大学位英语题库_公开版_v${releaseVersion}`
 const archiveFileName = `${packageDirectoryName}.zip`
 const moduleDirectory = dirname(fileURLToPath(import.meta.url))
 const defaultProjectRoot = resolve(moduleDirectory, '..', '..')
+const defaultAudioLicensePath = join(defaultProjectRoot, 'tools', 'audio', 'KOKORO-82M-APACHE-2.0.txt')
+const defaultAudioAttributionPath = join(defaultProjectRoot, 'tools', 'audio', 'ATTRIBUTION.md')
+const defaultAudioManifestPath = join(defaultProjectRoot, 'tools', 'audio', 'word-audio-manifest.json')
 
 function publicUsageGuide() {
   return `使用说明
@@ -18,6 +22,7 @@ function publicUsageGuide() {
 2. 双击“启动学位英语题库.cmd”，并保持弹出的窗口打开。
 3. 浏览器会自动打开公开学习版；同一可信 Wi-Fi 下的平板可访问窗口显示的局域网地址。
 4. 学习记录、错题和草稿只保存在当前浏览器；请勿在公共 Wi-Fi 上开放局域网地址。
+5. 单词速记的美式发音已内置，可离线播放。
 `
 }
 
@@ -65,17 +70,23 @@ export async function stagePublicRelease({
   nodePath = process.execPath,
   serverSourcePath = join(moduleDirectory, 'server.mjs'),
   launcherTemplatePath = join(defaultProjectRoot, '启动公开版题库.template.cmd'),
+  audioLicensePath = defaultAudioLicensePath,
+  audioAttributionPath = defaultAudioAttributionPath,
 }) {
   const resolvedOutputRoot = resolve(outputRoot)
   const stagingDirectory = await mkdtemp(join(resolvedOutputRoot, '.staging-'))
   const packageDirectory = join(stagingDirectory, packageDirectoryName)
   const siteDirectory = join(packageDirectory, 'site')
+  const thirdPartyLicensesDirectory = join(packageDirectory, 'third-party-licenses')
 
   await mkdir(packageDirectory)
+  await mkdir(thirdPartyLicensesDirectory)
   await cp(buildDirectory, siteDirectory, { recursive: true })
   await rm(join(siteDirectory, 'license.json'), { force: true })
   await copyFile(nodePath, join(packageDirectory, 'node.exe'))
   await copyFile(serverSourcePath, join(packageDirectory, 'server.mjs'))
+  await copyFile(audioLicensePath, join(thirdPartyLicensesDirectory, 'KOKORO-82M-APACHE-2.0.txt'))
+  await copyFile(audioAttributionPath, join(thirdPartyLicensesDirectory, 'ATTRIBUTION.md'))
 
   const launcherTemplate = await readFile(launcherTemplatePath, 'utf8')
   await writeFile(join(packageDirectory, '启动学位英语题库.cmd'), launcherTemplate, 'utf8')
@@ -91,8 +102,12 @@ export async function createPublicRelease({
   nodePath,
   serverSourcePath,
   launcherTemplatePath,
+  audioLicensePath,
+  audioAttributionPath,
+  audioManifestPath = defaultAudioManifestPath,
   sevenZipPath,
   run = defaultRun,
+  verifyAudio = verifyWordAudio,
 }) {
   const resolvedOutputRoot = resolve(outputRoot)
   const resolvedBuildDirectory = buildDirectory ?? join(projectRoot, 'web', 'dist')
@@ -114,12 +129,19 @@ export async function createPublicRelease({
       await run(npmCommand, npmArguments, { cwd: join(projectRoot, 'web') })
     }
 
+    await verifyAudio({
+      manifestPath: audioManifestPath,
+      audioDirectory: join(resolvedBuildDirectory, 'audio', 'words'),
+    })
+
     const staged = await stagePublicRelease({
       buildDirectory: resolvedBuildDirectory,
       outputRoot: resolvedOutputRoot,
       nodePath,
       serverSourcePath,
       launcherTemplatePath,
+      audioLicensePath,
+      audioAttributionPath,
     })
     stagingDirectory = staged.stagingDirectory
     const resolvedSevenZipPath = findSevenZip(sevenZipPath)
