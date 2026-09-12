@@ -74,7 +74,9 @@ test('creates a password-free public ZIP and refuses to overwrite it', async () 
       run: async (command, args) => {
         calls.push({ command, args })
         if (args[0] === 'a') {
-          await writeFile(args[2], 'public archive placeholder')
+          const archiveArgument = args.find((argument) => argument.endsWith('.zip'))
+          assert.ok(archiveArgument)
+          await writeFile(archiveArgument, 'public archive placeholder')
         }
         return { stdout: '', stderr: '' }
       },
@@ -83,6 +85,7 @@ test('creates a password-free public ZIP and refuses to overwrite it', async () 
     const archiveCall = calls.find((call) => call.args[0] === 'a')
     assert.ok(archiveCall)
     assert.deepEqual(archiveCall.args.slice(0, 2), ['a', '-tzip'])
+    assert.equal(archiveCall.args.includes('-mcu=on'), true)
     assert.equal(archiveCall.args.at(-1), '深大学位英语题库_公开版_v1.1.0')
     assert.equal(archiveCall.args.some((argument) => argument.startsWith('-p')), false)
     assert.match(release.archivePath, /深大学位英语题库_公开版_v1\.1\.0\.zip$/)

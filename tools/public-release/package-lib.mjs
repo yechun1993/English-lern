@@ -149,6 +149,7 @@ export async function createPublicRelease({
     await run(resolvedSevenZipPath, [
       'a',
       '-tzip',
+      '-mcu=on',
       archivePath,
       packageDirectoryName,
     ], { cwd: stagingDirectory })
