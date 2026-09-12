@@ -54,6 +54,7 @@
   position: sticky;
   top: 104px;
   align-self: start;
+  min-width: 0;
   padding: 16px;
   border: 1px solid #dbe4ef;
   border-radius: 16px;
@@ -338,8 +339,14 @@
   }
 
   .word-letter-index {
-    grid-template-columns: repeat(13, minmax(42px, 1fr));
+    display: flex;
     overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+
+  .word-letter-index button {
+    flex: 0 0 42px;
   }
 
   .word-list-toolbar {

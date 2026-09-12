@@ -213,7 +213,7 @@ export function WordQuickStudy({
               <p>{allUnmasteredAreMastered ? '全部单词已标记掌握，可查看已掌握单词。' : '调整筛选条件后再试。'}</p>
             </div>
           )}
-          <audio data-testid="word-audio" onError={() => setAudioError('音频暂不可播放')} preload="none" ref={audioRef} src={audioPath} />
+          <audio data-testid="word-audio" onError={() => setAudioError('音频暂不可播放')} preload="none" ref={audioRef} src={audioPath || undefined} />
           {audioError && <p className="word-audio-error" role="alert">{audioError}</p>}
         </section>
       </div>

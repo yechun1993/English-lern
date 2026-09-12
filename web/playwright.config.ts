@@ -12,12 +12,12 @@ export default defineConfig({
   projects: [
     {
       name: 'desktop-edge',
-      testMatch: 'learning-flow.spec.ts',
+      testMatch: ['learning-flow.spec.ts', 'word-quick-study.spec.ts'],
       use: { ...devices['Desktop Edge'], channel: 'msedge' },
     },
     {
       name: 'mobile-edge',
-      testMatch: 'mobile-writing.spec.ts',
+      testMatch: ['mobile-writing.spec.ts', 'word-quick-study.spec.ts'],
       use: { ...devices['Pixel 7'], channel: 'msedge' },
     },
   ],

@@ -35,7 +35,12 @@ describe('WordQuickStudy', () => {
   it('applies a confirmed batch limit and keeps row definition, audio, and mastery controls independent', async () => {
     const user = userEvent.setup()
     const props = createProps()
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
     const { rerender } = render(<WordQuickStudy {...props} />)
+
+    expect(screen.getByTestId('word-audio')).not.toHaveAttribute('src')
+    expect(consoleError).not.toHaveBeenCalled()
+    consoleError.mockRestore()
 
     await user.clear(screen.getByLabelText('本次背诵数量'))
     await user.type(screen.getByLabelText('本次背诵数量'), '2')
