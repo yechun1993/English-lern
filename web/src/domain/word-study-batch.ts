@@ -2,16 +2,16 @@ import { getWordCandidates } from './word-selection'
 import type { WordEntry } from './word'
 
 export type WordBatchRule =
-  | { kind: 'ordered' }
-  | { kind: 'random'; seed: number }
-  | { kind: 'initial'; initial: string }
+  | { readonly kind: 'ordered' }
+  | { readonly kind: 'random'; readonly seed: number }
+  | { readonly kind: 'initial'; readonly initial: string }
 
 export interface WordStudyBatch {
-  requestedSize: number
-  actualSize: number
-  rule: WordBatchRule
-  wordIds: readonly string[]
-  remainingWordIds: readonly string[]
+  readonly requestedSize: number
+  readonly actualSize: number
+  readonly rule: WordBatchRule
+  readonly wordIds: readonly string[]
+  readonly remainingWordIds: readonly string[]
 }
 
 interface CreateWordStudyBatchInput {
@@ -23,7 +23,12 @@ interface CreateWordStudyBatchInput {
 
 const INVALID_BATCH_MESSAGE = '单词批次参数无效。'
 
-export function createWordStudyBatch(input: CreateWordStudyBatchInput) {
+interface CreateWordStudyBatchResult {
+  readonly availableCount: number
+  readonly batch: WordStudyBatch
+}
+
+export function createWordStudyBatch(input: CreateWordStudyBatchInput): CreateWordStudyBatchResult {
   if (!Number.isInteger(input.requestedSize) || input.requestedSize <= 0) {
     throw new Error(INVALID_BATCH_MESSAGE)
   }
@@ -31,25 +36,31 @@ export function createWordStudyBatch(input: CreateWordStudyBatchInput) {
     throw new Error(INVALID_BATCH_MESSAGE)
   }
 
-  const mode = input.rule.kind === 'initial' ? 'initial' : input.rule.kind
+  const rule: WordBatchRule = input.rule.kind === 'ordered'
+    ? { kind: 'ordered' }
+    : input.rule.kind === 'random'
+      ? { kind: 'random', seed: input.rule.seed }
+      : { kind: 'initial', initial: input.rule.initial }
+  const mode = rule.kind === 'initial' ? 'initial' : rule.kind
   const candidates = getWordCandidates({
     words: input.words,
     masteredWordIds: input.masteredWordIds,
     mode,
-    initial: input.rule.kind === 'initial' ? input.rule.initial : undefined,
+    initial: rule.kind === 'initial' ? rule.initial : undefined,
     query: '',
-    shuffleSeed: input.rule.kind === 'random' ? input.rule.seed : undefined,
+    shuffleSeed: rule.kind === 'random' ? rule.seed : undefined,
   })
   const selected = candidates.slice(0, input.requestedSize)
   const wordIds = selected.map((entry) => entry.id)
+  const remainingWordIds = [...wordIds]
   return {
     availableCount: candidates.length,
     batch: {
       requestedSize: input.requestedSize,
       actualSize: wordIds.length,
-      rule: input.rule,
+      rule,
       wordIds,
-      remainingWordIds: wordIds,
+      remainingWordIds,
     } satisfies WordStudyBatch,
   }
 }

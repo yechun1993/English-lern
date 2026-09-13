@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, expectTypeOf, it } from 'vitest'
 import type { WordEntry } from './word'
 import {
   completeWordInBatch,
@@ -29,6 +29,21 @@ describe('word study batch', () => {
     expect(next.remainingWordIds).not.toContain('word-0003')
   })
 
+  it('returns independent readonly snapshots and clones the input rule', () => {
+    const rule = { kind: 'initial' as const, initial: 'A' }
+    const result = createWordStudyBatch({
+      words,
+      masteredWordIds: [],
+      requestedSize: 2,
+      rule,
+    })
+
+    expect(result.batch.wordIds).not.toBe(result.batch.remainingWordIds)
+    expectTypeOf(result.batch.wordIds).toEqualTypeOf<readonly string[]>()
+    rule.initial = 'Z'
+    expect(result.batch.rule).toEqual({ kind: 'initial', initial: 'A' })
+  })
+
   it('uses the actual candidate count when a letter has fewer words than the goal', () => {
     const result = createWordStudyBatch({
       words,
@@ -51,6 +66,30 @@ describe('word study batch', () => {
     }).batch
     expect(selectBatchWords(batch, words, '书')).toEqual([])
     expect(selectBatchWords(batch, words, '能力').map((entry) => entry.id)).toEqual(['word-0001'])
+  })
+
+  it('ignores missing frozen IDs and excludes completed words from later searches', () => {
+    const batch = createWordStudyBatch({
+      words,
+      masteredWordIds: [],
+      requestedSize: 2,
+      rule: { kind: 'ordered' },
+    }).batch
+    const completed = completeWordInBatch(batch, 'word-0001')
+    expect(selectBatchWords(completed, words.slice(1), '')).toEqual([words[1]])
+    expect(selectBatchWords(completed, words, 'ability')).toEqual([])
+    expect(selectBatchWords({ ...completed, remainingWordIds: ['missing-id'] }, words, '')).toEqual([])
+  })
+
+  it('does not change a batch when completing the same word twice', () => {
+    const batch = createWordStudyBatch({
+      words,
+      masteredWordIds: [],
+      requestedSize: 2,
+      rule: { kind: 'ordered' },
+    }).batch
+    const once = completeWordInBatch(batch, 'word-0001')
+    expect(completeWordInBatch(once, 'word-0001')).toEqual(once)
   })
 
   it('rejects invalid sizes and letters', () => {

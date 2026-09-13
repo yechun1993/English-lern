@@ -25,6 +25,11 @@ describe('word selection', () => {
       .toEqual([words[2]])
   })
 
+  it('returns all mastered matches even when the limit is one', () => {
+    expect(selectWords({ words, masteredWordIds: ['word-0001', 'word-0002'], mode: 'mastered', limit: 1, query: '' }))
+      .toEqual([words[0], words[1]])
+  })
+
   it('searches both English words and Chinese meanings', () => {
     expect(selectWords({ words, masteredWordIds: [], mode: 'ordered', limit: 8, query: '书' }))
       .toEqual([words[2]])
@@ -36,6 +41,14 @@ describe('word selection', () => {
     expect(shuffleWords(words, 23).map((entry) => entry.id))
       .not.toEqual(words.map((entry) => entry.id))
     expect(words.map((entry) => entry.id)).toEqual(['word-0001', 'word-0002', 'word-0003', 'word-0004'])
+  })
+
+  it('uses deterministic random candidates and rejects an invalid seed', () => {
+    const input = { words, masteredWordIds: [], mode: 'random' as const, query: '', shuffleSeed: 23 }
+    expect(getWordCandidates(input).map((entry) => entry.id))
+      .toEqual(getWordCandidates(input).map((entry) => entry.id))
+    expect(() => getWordCandidates({ ...input, shuffleSeed: Number.NaN }))
+      .toThrow('单词筛选参数无效。')
   })
 
   it('counts all candidates before applying the current batch limit', () => {
