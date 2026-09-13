@@ -12,11 +12,15 @@ export interface WordSelectionInput {
 
 const INVALID_SELECTION_MESSAGE = '单词筛选参数无效。'
 
-function validateInput(input: WordSelectionInput) {
-  if (!Number.isInteger(input.limit) || input.limit <= 0) {
+export type WordCandidateInput = Omit<WordSelectionInput, 'limit'>
+
+function validateLimit(limit: number): void {
+  if (!Number.isInteger(limit) || limit <= 0) {
     throw new Error(INVALID_SELECTION_MESSAGE)
   }
+}
 
+function validateCandidateInput(input: WordCandidateInput): void {
   if (input.mode === 'initial' && !/^[A-Z]$/.test(input.initial ?? '')) {
     throw new Error(INVALID_SELECTION_MESSAGE)
   }
@@ -52,8 +56,8 @@ export function shuffleWords(words: readonly WordEntry[], seed: number): WordEnt
   return shuffled
 }
 
-function getCandidates(input: WordSelectionInput): WordEntry[] {
-  validateInput(input)
+export function getWordCandidates(input: WordCandidateInput): WordEntry[] {
+  validateCandidateInput(input)
   const mastered = new Set(input.masteredWordIds)
   let candidates = input.mode === 'mastered'
     ? input.words.filter((entry) => mastered.has(entry.id))
@@ -68,21 +72,19 @@ function getCandidates(input: WordSelectionInput): WordEntry[] {
   }
 
   const normalizedQuery = input.query.trim().toLowerCase()
-  if (normalizedQuery) {
-    candidates = candidates.filter((entry) => (
-      entry.word.toLowerCase().includes(normalizedQuery)
-      || entry.meaning.toLowerCase().includes(normalizedQuery)
-    ))
-  }
-
-  return candidates
+  return normalizedQuery
+    ? candidates.filter((entry) => entry.word.toLowerCase().includes(normalizedQuery)
+      || entry.meaning.toLowerCase().includes(normalizedQuery))
+    : candidates
 }
 
 export function selectWords(input: WordSelectionInput): WordEntry[] {
-  const candidates = getCandidates(input)
+  validateLimit(input.limit)
+  const candidates = getWordCandidates(input)
   return input.mode === 'mastered' ? candidates : candidates.slice(0, input.limit)
 }
 
 export function countAvailableWords(input: WordSelectionInput): number {
-  return getCandidates(input).length
+  validateLimit(input.limit)
+  return getWordCandidates(input).length
 }

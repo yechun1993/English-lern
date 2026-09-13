@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { WordEntry } from './word'
-import { countAvailableWords, selectWords, shuffleWords } from './word-selection'
+import { countAvailableWords, getWordCandidates, selectWords, shuffleWords } from './word-selection'
 
 const words: WordEntry[] = [
   { id: 'word-0001', index: 1, word: 'ability', phonetic: null, meaning: '能力', note: null },
@@ -41,6 +41,11 @@ describe('word selection', () => {
   it('counts all candidates before applying the current batch limit', () => {
     expect(countAvailableWords({ words, masteredWordIds: ['word-0002'], mode: 'ordered', limit: 1, query: '' }))
       .toBe(3)
+  })
+
+  it('exports all matching candidates without applying a limit', () => {
+    expect(getWordCandidates({ words, masteredWordIds: [], mode: 'ordered', query: '' }))
+      .toEqual(words)
   })
 
   it.each([
