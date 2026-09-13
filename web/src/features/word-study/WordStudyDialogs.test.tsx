@@ -158,18 +158,28 @@ describe('WordBatchChangeDialog', () => {
     expect(onConfirm).toHaveBeenCalledOnce()
   })
 
-  it('adds the current maximum when fewer candidates are available', () => {
+  it('disables confirmation and explains when no candidate is available', async () => {
+    const user = userEvent.setup()
+    const onConfirm = vi.fn()
     render(
       <WordBatchChangeDialog
         availableCount={0}
         description="将会重新按照随机单词排序给出30个单词背诵"
         onCancel={vi.fn()}
-        onConfirm={vi.fn()}
+        onConfirm={onConfirm}
         requestedSize={30}
       />,
     )
 
+    expect(screen.getByText('该条件下暂无可背单词')).toBeVisible()
     expect(screen.getByText('当前最多可提供0个。')).toBeVisible()
+    const confirmButton = screen.getByRole('button', { name: '确认重新生成' })
+    expect(confirmButton).toBeDisabled()
+
+    await user.click(confirmButton)
+    confirmButton.focus()
+    await user.keyboard('{Enter}')
+    expect(onConfirm).not.toHaveBeenCalled()
   })
 
   it('can be cancelled with Escape', async () => {

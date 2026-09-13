@@ -147,12 +147,15 @@ export function WordBatchChangeDialog({
       <section aria-labelledby={titleId} aria-modal="true" className="word-dialog" role="dialog">
         <h2 id={titleId}>重新生成本轮单词？</h2>
         <p>{description}</p>
+        {availableCount === 0 && <p>该条件下暂无可背单词</p>}
         {availableCount < requestedSize && <p>当前最多可提供{availableCount}个。</p>}
         <div className="word-dialog-actions">
           <button className="word-dialog-secondary-action" onClick={onCancel} type="button">
             取消
           </button>
-          <button onClick={onConfirm} type="button">确认重新生成</button>
+          <button disabled={availableCount === 0} onClick={onConfirm} type="button">
+            确认重新生成
+          </button>
         </div>
       </section>
     </div>

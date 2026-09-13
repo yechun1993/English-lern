@@ -102,6 +102,12 @@
   background: #1e40af;
 }
 
+.word-dialog-actions button:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
 .word-dialog-actions .word-dialog-secondary-action {
   border: 1px solid #cbd5e1;
   background: #f8fafc;
