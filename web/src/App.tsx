@@ -22,7 +22,6 @@ import { PwaUpdateNotice } from './components/PwaUpdateNotice'
 import type { Question } from './domain/question'
 import type { Passage } from './domain/passage'
 import type { WordEntry } from './domain/word'
-import { daysUntilExam } from './domain/exam-date'
 import './App.css'
 
 type Screen = 'dashboard' | 'topics' | 'cloze' | 'reading' | 'translation' | 'writing' | 'words' | 'practice' | 'subjective'
@@ -56,7 +55,6 @@ function App() {
   const [words, setWords] = useState<readonly WordEntry[]>([])
   const [isContentLoading, setIsContentLoading] = useState(false)
   const [contentError, setContentError] = useState<string | null>(null)
-  const remainingDays = daysUntilExam(new Date())
 
   function startPractice(
     title: string,
@@ -360,10 +358,6 @@ function App() {
         <div className="header-actions">
           <button className="topic-entry" disabled={isContentLoading} onClick={openTopicHub} type="button">专项突破</button>
           <button className="topic-entry word-entry" onClick={openWordQuickStudy} type="button">单词速记</button>
-          <div className="exam-countdown" aria-label="考试倒计时">
-            <span>距离 10 月 17 日</span>
-            <strong>{remainingDays} 天</strong>
-          </div>
         </div>
       </header>
 

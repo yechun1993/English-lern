@@ -8,6 +8,8 @@ describe('App', () => {
 
     expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
     expect(screen.getByLabelText('公开版提示')).toHaveTextContent('公开学习版 · 免费使用')
+    expect(screen.queryByLabelText('考试倒计时')).not.toBeInTheDocument()
+    expect(screen.queryByText(/10 月 17 日/)).not.toBeInTheDocument()
   })
 
   it('opens a diagnostic practice session from the dashboard', async () => {

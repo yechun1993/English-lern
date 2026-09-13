@@ -48,18 +48,6 @@ h2 {
   color: #64748b;
 }
 
-.exam-countdown {
-  display: grid;
-  min-width: 142px;
-  padding: 14px 16px;
-  border: 1px solid #dbe4ef;
-  border-radius: 14px;
-  background: #fff;
-  color: #64748b;
-  font-size: 0.8rem;
-  text-align: right;
-}
-
 .header-actions {
   display: flex;
   align-items: flex-end;
@@ -85,12 +73,6 @@ h2 {
 
 .word-entry:hover {
   background: #1d4ed8;
-}
-
-.exam-countdown strong {
-  margin-top: 2px;
-  color: #0f766e;
-  font-size: 1.5rem;
 }
 
 .progress-card {
@@ -215,11 +197,6 @@ button:hover {
   .section-heading {
     align-items: stretch;
     flex-direction: column;
-  }
-
-  .exam-countdown {
-    width: fit-content;
-    text-align: left;
   }
 
   .progress-card {
