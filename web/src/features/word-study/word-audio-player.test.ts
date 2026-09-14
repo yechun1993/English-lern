@@ -205,6 +205,16 @@ describe('word audio controller', () => {
     })
   })
 
+  it('reports synchronous play failures without throwing to the caller', () => {
+    audio.play.mockImplementationOnce(() => { throw new Error('sync-play-failure') })
+    const player = createPlayer()
+    expect(() => player.play(words[0])).not.toThrow()
+    expect(audio.play).toHaveBeenCalledOnce()
+    expect(onStatus).toHaveBeenLastCalledWith({
+      phase: 'error', wordId: 'word-0001', message: '播放失败，请再次点击',
+    })
+  })
+
   it('disposes once, clears audio and listeners, revokes every blob, and ignores subsequent calls', async () => {
     const player = createPlayer()
     await player.preload(words)

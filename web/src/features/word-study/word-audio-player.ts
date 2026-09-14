@@ -108,11 +108,16 @@ export function createWordAudioPlayer({
     onStatus({ phase: 'loading', wordId: word.id })
     installLatestOnlyListeners(token, word.id)
     audio.load()
-    void audio.play().catch(() => {
+    const reportFailure = () => {
       if (token === activeToken) {
         onStatus({ phase: 'error', wordId: word.id, message: '播放失败，请再次点击' })
       }
-    })
+    }
+    try {
+      void audio.play().catch(reportFailure)
+    } catch {
+      reportFailure()
+    }
   }
 
   function dispose() {
