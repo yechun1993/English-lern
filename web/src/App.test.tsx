@@ -186,6 +186,19 @@ describe('App', () => {
 
     await user.click(screen.getByRole('button', { name: '单词速记' }))
     expect(await screen.findByRole('heading', { name: '单词速记' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: '设置本次背诵目标' })).toBeVisible()
+    expect(screen.queryByRole('list', { name: '单词列表' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '开背' }))
+    expect(screen.getByRole('list', { name: '单词列表' })).toBeVisible()
+    await user.click(screen.getByRole('button', { name: '返回今日学习' }))
+    expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
+  })
+
+  it('returns to the dashboard before accepting a word-study goal', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: '单词速记' }))
+    expect(await screen.findByRole('dialog', { name: '设置本次背诵目标' })).toBeVisible()
     await user.click(screen.getByRole('button', { name: '返回今日学习' }))
     expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
   })

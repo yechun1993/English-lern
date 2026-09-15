@@ -145,26 +145,24 @@
 
 .word-list-controls {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: flex-end;
   gap: 10px;
 }
 
-.word-search-field,
-.word-limit-form {
+.word-search-field {
   display: grid;
   gap: 4px;
 }
 
-.word-search-field span,
-.word-limit-form label {
+.word-search-field span {
   color: #475569;
   font-size: 0.72rem;
   font-weight: 700;
 }
 
-.word-search-field input,
-.word-limit-form input {
+.word-search-field input {
   min-height: 38px;
   padding: 7px 9px;
   border: 1px solid #cbd5e1;
@@ -178,19 +176,7 @@
   width: 175px;
 }
 
-.word-limit-form {
-  grid-template-columns: 74px auto;
-}
-
-.word-limit-form label {
-  grid-column: 1 / -1;
-}
-
-.word-limit-form input {
-  width: 74px;
-}
-
-.word-limit-form button,
+.word-session-button,
 .word-rerandom-button {
   width: auto;
   min-height: 38px;
@@ -198,6 +184,20 @@
   border-radius: 8px;
   background: #1d4ed8;
   font-size: 0.8rem;
+}
+
+.word-list-toolbar .word-batch-progress {
+  margin: 6px 0;
+  color: #1d4ed8;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.word-filter-instruction {
+  margin: 12px 0 0;
+  color: #475569;
+  font-size: 0.8rem;
+  line-height: 1.5;
 }
 
 .word-list {
