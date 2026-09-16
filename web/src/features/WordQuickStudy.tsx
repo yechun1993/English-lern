@@ -1,9 +1,11 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { FixedBackButton } from '../components/FixedBackButton'
+import type { WordEntry } from '../domain/word'
 import { getWordCandidates } from '../domain/word-selection'
 import { completeWordInBatch, createWordStudyBatch, selectBatchWords, type WordBatchRule, type WordStudyBatch } from '../domain/word-study-batch'
-import { getWordAudioPath, type WordEntry } from '../domain/word'
+import { WordMasteryBurst, prefersReducedMotion } from './word-study/WordMasteryBurst'
 import { WordBatchChangeDialog, WordBatchCompleteDialog, WordGoalDialog } from './word-study/WordStudyDialogs'
+import { useWordAudioPlayer } from './word-study/useWordAudioPlayer'
 import './WordQuickStudy.css'
 
 export interface WordQuickStudyProps {
@@ -46,16 +48,17 @@ export function WordQuickStudy({
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now())
   const [hiddenDefinitionIds, setHiddenDefinitionIds] = useState<Set<string>>(() => new Set())
   const batchVersionRef = useRef(0)
-  const [audioPath, setAudioPath] = useState('')
-  const [audioError, setAudioError] = useState<string | null>(null)
+  const [celebratingWordIds, setCelebratingWordIds] = useState<Set<string>>(() => new Set())
+  const celebratingWordIdsRef = useRef(new Set<string>())
+  const masteryTimers = useRef(new Map<string, number>())
   const audioRef = useRef<HTMLAudioElement>(null)
   const masteredSet = useMemo(() => new Set(masteredWordIds), [masteredWordIds])
 
   // Reconcile before committing the list; completed members never rejoin this batch.
-  if (batch && batch.remainingWordIds.some((id) => masteredSet.has(id))) {
+  if (batch && batch.remainingWordIds.some((id) => masteredSet.has(id) && !celebratingWordIds.has(id))) {
     setBatch({
       ...batch,
-      remainingWordIds: batch.remainingWordIds.filter((id) => !masteredSet.has(id)),
+      remainingWordIds: batch.remainingWordIds.filter((id) => !masteredSet.has(id) || celebratingWordIds.has(id)),
     })
   }
 
@@ -71,6 +74,23 @@ export function WordQuickStudy({
     ? getWordCandidates({ words, masteredWordIds, mode: 'mastered', query: masteredQuery })
     : batch ? selectBatchWords(batch, words, query) : []
   const activeRule = batch?.rule
+  const preloadWords = useMemo(
+    () => batch ? selectBatchWords(batch, words, '') : [],
+    [batch, words],
+  )
+  const { status: audioStatus, play } = useWordAudioPlayer(audioRef, preloadWords)
+
+  // The controller clears its native source while replacing a batch; keep the
+  // element declaratively source-free until a learner actively requests audio.
+  useEffect(() => {
+    audioRef.current?.removeAttribute('src')
+  }, [preloadWords])
+
+  useEffect(() => () => {
+    for (const timer of masteryTimers.current.values()) window.clearTimeout(timer)
+    masteryTimers.current.clear()
+    celebratingWordIdsRef.current.clear()
+  }, [])
 
   const letterCounts = useMemo(() => {
     const counts = new Map<string, number>()
@@ -85,6 +105,7 @@ export function WordQuickStudy({
   function startBatch(requestedSize: number, rule: WordBatchRule) {
     const result = createWordStudyBatch({ words, masteredWordIds, requestedSize, rule })
     if (result.availableCount === 0) return
+    clearMasteryCelebrations()
     batchVersionRef.current += 1
     setBatch(result.batch)
     setQuery('')
@@ -130,8 +151,44 @@ export function WordQuickStudy({
   }
 
   function markMastered(wordId: string) {
-    setBatch((current) => current ? completeWordInBatch(current, wordId) : current)
+    if (!batch?.remainingWordIds.includes(wordId) || celebratingWordIdsRef.current.has(wordId)) return
+    const batchVersionAtClick = batchVersionRef.current
+
+    if (prefersReducedMotion()) {
+      onMarkMastered(wordId)
+      setBatch((current) => batchVersionRef.current === batchVersionAtClick && current
+        ? completeWordInBatch(current, wordId)
+        : current)
+      return
+    }
+
+    const nextCelebratingIds = new Set(celebratingWordIdsRef.current).add(wordId)
+    celebratingWordIdsRef.current = nextCelebratingIds
+    setCelebratingWordIds(nextCelebratingIds)
     onMarkMastered(wordId)
+    const timer = window.setTimeout(() => {
+      masteryTimers.current.delete(wordId)
+      const nextIds = new Set(celebratingWordIdsRef.current)
+      nextIds.delete(wordId)
+      celebratingWordIdsRef.current = nextIds
+      setCelebratingWordIds(nextIds)
+      setBatch((current) => batchVersionRef.current === batchVersionAtClick && current
+        ? completeWordInBatch(current, wordId)
+        : current)
+    }, 800)
+    masteryTimers.current.set(wordId, timer)
+  }
+
+  function clearMasteryCelebrations() {
+    for (const timer of masteryTimers.current.values()) window.clearTimeout(timer)
+    masteryTimers.current.clear()
+    celebratingWordIdsRef.current.clear()
+    setCelebratingWordIds(new Set())
+  }
+
+  function exitStudy() {
+    clearMasteryCelebrations()
+    onBack()
   }
 
   function toggleDefinition(wordId: string) {
@@ -143,23 +200,11 @@ export function WordQuickStudy({
     })
   }
 
-  function playAudio(entry: WordEntry) {
-    const nextPath = getWordAudioPath(entry.index)
-    setAudioError(null)
-    setAudioPath(nextPath)
-
-    if (audioRef.current) {
-      audioRef.current.setAttribute('src', nextPath)
-      audioRef.current.currentTime = 0
-      void audioRef.current.play().catch(() => setAudioError('音频暂不可播放'))
-    }
-  }
-
   const allUnmasteredAreMastered = !viewingMastered && availableCount === 0
 
   return (
     <main className="word-study-shell">
-      <FixedBackButton label="返回今日学习" onBack={onBack} />
+      <FixedBackButton label="返回今日学习" onBack={exitStudy} />
       <header className="word-study-header">
         <div>
           <p className="eyebrow">高频词汇 · 本地美式发音</p>
@@ -228,6 +273,14 @@ export function WordQuickStudy({
               {visibleWords.map((entry) => {
                 const definitionVisible = !hiddenDefinitionIds.has(entry.id)
                 const isMastered = masteredSet.has(entry.id)
+                const isCelebrating = celebratingWordIds.has(entry.id)
+                const isAudioLoading = audioStatus.phase === 'loading' && audioStatus.wordId === entry.id
+                const isAudioPlaying = audioStatus.phase === 'playing' && audioStatus.wordId === entry.id
+                const audioLabel = isAudioLoading
+                  ? `正在加载 ${entry.word} 的美式发音`
+                  : isAudioPlaying
+                    ? `正在播放 ${entry.word} 的美式发音`
+                    : `播放 ${entry.word} 的美式发音`
                 return (
                   <li className="word-row" data-word-id={entry.id} key={entry.id}>
                     <span className="word-index">{entry.index}</span>
@@ -245,21 +298,32 @@ export function WordQuickStudy({
                       {definitionVisible && <span className="word-meaning">{entry.meaning}</span>}
                     </button>
                     <button
-                      aria-label={`播放 ${entry.word} 的美式发音`}
-                      className="word-audio-button"
-                      onClick={() => playAudio(entry)}
+                      aria-label={`${definitionVisible ? '点击可隐藏' : '点击可展示'} ${entry.word} 的中文释义`}
+                      className="word-definition-hint"
+                      onClick={() => toggleDefinition(entry.id)}
                       type="button"
                     >
-                      <span aria-hidden="true">🔊</span>
+                      {definitionVisible ? '点击可隐藏中文释义' : '点击可展示中文释义'}
                     </button>
                     <button
-                      aria-label={isMastered ? `取消掌握 ${entry.word}` : `已掌握 ${entry.word}`}
-                      className={`word-mastered-button${isMastered ? ' is-mastered' : ''}`}
-                      onClick={() => isMastered ? onUnmarkMastered(entry.id) : markMastered(entry.id)}
+                      aria-label={audioLabel}
+                      className="word-audio-button"
+                      onClick={() => play(entry)}
                       type="button"
                     >
-                      {isMastered ? '取消掌握' : '已掌握'}
+                      {isAudioLoading ? '加载中…' : <span aria-hidden="true">{isAudioPlaying ? '▶️ 🔊' : '🔊'}</span>}
                     </button>
+                    <span className="word-mastered-control">
+                      {isCelebrating && <WordMasteryBurst wordId={entry.id} />}
+                      <button
+                        aria-label={isMastered ? `取消掌握 ${entry.word}` : `已掌握 ${entry.word}`}
+                        className={`word-mastered-button${isMastered ? ' is-mastered' : ''}`}
+                        onClick={() => isMastered ? onUnmarkMastered(entry.id) : markMastered(entry.id)}
+                        type="button"
+                      >
+                        {isMastered ? '取消掌握' : '已掌握'}
+                      </button>
+                    </span>
                   </li>
                 )
               })}
@@ -270,8 +334,8 @@ export function WordQuickStudy({
               <p>{allUnmasteredAreMastered ? '全部单词已标记掌握，可查看已掌握单词。' : '调整筛选条件后再试。'}</p>
             </div>
           )}
-          <audio data-testid="word-audio" onError={() => setAudioError('音频暂不可播放')} preload="none" ref={audioRef} src={audioPath || undefined} />
-          {audioError && <p className="word-audio-error" role="alert">{audioError}</p>}
+          <audio data-testid="word-audio" preload="none" ref={audioRef} />
+          {audioStatus.phase === 'error' && <p aria-live="polite" className="word-audio-error">{audioStatus.message}</p>}
         </section>
       </div>
       {goalDialogContext && (
@@ -279,7 +343,7 @@ export function WordQuickStudy({
           availableCount={availableCount}
           canCancel={goalDialogContext === 'reset'}
           key={goalDialogContext}
-          onBack={onBack}
+          onBack={exitStudy}
           onCancel={() => setGoalDialogContext(null)}
           onStart={(size) => startBatch(size, goalDialogContext === 'reset' ? batch?.rule ?? { kind: 'ordered' } : { kind: 'ordered' })}
           onViewMastered={viewMastered}
@@ -295,7 +359,7 @@ export function WordQuickStudy({
         />
       )}
       {batch && batch.remainingWordIds.length === 0 && !viewingMastered && !goalDialogContext && !pendingRule && (
-        <WordBatchCompleteDialog onContinue={() => setGoalDialogContext('continue')} onRest={onBack} />
+        <WordBatchCompleteDialog onContinue={() => setGoalDialogContext('continue')} onRest={exitStudy} />
       )}
     </main>
   )

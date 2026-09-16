@@ -1,5 +1,6 @@
-import { render, screen, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { WordEntry } from '../domain/word'
 import { shuffleWords } from '../domain/word-selection'
@@ -23,16 +24,37 @@ function createProps(overrides: Partial<WordQuickStudyProps> = {}): WordQuickStu
   }
 }
 
+function ImmediateMasteryParent({ onMarkMastered }: { onMarkMastered: (wordId: string) => void }) {
+  const [masteredWordIds, setMasteredWordIds] = useState<string[]>([])
+  return (
+    <WordQuickStudy
+      {...createProps({
+        masteredWordIds,
+        onMarkMastered: (wordId) => {
+          onMarkMastered(wordId)
+          setMasteredWordIds((current) => [...current, wordId])
+        },
+      })}
+    />
+  )
+}
+
 describe('WordQuickStudy', () => {
   let user: ReturnType<typeof userEvent.setup>
 
   beforeEach(() => {
     user = userEvent.setup()
     vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {})
+    vi.spyOn(HTMLMediaElement.prototype, 'load').mockImplementation(() => {})
     vi.spyOn(Date, 'now').mockReturnValue(23)
   })
 
-  afterEach(() => vi.restoreAllMocks())
+  afterEach(() => {
+    cleanup()
+    vi.restoreAllMocks()
+    vi.unstubAllGlobals()
+  })
 
   async function enterGoal(goal: number) {
     const input = screen.getByRole('spinbutton', { name: '本次背诵数量目标' })
@@ -73,25 +95,81 @@ describe('WordQuickStudy', () => {
     expect(props.onBack).toHaveBeenCalledOnce()
   })
 
-  it('does not replenish a fixed batch after immediate mastery', async () => {
+  it('persists mastery immediately and removes the row after the 800ms burst', async () => {
+    const onMarkMastered = vi.fn()
+    render(<ImmediateMasteryParent onMarkMastered={onMarkMastered} />)
+    await enterGoal(2)
+
+    vi.useFakeTimers()
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 ability' }))
+
+      expect(onMarkMastered).toHaveBeenCalledWith('word-0001')
+      expect(screen.getByTestId('mastery-burst-word-0001')).toBeVisible()
+      expect(screen.getByText('ability', { exact: true })).toBeVisible()
+      await act(async () => { vi.advanceTimersByTime(800) })
+      expect(screen.queryByText('ability', { exact: true })).not.toBeInTheDocument()
+      expect(visibleWordIds()).toEqual(['word-0002'])
+      expect(screen.queryByText('book', { exact: true })).not.toBeInTheDocument()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('shows a separate definition-state hint while keeping the word body and audio controls independent', async () => {
+    await startWithGoal(2)
+    expect(screen.getByTestId('word-audio')).not.toHaveAttribute('src')
+    expect(screen.getByRole('button', { name: '点击可隐藏 ability 的中文释义' }))
+      .toHaveTextContent('点击可隐藏中文释义')
+    await user.click(screen.getByRole('button', { name: '点击可隐藏 ability 的中文释义' }))
+    expect(screen.getByRole('button', { name: '点击可展示 ability 的中文释义' }))
+      .toHaveTextContent('点击可展示中文释义')
+    await user.click(screen.getByRole('button', { name: '切换 ability 的释义显示' }))
+    expect(screen.getByText('能力')).toBeVisible()
+    await user.click(screen.getByRole('button', { name: '播放 ability 的美式发音' }))
+    expect(screen.getByRole('button', { name: '正在加载 ability 的美式发音' })).toHaveTextContent('加载中…')
+    expect(screen.getByTestId('word-audio')).toHaveAttribute('src', '/audio/words/0001.mp3')
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledOnce()
+    expect(screen.getByText('能力')).toBeVisible()
+    expect(visibleWordIds()).toEqual(['word-0001', 'word-0002'])
+  })
+
+  it('removes immediately without a burst when reduced motion is preferred', async () => {
+    vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches: true }))
     const { props } = await startWithGoal(2)
     await user.click(screen.getByRole('button', { name: '已掌握 ability' }))
     expect(props.onMarkMastered).toHaveBeenCalledWith('word-0001')
-    expect(visibleWordIds()).toEqual(['word-0002'])
-    expect(screen.queryByText('book', { exact: true })).not.toBeInTheDocument()
-    expect(screen.getByText('本轮目标 2 · 剩余 1')).toBeVisible()
+    expect(screen.queryByTestId('mastery-burst-word-0001')).not.toBeInTheDocument()
+    expect(screen.queryByText('ability', { exact: true })).not.toBeInTheDocument()
   })
 
-  it('keeps audio and definition controls independent', async () => {
+  it('clears an active burst before rebuilding the batch', async () => {
     await startWithGoal(2)
-    expect(screen.getByTestId('word-audio')).not.toHaveAttribute('src')
-    await user.click(screen.getByRole('button', { name: '切换 ability 的释义显示' }))
-    expect(screen.queryByText('能力')).not.toBeInTheDocument()
+    vi.useFakeTimers()
+    try {
+      const clearTimer = vi.spyOn(window, 'clearTimeout')
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 ability' }))
+      expect(screen.getByTestId('mastery-burst-word-0001')).toBeVisible()
+
+      fireEvent.click(screen.getByRole('button', { name: '重新设定目标' }))
+      fireEvent.change(screen.getByRole('spinbutton', { name: '本次背诵数量目标' }), { target: { value: '1' } })
+      fireEvent.click(screen.getByRole('button', { name: '开背' }))
+
+      expect(clearTimer).toHaveBeenCalled()
+      expect(screen.queryByTestId('mastery-burst-word-0001')).not.toBeInTheDocument()
+      await act(async () => { vi.advanceTimersByTime(800) })
+      expect(screen.getByText('ability', { exact: true })).toBeVisible()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('announces an audio playback failure after showing the loading state', async () => {
+    await startWithGoal(2)
     await user.click(screen.getByRole('button', { name: '播放 ability 的美式发音' }))
-    expect(screen.getByTestId('word-audio')).toHaveAttribute('src', '/audio/words/0001.mp3')
-    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledOnce()
-    expect(screen.queryByText('能力')).not.toBeInTheDocument()
-    expect(visibleWordIds()).toEqual(['word-0001', 'word-0002'])
+    expect(screen.getByText('加载中…')).toBeVisible()
+    fireEvent.error(screen.getByTestId('word-audio'))
+    expect(screen.getByText('播放失败，请再次点击')).toHaveAttribute('aria-live', 'polite')
   })
 
   it('removes externally mastered batch members without replenishing or restoring them after undo', async () => {
@@ -283,8 +361,14 @@ describe('WordQuickStudy', () => {
     const { props, rerender } = await startWithGoal(1)
     await user.click(screen.getByRole('button', { name: '字母 Z' }))
     await user.click(screen.getByRole('button', { name: '确认重新生成' }))
-    await user.click(screen.getByRole('button', { name: '已掌握 zero' }))
-    rerender(<WordQuickStudy {...props} masteredWordIds={['word-0004']} />)
+    vi.useFakeTimers()
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 zero' }))
+      rerender(<WordQuickStudy {...props} masteredWordIds={['word-0004']} />)
+      await act(async () => { vi.advanceTimersByTime(800) })
+    } finally {
+      vi.useRealTimers()
+    }
     expect(screen.getByRole('dialog', { name: '本轮背诵完成' })).toBeVisible()
     await user.click(screen.getByRole('button', { name: '继续背' }))
     expect(screen.getByRole('spinbutton')).toHaveValue(30)
@@ -297,7 +381,13 @@ describe('WordQuickStudy', () => {
 
   it('keeps fixed back available from the continue goal', async () => {
     const { props } = await startWithGoal(1)
-    await user.click(screen.getByRole('button', { name: '已掌握 ability' }))
+    vi.useFakeTimers()
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 ability' }))
+      await act(async () => { vi.advanceTimersByTime(800) })
+    } finally {
+      vi.useRealTimers()
+    }
     await user.click(screen.getByRole('button', { name: '继续背' }))
     await user.click(screen.getByRole('button', { name: '返回今日学习' }))
     expect(props.onBack).toHaveBeenCalledOnce()
@@ -305,7 +395,13 @@ describe('WordQuickStudy', () => {
 
   it('returns home when the learner chooses to rest after completion', async () => {
     const { props } = await startWithGoal(1)
-    await user.click(screen.getByRole('button', { name: '已掌握 ability' }))
+    vi.useFakeTimers()
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 ability' }))
+      await act(async () => { vi.advanceTimersByTime(800) })
+    } finally {
+      vi.useRealTimers()
+    }
     await user.click(screen.getByRole('button', { name: '先休息一下' }))
     expect(props.onBack).toHaveBeenCalledOnce()
   })

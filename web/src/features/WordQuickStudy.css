@@ -208,7 +208,7 @@
 
 .word-row {
   display: grid;
-  grid-template-columns: 48px minmax(220px, 1fr) auto auto;
+  grid-template-columns: 48px minmax(220px, 1fr) minmax(126px, auto) auto auto;
   gap: 12px;
   align-items: center;
   min-height: 72px;
@@ -261,6 +261,20 @@
   line-height: 1.45;
 }
 
+.word-definition-hint {
+  width: auto;
+  padding: 8px 4px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.word-definition-hint:hover {
+  background: #f8fafc;
+}
+
 .word-audio-button {
   width: 42px;
   min-width: 42px;
@@ -285,6 +299,50 @@
 
 .word-mastered-button.is-mastered {
   background: #475569;
+}
+
+.word-mastered-control {
+  position: relative;
+  display: block;
+  min-width: 82px;
+}
+
+.word-mastery-burst {
+  inset: 50% auto auto 50%;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.word-mastery-particle {
+  --burst-x: 0px;
+  --burst-y: -28px;
+  --burst-color: #22c55e;
+  animation: word-firework 800ms ease-out forwards;
+  background: var(--burst-color);
+  border-radius: 999px;
+  height: 6px;
+  left: -3px;
+  position: absolute;
+  top: -3px;
+  width: 6px;
+}
+
+.particle-1 { --burst-x: 0px; --burst-y: -32px; --burst-color: #22c55e; }
+.particle-2 { --burst-x: 20px; --burst-y: -26px; --burst-color: #f59e0b; }
+.particle-3 { --burst-x: 32px; --burst-y: -8px; --burst-color: #38bdf8; }
+.particle-4 { --burst-x: 28px; --burst-y: 16px; --burst-color: #a78bfa; }
+.particle-5 { --burst-x: 10px; --burst-y: 30px; --burst-color: #fb7185; }
+.particle-6 { --burst-x: -10px; --burst-y: 30px; --burst-color: #22c55e; }
+.particle-7 { --burst-x: -28px; --burst-y: 16px; --burst-color: #f59e0b; }
+.particle-8 { --burst-x: -32px; --burst-y: -8px; --burst-color: #38bdf8; }
+.particle-9 { --burst-x: -20px; --burst-y: -26px; --burst-color: #a78bfa; }
+.particle-10 { --burst-x: 0px; --burst-y: 24px; --burst-color: #fb7185; }
+
+@keyframes word-firework {
+  0% { opacity: 1; transform: translate(0, 0) scale(0.4); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--burst-x), var(--burst-y)) scale(1); }
 }
 
 .word-empty-state {
@@ -401,7 +459,27 @@
   }
 
   .word-mastered-button {
+    width: 100%;
+  }
+
+  .word-definition-hint {
+    grid-column: 2;
+  }
+
+  .word-audio-button {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .word-mastered-control {
     grid-column: 2 / -1;
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-mastery-particle {
+    animation: none;
+    display: none;
   }
 }
