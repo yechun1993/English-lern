@@ -24,7 +24,13 @@ function createProps(overrides: Partial<WordQuickStudyProps> = {}): WordQuickStu
   }
 }
 
-function ImmediateMasteryParent({ onMarkMastered }: { onMarkMastered: (wordId: string) => void }) {
+function ImmediateMasteryParent({
+  onMarkMastered,
+  onUnmarkMastered = vi.fn(),
+}: {
+  onMarkMastered: (wordId: string) => void
+  onUnmarkMastered?: (wordId: string) => void
+}) {
   const [masteredWordIds, setMasteredWordIds] = useState<string[]>([])
   return (
     <WordQuickStudy
@@ -34,6 +40,7 @@ function ImmediateMasteryParent({ onMarkMastered }: { onMarkMastered: (wordId: s
           onMarkMastered(wordId)
           setMasteredWordIds((current) => [...current, wordId])
         },
+        onUnmarkMastered,
       })}
     />
   )
@@ -111,6 +118,29 @@ describe('WordQuickStudy', () => {
       expect(screen.queryByText('ability', { exact: true })).not.toBeInTheDocument()
       expect(visibleWordIds()).toEqual(['word-0002'])
       expect(screen.queryByText('book', { exact: true })).not.toBeInTheDocument()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('disables undo while the immediate-parent mastery burst is active', async () => {
+    const onMarkMastered = vi.fn()
+    const onUnmarkMastered = vi.fn()
+    render(<ImmediateMasteryParent onMarkMastered={onMarkMastered} onUnmarkMastered={onUnmarkMastered} />)
+    await enterGoal(2)
+
+    vi.useFakeTimers()
+    try {
+      fireEvent.click(screen.getByRole('button', { name: '已掌握 ability' }))
+      const undoButton = screen.getByRole('button', { name: '取消掌握 ability' })
+      expect(undoButton).toBeDisabled()
+      fireEvent.click(undoButton)
+      expect(onUnmarkMastered).not.toHaveBeenCalled()
+
+      await act(async () => { vi.advanceTimersByTime(800) })
+      expect(onMarkMastered).toHaveBeenCalledWith('word-0001')
+      expect(screen.queryByText('ability', { exact: true })).not.toBeInTheDocument()
+      expect(screen.getByText('本轮目标 2 · 剩余 1')).toBeVisible()
     } finally {
       vi.useRealTimers()
     }

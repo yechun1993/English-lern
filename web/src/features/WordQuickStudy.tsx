@@ -318,6 +318,7 @@ export function WordQuickStudy({
                       <button
                         aria-label={isMastered ? `取消掌握 ${entry.word}` : `已掌握 ${entry.word}`}
                         className={`word-mastered-button${isMastered ? ' is-mastered' : ''}`}
+                        disabled={isCelebrating}
                         onClick={() => isMastered ? onUnmarkMastered(entry.id) : markMastered(entry.id)}
                         type="button"
                       >

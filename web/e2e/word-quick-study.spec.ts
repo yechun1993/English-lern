@@ -43,3 +43,28 @@ test('平板窄屏可按首字母定位、折叠释义并使用固定返回按�
   expect(box).not.toBeNull()
   expect(box?.x).toBeLessThan(24)
 })
+
+test('窄屏和两栏临界宽度都不会裁切掌握按钮', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-edge')
+  await page.setViewportSize({ width: 580, height: 900 })
+  await page.goto('/')
+
+  await page.getByRole('button', { name: '单词速记' }).click()
+  await page.getByRole('spinbutton', { name: '本次背诵数量目标' }).fill('2')
+  await page.getByRole('button', { name: '开背' }).click()
+
+  async function expectMasteryButtonInsidePanel() {
+    const panel = await page.locator('.word-list-panel').boundingBox()
+    const button = page.getByRole('button', { name: '已掌握 ability' })
+    const buttonBox = await button.boundingBox()
+    expect(panel).not.toBeNull()
+    expect(buttonBox).not.toBeNull()
+    expect(buttonBox!.x).toBeGreaterThanOrEqual(panel!.x)
+    expect(buttonBox!.x + buttonBox!.width).toBeLessThanOrEqual(panel!.x + panel!.width)
+    await expect(button).toBeVisible()
+  }
+
+  await expectMasteryButtonInsidePanel()
+  await page.setViewportSize({ width: 861, height: 900 })
+  await expectMasteryButtonInsidePanel()
+})
