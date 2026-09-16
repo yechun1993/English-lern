@@ -1,8 +1,17 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { afterEach, beforeEach, vi } from 'vitest'
 import App from './App'
 
 describe('App', () => {
+  beforeEach(() => {
+    vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
+    vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {})
+    vi.spyOn(HTMLMediaElement.prototype, 'load').mockImplementation(() => {})
+  })
+
+  afterEach(() => vi.restoreAllMocks())
+
   it('shows the daily learning entry point', () => {
     render(<App />)
 
