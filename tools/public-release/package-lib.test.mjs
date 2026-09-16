@@ -86,9 +86,9 @@ test('creates a password-free public ZIP and refuses to overwrite it', async () 
     assert.ok(archiveCall)
     assert.deepEqual(archiveCall.args.slice(0, 2), ['a', '-tzip'])
     assert.equal(archiveCall.args.includes('-mcu=on'), true)
-    assert.equal(archiveCall.args.at(-1), '深大学位英语题库_公开版_v1.1.0')
+    assert.equal(archiveCall.args.at(-1), '深大学位英语题库_公开版_v1.2.0')
     assert.equal(archiveCall.args.some((argument) => argument.startsWith('-p')), false)
-    assert.match(release.archivePath, /深大学位英语题库_公开版_v1\.1\.0\.zip$/)
+    assert.match(release.archivePath, /深大学位英语题库_公开版_v1\.2\.0\.zip$/)
     assert.equal(release.sha256.length, 64)
 
     await assert.rejects(

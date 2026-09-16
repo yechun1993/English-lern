@@ -6,7 +6,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { verifyWordAudio } from '../audio/verify-word-audio.mjs'
 
-const releaseVersion = '1.1.0'
+const releaseVersion = '1.2.0'
 const packageDirectoryName = `深大学位英语题库_公开版_v${releaseVersion}`
 const archiveFileName = `${packageDirectoryName}.zip`
 const moduleDirectory = dirname(fileURLToPath(import.meta.url))
