@@ -51,6 +51,14 @@ export function WordQuickStudy({
   const audioRef = useRef<HTMLAudioElement>(null)
   const masteredSet = useMemo(() => new Set(masteredWordIds), [masteredWordIds])
 
+  // Reconcile before committing the list; completed members never rejoin this batch.
+  if (batch && batch.remainingWordIds.some((id) => masteredSet.has(id))) {
+    setBatch({
+      ...batch,
+      remainingWordIds: batch.remainingWordIds.filter((id) => !masteredSet.has(id)),
+    })
+  }
+
   const availableCount = useMemo(() => getWordCandidates({
     words, masteredWordIds, mode: 'ordered', query: '',
   }).length, [words, masteredWordIds])

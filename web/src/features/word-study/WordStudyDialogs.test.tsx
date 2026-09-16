@@ -102,12 +102,12 @@ describe('WordGoalDialog', () => {
     expect(screen.queryByRole('spinbutton')).not.toBeInTheDocument()
   })
 
-  it('renders cancel only when permitted and handles Escape only then', async () => {
+  it.each([100, 0])('renders cancel only when permitted and handles Escape only then with %i candidates', async (availableCount) => {
     const user = userEvent.setup()
     const onCancel = vi.fn()
     const { rerender } = render(
       <WordGoalDialog
-        availableCount={100}
+        availableCount={availableCount}
         canCancel={false}
         onBack={vi.fn()}
         onCancel={onCancel}
@@ -122,7 +122,7 @@ describe('WordGoalDialog', () => {
 
     rerender(
       <WordGoalDialog
-        availableCount={100}
+        availableCount={availableCount}
         canCancel
         onBack={vi.fn()}
         onCancel={onCancel}

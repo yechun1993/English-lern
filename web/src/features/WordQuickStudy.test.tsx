@@ -94,6 +94,30 @@ describe('WordQuickStudy', () => {
     expect(visibleWordIds()).toEqual(['word-0001', 'word-0002'])
   })
 
+  it('removes externally mastered batch members without replenishing or restoring them after undo', async () => {
+    const { props, rerender } = await startWithGoal(2)
+    rerender(<WordQuickStudy {...props} masteredWordIds={['word-0001']} />)
+    expect(visibleWordIds()).toEqual(['word-0002'])
+    expect(screen.getByText('本轮目标 2 · 剩余 1')).toBeVisible()
+    expect(screen.queryByText('book', { exact: true })).not.toBeInTheDocument()
+    expect(props.onMarkMastered).not.toHaveBeenCalled()
+
+    rerender(<WordQuickStudy {...props} masteredWordIds={[]} />)
+    expect(visibleWordIds()).toEqual(['word-0002'])
+    expect(screen.getByText('本轮目标 2 · 剩余 1')).toBeVisible()
+  })
+
+  it('completes the fixed batch when all remaining members become externally mastered', async () => {
+    const { props, rerender } = await startWithGoal(2)
+    rerender(<WordQuickStudy {...props} masteredWordIds={['word-0001']} />)
+    expect(screen.queryByRole('dialog', { name: '本轮背诵完成' })).not.toBeInTheDocument()
+    rerender(<WordQuickStudy {...props} masteredWordIds={['word-0001', 'word-0002']} />)
+    expect(screen.getByText('本轮目标 2 · 剩余 0')).toBeVisible()
+    expect(screen.queryByRole('list', { name: '单词列表' })).not.toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: '本轮背诵完成' })).toBeVisible()
+    expect(props.onMarkMastered).not.toHaveBeenCalled()
+  })
+
   it('cancels random rebuilding without changing the batch, rule, search, or definitions', async () => {
     await startWithGoal(2)
     await user.click(screen.getByRole('button', { name: '切换 ability 的释义显示' }))
@@ -204,6 +228,18 @@ describe('WordQuickStudy', () => {
     expect(screen.getByRole('searchbox')).toHaveValue('')
     expect(screen.getByText('能力')).toBeVisible()
     expect(screen.getByText('本轮目标 1 · 剩余 1')).toBeVisible()
+  })
+
+  it('keeps reset cancellable when candidates become exhausted while it is open', async () => {
+    const { props, rerender } = await startWithGoal(2)
+    await user.click(screen.getByRole('button', { name: '重新设定目标' }))
+    rerender(<WordQuickStudy {...props} masteredWordIds={words.map((word) => word.id)} />)
+    expect(screen.getByRole('dialog', { name: '全部单词已掌握' })).toBeVisible()
+    await user.click(screen.getByRole('button', { name: '取消' }))
+    expect(screen.queryByRole('dialog', { name: '全部单词已掌握' })).not.toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: '本轮背诵完成' })).toBeVisible()
+    expect(screen.getByText('本轮目标 2 · 剩余 0')).toBeVisible()
+    expect(props.onBack).not.toHaveBeenCalled()
   })
 
   it('temporarily views all mastered words and restores the exact batch and search', async () => {

@@ -84,6 +84,11 @@ export function WordGoalDialog({
             <h2 id={titleId}>全部单词已掌握</h2>
             <p>当前没有待背单词，可以回顾已掌握的内容。</p>
             <div className="word-dialog-actions">
+              {canCancel && (
+                <button className="word-dialog-secondary-action" onClick={onCancel} type="button">
+                  取消
+                </button>
+              )}
               <button className="word-dialog-secondary-action" onClick={onBack} type="button">
                 返回今日学习
               </button>
