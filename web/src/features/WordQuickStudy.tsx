@@ -39,6 +39,7 @@ export function WordQuickStudy({
   onUnmarkMastered,
 }: WordQuickStudyProps) {
   const [batch, setBatch] = useState<WordStudyBatch | null>(null)
+  const [preloadWords, setPreloadWords] = useState<readonly WordEntry[]>([])
   const [goalDialogContext, setGoalDialogContext] = useState<GoalDialogContext>('initial')
   const [pendingRule, setPendingRule] = useState<WordBatchRule | null>(null)
   const [viewingMastered, setViewingMastered] = useState(false)
@@ -74,10 +75,6 @@ export function WordQuickStudy({
     ? getWordCandidates({ words, masteredWordIds, mode: 'mastered', query: masteredQuery })
     : batch ? selectBatchWords(batch, words, query) : []
   const activeRule = batch?.rule
-  const preloadWords = useMemo(
-    () => batch ? selectBatchWords(batch, words, '') : [],
-    [batch, words],
-  )
   const { status: audioStatus, play } = useWordAudioPlayer(audioRef, preloadWords)
 
   // The controller clears its native source while replacing a batch; keep the
@@ -101,6 +98,10 @@ export function WordQuickStudy({
     }
     return counts
   }, [masteredSet, words])
+  const goalRule = goalDialogContext === 'reset' ? batch?.rule ?? { kind: 'ordered' as const } : { kind: 'ordered' as const }
+  const goalAvailableCount = goalRule.kind === 'initial'
+    ? getWordCandidates({ words, masteredWordIds, mode: 'initial', initial: goalRule.initial, query: '' }).length
+    : availableCount
 
   function startBatch(requestedSize: number, rule: WordBatchRule) {
     const result = createWordStudyBatch({ words, masteredWordIds, requestedSize, rule })
@@ -108,6 +109,7 @@ export function WordQuickStudy({
     clearMasteryCelebrations()
     batchVersionRef.current += 1
     setBatch(result.batch)
+    setPreloadWords(selectBatchWords(result.batch, words, ''))
     setQuery('')
     setMasteredQuery('')
     setHiddenDefinitionIds(new Set())
@@ -341,12 +343,13 @@ export function WordQuickStudy({
       </div>
       {goalDialogContext && (
         <WordGoalDialog
-          availableCount={availableCount}
+          availableCount={goalAvailableCount}
           canCancel={goalDialogContext === 'reset'}
+          emptyScope={goalRule.kind === 'initial' ? 'initial' : 'all'}
           key={goalDialogContext}
           onBack={exitStudy}
           onCancel={() => setGoalDialogContext(null)}
-          onStart={(size) => startBatch(size, goalDialogContext === 'reset' ? batch?.rule ?? { kind: 'ordered' } : { kind: 'ordered' })}
+          onStart={(size) => startBatch(size, goalRule)}
           onViewMastered={viewMastered}
         />
       )}

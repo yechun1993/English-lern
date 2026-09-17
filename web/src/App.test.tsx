@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, vi } from 'vitest'
 import App from './App'
@@ -208,7 +208,7 @@ describe('App', () => {
     render(<App />)
     await user.click(screen.getByRole('button', { name: '单词速记' }))
     expect(await screen.findByRole('dialog', { name: '设置本次背诵目标' })).toBeVisible()
-    await user.click(screen.getByRole('button', { name: '返回今日学习' }))
+    await user.click(within(screen.getByRole('dialog')).getByRole('button', { name: '返回今日学习' }))
     expect(screen.getByRole('heading', { name: '今日学习' })).toBeInTheDocument()
   })
 })

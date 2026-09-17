@@ -58,6 +58,44 @@ test('快速连续点击时仅最后一个单词进入播放状态', async ({ pa
   expect(pageErrors).toEqual([])
 })
 
+test('真实 Edge 键盘焦点始终留在弹窗内并在取消后返回触发按钮', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-edge')
+  await page.goto('/')
+  await page.getByRole('button', { name: '单词速记' }).click()
+  const goal = page.getByRole('dialog', { name: '设置本次背诵目标' })
+  await expect(goal.getByRole('spinbutton')).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  await expect(goal.getByRole('button', { name: '开背' })).toBeFocused()
+  await page.keyboard.press('Tab')
+  await expect(goal.getByRole('spinbutton')).toBeFocused()
+  await goal.getByRole('spinbutton').fill('2')
+  await goal.getByRole('button', { name: '开背' }).click()
+
+  const random = page.getByRole('button', { name: '随机单词' })
+  await random.click()
+  const change = page.getByRole('dialog', { name: '重新生成本轮单词？' })
+  await expect(change.getByRole('button', { name: '取消' })).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  await expect(change.getByRole('button', { name: '确认重新生成' })).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(random).toBeFocused()
+
+  const reset = page.getByRole('button', { name: '重新设定目标' })
+  await reset.click()
+  await expect(goal.getByRole('spinbutton')).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(reset).toBeFocused()
+
+  await page.getByRole('button', { name: '已掌握 ability' }).click()
+  await page.getByRole('button', { name: '已掌握 able' }).click()
+  const complete = page.getByRole('dialog', { name: '本轮背诵完成' })
+  await expect(complete.getByRole('button', { name: '先休息一下' })).toBeFocused()
+  await page.keyboard.press('Shift+Tab')
+  await expect(complete.getByRole('button', { name: '继续背' })).toBeFocused()
+  await complete.getByRole('button', { name: '继续背' }).click()
+  await expect(goal.getByRole('spinbutton')).toBeFocused()
+})
+
 test('平板窄屏首字母确认、释义提示和休息返回', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile-edge')
   await page.goto('/')
@@ -119,6 +157,7 @@ test('窄屏和两栏临界宽度都不会裁切掌握按钮', async ({ page }, 
     expect(buttonBox!.x).toBeGreaterThanOrEqual(panel!.x)
     expect(buttonBox!.x + buttonBox!.width).toBeLessThanOrEqual(panel!.x + panel!.width)
     await expect(button).toBeVisible()
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true)
   }
 
   await expectMasteryButtonInsidePanel()
